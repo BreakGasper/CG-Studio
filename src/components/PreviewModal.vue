@@ -6,18 +6,16 @@ const props = defineProps({ project: { type: Object, required: true } })
 const emit = defineEmits(['close'])
 
 const entry = computed(() => previews[props.project.id])
-const ready = ref(false)
-const failed = ref(false)
-const phone = computed(() => props.project.mock.device === 'phone')
-const url = computed(() => props.project.id.replace(/-/g, '') + '.app')
+const host = computed(() => new URL(entry.value.url).host)
+const mode = ref('phone')
+const loaded = ref(false)
 const closeBtn = ref(null)
 
 const onKey = (e) => { if (e.key === 'Escape') emit('close') }
-onMounted(async () => {
+onMounted(() => {
   window.addEventListener('keydown', onKey)
   document.documentElement.classList.add('pv-lock')
   closeBtn.value?.focus()
-  try { await entry.value.load(); ready.value = true } catch { failed.value = true }
 })
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', onKey)
@@ -28,16 +26,20 @@ onBeforeUnmount(() => {
 <template>
   <Teleport to="body">
     <div class="pv-back" @click.self="emit('close')">
-      <div class="pv-win" :class="{ phone }" role="dialog" aria-modal="true" :aria-label="`Preview de ${project.name}`">
+      <div class="pv-win" :class="{ phone: mode === 'phone' }" role="dialog" aria-modal="true" :aria-label="`Preview de ${project.name}`">
         <div class="pv-bar">
           <span class="pv-dots"><i></i><i></i><i></i></span>
-          <span class="pv-url">{{ url }}</span>
-          <span class="pv-tag">Preview · datos de ejemplo</span>
+          <span class="pv-url">{{ host }}</span>
+          <span class="pv-modes" role="group" aria-label="Tamaño">
+            <button type="button" :class="{ on: mode === 'phone' }" @click="mode = 'phone'">Móvil</button>
+            <button type="button" :class="{ on: mode === 'desktop' }" @click="mode = 'desktop'">Escritorio</button>
+          </span>
+          <a class="pv-open" :href="entry.url" target="_blank" rel="noopener noreferrer">Abrir ↗</a>
           <button ref="closeBtn" class="pv-x" type="button" aria-label="Cerrar preview" @click="emit('close')">✕</button>
         </div>
         <div class="pv-body">
-          <component :is="entry.tag" v-if="ready" />
-          <div v-else class="pv-load">{{ failed ? 'No se pudo cargar el preview.' : 'Cargando preview…' }}</div>
+          <div v-if="!loaded" class="pv-load">Cargando {{ entry.label }}…</div>
+          <iframe :src="entry.url" :title="`Preview de ${project.name}`" allow="clipboard-write; geolocation" referrerpolicy="no-referrer" @load="loaded = true"></iframe>
         </div>
       </div>
     </div>

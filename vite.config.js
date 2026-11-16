@@ -3,10 +3,7 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [
-    vue({
-      // Los previews son custom elements (Shadow DOM): Vue no debe tratarlos como componentes.
-      template: { compilerOptions: { isCustomElement: (tag) => tag.endsWith('-preview') } },
-    }),
+    vue(),
   ],
   build: { outDir: 'dist' },
 })
