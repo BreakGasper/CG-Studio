@@ -1,0 +1,17 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // El formulario de contacto solo puede crear mensajes; nadie los lee desde la web.
+    match /contactos/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['nombre', 'correo', 'tipo', 'mensaje', 'creado'])
+        && request.resource.data.nombre is string && request.resource.data.nombre.size() <= 120
+        && request.resource.data.correo is string && request.resource.data.correo.size() <= 200
+        && request.resource.data.tipo is string && request.resource.data.tipo.size() <= 80
+        && request.resource.data.mensaje is string && request.resource.data.mensaje.size() <= 4000;
+      allow read, update, delete: if false;
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
