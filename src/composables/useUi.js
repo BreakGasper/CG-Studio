@@ -11,9 +11,21 @@ export function setTheme(id) {
   try { localStorage.setItem('cg-theme', id) } catch { /* sin almacenamiento */ }
 }
 
+// Alterna entre modo claro y oscuro (cualquier tema que no sea claro pasa a claro).
+export function toggleMode() {
+  setTheme(theme.value === 'light' ? 'dark' : 'light')
+}
+
+// Carga el tema guardado; si no hay, respeta la preferencia del sistema.
 export function loadTheme() {
-  try {
-    const saved = localStorage.getItem('cg-theme')
-    if (saved) setTheme(saved)
-  } catch { /* sin almacenamiento */ }
+  let saved = null
+  try { saved = localStorage.getItem('cg-theme') } catch { /* sin almacenamiento */ }
+  if (saved) {
+    theme.value = saved
+    document.documentElement.dataset.theme = saved
+    return
+  }
+  const prefersLight = window.matchMedia?.('(prefers-color-scheme: light)').matches
+  theme.value = prefersLight ? 'light' : 'dark'
+  document.documentElement.dataset.theme = theme.value
 }

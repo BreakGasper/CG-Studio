@@ -166,3 +166,16 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--line);color:v
 .ib:hover,.ib.on{color:var(--hl)}
 #ov a:hover{color:var(--hl)}
 .step b{color:var(--hl)}
+
+/* ---------- Botón modo claro / oscuro (cabecera) ---------- */
+.theme-toggle{margin-left:auto;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);display:grid;place-items:center;cursor:pointer;position:relative;transition:background .25s,border-color .25s,transform .2s}
+.theme-toggle:hover{border-color:var(--acc);transform:rotate(12deg)}
+.theme-toggle:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.theme-toggle svg{width:22px;height:22px;position:absolute;transition:opacity .25s,transform .35s}
+.theme-toggle .ic-moon{opacity:0;transform:rotate(-60deg) scale(.5)}
+:root[data-theme="light"] .theme-toggle .ic-sun{opacity:0;transform:rotate(60deg) scale(.5)}
+:root[data-theme="light"] .theme-toggle .ic-moon{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.theme-toggle,.theme-toggle svg{transition:none}}
+
+/* Fondos oscuros fijos: el logo se mantiene blanco aunque el tema sea claro */
+.msz span,.mbadge{--logo:#fff}
