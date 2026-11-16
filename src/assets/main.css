@@ -192,3 +192,24 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--line);color:v
 .plinks .priv{display:inline-flex;gap:6px;align-items:center;color:var(--mute)}
 .shot .tag,.shot .num{top:auto;bottom:10px}
 .shot .num{right:14px;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.45);font-weight:600}
+
+/* ---------- Dock lateral más grande ---------- */
+.dock{gap:18px}
+.dock .ib{width:58px;height:58px;color:var(--ink);opacity:.8;position:relative;transition:color .2s,opacity .2s,background .2s,transform .2s}
+.dock .ib svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.dock .dock-col{gap:6px;padding:10px 8px}
+.dock .dock-col .ib{width:50px;height:50px;border:0}
+.dock .dock-col .ib svg{width:24px;height:24px}
+.dock .ib:hover{opacity:1;transform:scale(1.08)}
+.dock .ib.on{opacity:1;background:rgba(255,46,151,.14)}
+.dock .ib:focus-visible{outline:2px solid var(--hl,var(--acc));outline-offset:2px}
+/* etiqueta al pasar el mouse */
+.dock .ib::before{content:attr(data-label);position:absolute;right:calc(100% + 14px);top:50%;transform:translateY(-50%) translateX(6px);background:var(--card2);color:var(--ink);border:1px solid var(--line);padding:6px 12px;border-radius:10px;font:500 13px Inter,sans-serif;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s,transform .15s}
+.dock .ib:hover::before,.dock .ib:focus-visible::before{opacity:1;transform:translateY(-50%)}
+.cfgbox{right:120px}
+@media (max-height:760px){
+  .dock{gap:10px}
+  .dock .ib{width:46px;height:46px}.dock .dock-col .ib{width:40px;height:40px}
+  .dock .ib svg{width:22px;height:22px}.dock .dock-col .ib svg{width:20px;height:20px}
+}
+.dock .ib.on{color:var(--hl,var(--acc))}
