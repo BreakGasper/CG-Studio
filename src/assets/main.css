@@ -264,3 +264,14 @@ html.pv-lock{overflow:hidden}
 
 .pv-bar{flex-wrap:wrap;row-gap:6px}
 .pv-modes[role=tablist] .on{background:#ff2e97}
+
+/* ---------- Dock un poco más pequeño ---------- */
+.dock{gap:14px}
+.dock .ib{width:56px;height:56px}
+.dock .ib svg{width:27px;height:27px}
+.dock .dock-col{gap:5px;padding:9px 7px}
+.dock .dock-col .ib{width:48px;height:48px}
+.dock .dock-col .ib svg{width:25px;height:25px}
+.cfgbox{right:120px}
+@media (max-height:820px){.dock .ib{width:46px;height:46px}.dock .dock-col .ib{width:40px;height:40px}.dock .ib svg{width:22px;height:22px}.dock .dock-col .ib svg{width:21px;height:21px}}
+@media (max-height:640px){.dock .ib{width:40px;height:40px}.dock .dock-col .ib{width:34px;height:34px}.dock .ib svg,.dock .dock-col .ib svg{width:18px;height:18px}}

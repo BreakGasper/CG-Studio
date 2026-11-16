@@ -155,52 +155,6 @@ export const projects = [
     }
   },
   {
-    "id": "mr-novedades",
-    "name": "MR Novedades",
-    "cat": "android",
-    "platform": "Android",
-    "year": 2025,
-    "visibility": "private",
-    "repo": null,
-    "desc": "App de ventas por catálogo con carrito, clientes, cupones y comprobante de depósito.",
-    "tags": [
-      "Kotlin",
-      "Hilt",
-      "MVVM",
-      "Firebase"
-    ],
-    "mock": {
-      "device": "phone",
-      "layout": "shop",
-      "c1": "#8d5fe6",
-      "c2": "#4c1d95",
-      "title": "MR Novedades",
-      "items": [
-        {
-          "name": "Blusa floral",
-          "price": "$320"
-        },
-        {
-          "name": "Perfume",
-          "price": "$450"
-        },
-        {
-          "name": "Bolsa",
-          "price": "$280"
-        },
-        {
-          "name": "Zapatos",
-          "price": "$590"
-        }
-      ],
-      "chips": [
-        "Todo",
-        "Ropa",
-        "Belleza"
-      ]
-    }
-  },
-  {
     "id": "vent-app",
     "name": "Vent App",
     "cat": "flutter",
@@ -244,69 +198,6 @@ export const projects = [
         "Tech",
         "Moda"
       ]
-    }
-  },
-  {
-    "id": "testapp",
-    "name": "Test App",
-    "cat": "flutter",
-    "platform": "Flutter",
-    "year": 2025,
-    "visibility": "public",
-    "repo": "https://github.com/BreakGasper/testapp",
-    "desc": "App Flutter de pruebas con arquitectura por capas (infraestructura, servicios y vistas).",
-    "tags": [
-      "Flutter",
-      "Dart"
-    ],
-    "mock": {
-      "device": "phone",
-      "layout": "list",
-      "c1": "#0ea5e9",
-      "c2": "#1e3a8a",
-      "title": "Test App",
-      "items": [
-        {
-          "t": "Inicio",
-          "s": "Resumen"
-        },
-        {
-          "t": "Servicios",
-          "s": "Conexión a API"
-        },
-        {
-          "t": "Vistas",
-          "s": "Pantallas"
-        },
-        {
-          "t": "Ajustes",
-          "s": "Preferencias"
-        }
-      ]
-    }
-  },
-  {
-    "id": "prueba-ubicacion",
-    "name": "Prueba Ubicación",
-    "cat": "android",
-    "platform": "Android",
-    "year": 2025,
-    "visibility": "public",
-    "repo": "https://github.com/BreakGasper/PruebaUbicacion",
-    "desc": "Prueba de geolocalización: permisos, ubicación en tiempo real y notificaciones.",
-    "tags": [
-      "Kotlin",
-      "Hilt",
-      "Location"
-    ],
-    "mock": {
-      "device": "phone",
-      "layout": "location",
-      "c1": "#19c37d",
-      "c2": "#0f766e",
-      "title": "Mi ubicación",
-      "coords": "Lat 20.66 · Lng -103.35",
-      "cta": "Compartir"
     }
   },
   {
@@ -395,35 +286,6 @@ export const projects = [
         "    [{ message, duration }])",
         "}"
       ]
-    }
-  },
-  {
-    "id": "mvvm",
-    "name": "MVVM",
-    "cat": "android",
-    "platform": "Android",
-    "year": 2024,
-    "visibility": "private",
-    "repo": null,
-    "desc": "Base de app Android con arquitectura MVVM: inicio de sesión, registro de usuarios y pantalla principal.",
-    "tags": [
-      "Kotlin",
-      "MVVM",
-      "Hilt"
-    ],
-    "mock": {
-      "device": "phone",
-      "layout": "auth",
-      "c1": "#3a6ae8",
-      "c2": "#1e3a8a",
-      "title": "Bienvenido",
-      "initial": "M",
-      "fields": [
-        "Celular",
-        "Contraseña"
-      ],
-      "cta": "Ingresar",
-      "link": "Crear cuenta"
     }
   },
   {
@@ -536,51 +398,6 @@ export const projects = [
     }
   },
   {
-    "id": "apv2",
-    "name": "APV2",
-    "cat": "android",
-    "platform": "Android",
-    "year": 2023,
-    "visibility": "public",
-    "repo": "https://github.com/BreakGasper/APV2",
-    "desc": "Administración de una pizzería: usuarios, especialidades, bebidas, adicionales y promociones.",
-    "tags": [
-      "Kotlin",
-      "Hilt",
-      "Firebase"
-    ],
-    "mock": {
-      "device": "phone",
-      "layout": "shop",
-      "c1": "#f97316",
-      "c2": "#9a3412",
-      "title": "Pizzería",
-      "items": [
-        {
-          "name": "Pepperoni",
-          "price": "$150"
-        },
-        {
-          "name": "Hawaiana",
-          "price": "$140"
-        },
-        {
-          "name": "Refresco",
-          "price": "$30"
-        },
-        {
-          "name": "Combo 2x1",
-          "price": "$199"
-        }
-      ],
-      "chips": [
-        "Pizzas",
-        "Bebidas",
-        "Promos"
-      ]
-    }
-  },
-  {
     "id": "room",
     "name": "Room Tasks",
     "cat": "android",
@@ -683,93 +500,6 @@ export const projects = [
       "c2": "#0c4a6e",
       "title": "Verifica tu identidad",
       "cta": "Usar huella"
-    }
-  },
-  {
-    "id": "moonsheep",
-    "name": "MoonSheep",
-    "cat": "web",
-    "platform": "Web",
-    "year": 2022,
-    "visibility": "private",
-    "repo": null,
-    "desc": "Sitio web de catálogo digital para mostrar productos de un negocio.",
-    "tags": [
-      "HTML",
-      "CSS",
-      "JavaScript"
-    ],
-    "mock": {
-      "device": "browser",
-      "layout": "store",
-      "c1": "#8d5fe6",
-      "c2": "#4c1d95",
-      "title": "MoonSheep",
-      "nav": [
-        "Inicio",
-        "Catálogo",
-        "Contacto"
-      ],
-      "hero": "Tu catálogo digital",
-      "cta": "Ver catálogo",
-      "items": [
-        {
-          "name": "Colección 1",
-          "price": ""
-        },
-        {
-          "name": "Colección 2",
-          "price": ""
-        },
-        {
-          "name": "Colección 3",
-          "price": ""
-        },
-        {
-          "name": "Colección 4",
-          "price": ""
-        }
-      ]
-    }
-  },
-  {
-    "id": "kottlin-user",
-    "name": "Kottlin User",
-    "cat": "android",
-    "platform": "Android",
-    "year": 2022,
-    "visibility": "private",
-    "repo": null,
-    "desc": "App en Kotlin que lista libros desde un servicio web, con Dagger para inyección de dependencias.",
-    "tags": [
-      "Kotlin",
-      "Dagger",
-      "RecyclerView"
-    ],
-    "mock": {
-      "device": "phone",
-      "layout": "list",
-      "c1": "#0ea5e9",
-      "c2": "#1e3a8a",
-      "title": "Libros",
-      "items": [
-        {
-          "t": "Título 1",
-          "s": "Subtítulo"
-        },
-        {
-          "t": "Título 2",
-          "s": "Subtítulo"
-        },
-        {
-          "t": "Título 3",
-          "s": "Subtítulo"
-        },
-        {
-          "t": "Título 4",
-          "s": "Subtítulo"
-        }
-      ]
     }
   },
   {

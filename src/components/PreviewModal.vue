@@ -45,7 +45,7 @@ onBeforeUnmount(() => {
         </div>
         <div class="pv-body">
           <div v-if="!loaded" class="pv-load">Cargando…</div>
-          <iframe :key="view.url" :src="view.url" :title="`Preview de ${project.name}: ${view.label}`" allow="clipboard-write" @load="loaded = true"></iframe>
+          <iframe style="position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff" :key="view.url" :src="view.url" :title="`Preview de ${project.name}: ${view.label}`" allow="clipboard-write" @load="loaded = true"></iframe>
         </div>
       </div>
     </div>
