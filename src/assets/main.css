@@ -247,7 +247,8 @@ html.pv-lock{overflow:hidden}
 
 .pv-x{border:0;background:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;color:#334155;font-size:14px}
 .pv-x:hover{background:#ff2e97;color:#fff}.pv-x:focus-visible{outline:2px solid #ff2e97;outline-offset:2px}
-.pv-body{position:relative;flex:1;min-height:0;overflow:hidden;background:#fff}\n.pv-body iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
+.pv-body{position:relative;flex:1;min-height:0;overflow:hidden;background:#fff}
+.pv-body iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
 .pv-load{position:absolute;inset:0;display:grid;place-items:center;color:#64748b;font:14px Inter,sans-serif}
 @media(max-width:700px){.pv-back{padding:0}.pv-win{height:100vh;border-radius:0}.pv-tag{display:none}}
 @media (prefers-reduced-motion:reduce){.pv-back,.pv-win{animation:none}.pbtn{transition:none}}
@@ -260,3 +261,6 @@ html.pv-lock{overflow:hidden}
 .pv-url{max-width:200px}
 .pv-win{transition:width .25s}
 @media(max-width:700px){.pv-modes{display:none}.pv-win.phone,.pv-win{width:100%}}
+
+.pv-bar{flex-wrap:wrap;row-gap:6px}
+.pv-modes[role=tablist] .on{background:#ff2e97}
