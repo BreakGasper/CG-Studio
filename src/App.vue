@@ -10,6 +10,7 @@ import TopBar from './components/TopBar.vue'
 import HeroSection from './components/HeroSection.vue'
 import ClientsStrip from './components/ClientsStrip.vue'
 import AboutSection from './components/AboutSection.vue'
+import MissionVision from './components/MissionVision.vue'
 import MascotSection from './components/MascotSection.vue'
 import WorkSection from './components/WorkSection.vue'
 import ServicesSection from './components/ServicesSection.vue'
@@ -33,6 +34,7 @@ onMounted(loadTheme)
     <HeroSection />
     <ClientsStrip />
     <AboutSection />
+    <MissionVision />
     <MascotSection />
     <WorkSection />
     <ServicesSection />

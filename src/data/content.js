@@ -45,6 +45,20 @@ export const stats = [
 
 export const clients = ['◐ Logoipsum', 'Logoipsum', '◑ Logoipsum', 'Logoipsum']
 
+// Misión y visión (texto propuesto: ajústalo a tu estilo).
+export const missionVision = [
+  {
+    id: 'mision',
+    label: 'Misión',
+    text: 'Crear software, plataformas y soluciones de inteligencia artificial confiables y escalables que ayuden a las empresas a automatizar su operación y crecer, con un equipo técnico bien liderado, buenas prácticas y entregas a tiempo.',
+  },
+  {
+    id: 'vision',
+    label: 'Visión',
+    text: 'Ser un estudio de ingeniería digital de referencia en Latinoamérica, reconocido por la calidad de su código, la innovación con IA y la confianza de sus clientes a largo plazo.',
+  },
+]
+
 export const timeline = [
   { when: '2024 — Hoy', title: 'Plataformas con IA', text: 'Agentes, automatizaciones y APIs en producción.' },
   { when: '2021 — 2024', title: 'Producto y plataformas web', text: 'SaaS, paneles y e-commerce a medida.' },
