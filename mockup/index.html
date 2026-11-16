@@ -167,26 +167,14 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--line);color:v
 .msz .a{width:64px;height:64px}.msz .b{width:40px;height:40px}.msz .c{width:24px;height:24px}
 @media(max-width:1100px){.mgrid{grid-template-columns:1fr}}
 
-/* ===== Paleta de marca: cabeceras #1b2a24 · botones #0ca5b0 · resaltado #ff2e97 ===== */
-:root{--acc:#0ca5b0;--acc-soft:rgba(12,165,176,.18);--btn:#0ca5b0;--hl:#ff2e97;--head:#1b2a24}
-.btn.pri,.circ,.tab.on,.ico{background:var(--btn);border-color:var(--btn);color:#04222a}
-.btn.pri:hover,.circ:hover{filter:brightness(1.1)}
-.hl{background:var(--hl);color:#fff}
-.hl.o{background:var(--head);color:var(--hl);border-color:var(--hl)}
+/* Rosa #ff2e97 solo en detalles puntuales */
+:root{--hl:#ff2e97}
 .dot{background:var(--hl);box-shadow:0 0 0 4px rgba(255,46,151,.25)}
-.tl div::before,.bar i{background:var(--hl)}
 .tag{background:var(--hl);color:#fff}
-.svc li::before,.step b,.ib:hover,.ib.on{color:var(--hl)}
-.cta-big{background:var(--hl);color:#1b2a24}
-.cta-big .btn{background:#1b2a24;color:#fff;border-color:#1b2a24}
-.mbadge{box-shadow:0 0 0 6px rgba(27,42,36,.25)}
-#ov{background:var(--head)}
+.hl.o{color:var(--hl)}
+.ib:hover,.ib.on{color:var(--hl)}
 #ov a:hover{color:var(--hl)}
-.dock-col,.ib,.cfgbox,.avail{background:var(--head)}
-.dock-col .ib{background:none}
-aside{background:linear-gradient(180deg,#24382f,var(--head));border-color:#2b4137}
-.top{background:var(--head);border:1px solid #2b4137;border-radius:22px;padding:12px 20px}
-.cfgbox,.dock-col,.ib{border-color:#2b4137}
+.step b{color:var(--hl)}
 </style>
 </head>
 <body>
@@ -227,7 +215,7 @@ aside{background:linear-gradient(180deg,#24382f,var(--head));border-color:#2b413
   <button class="ib" onclick="ov.classList.add('open')" aria-label="Menú completo">☰</button>
 </div>
 <div class="cfgbox" id="cfg"><span>Color</span>
-  <i class="sw" style="background:#0ca5b0" data-t="dark"></i><i class="sw" style="background:#f2f5f8" data-t="light"></i>
+  <i class="sw" style="background:#14c8d8" data-t="dark"></i><i class="sw" style="background:#f2f5f8" data-t="light"></i>
   <i class="sw" style="background:#a78bfa" data-t="lavender"></i><i class="sw" style="background:#22c7ea" data-t="ocean"></i>
 </div>
 
