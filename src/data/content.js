@@ -62,6 +62,7 @@ export const services = [
   { n: '01', title: 'Software y plataformas', items: ['Apps web a medida', 'SaaS y paneles', 'E-commerce'], text: 'Productos rápidos y listos para crecer.' },
   { n: '02', title: 'IA y automatización', items: ['Agentes y chatbots', 'Flujos automáticos', 'Integraciones'], text: 'Ahorra horas de trabajo repetitivo.' },
   { n: '03', title: 'APIs e ingeniería', items: ['Diseño de APIs', 'Backend escalable', 'Cloud y DevOps'], text: 'Bases sólidas para tu negocio.' },
+  { n: '04', title: 'Liderazgo técnico', items: ['Gestión de equipos de programadores', 'Mantenimiento de servidores', 'Publicaciones y despliegues'], text: 'Un líder técnico que guía al equipo, cuida la operación y entrega a tiempo.' },
 ]
 
 // Tecnologías y herramientas (tomadas del CV).
@@ -85,6 +86,24 @@ export const techGroups = [
   {
     title: 'AWS',
     items: ['AWS S3', 'AWS Lambda', 'AWS API Gateway'],
+  },
+  {
+    title: 'Liderazgo técnico',
+    items: [
+      'Gestión y coordinación de programadores',
+      'Asignación de tareas y planeación de sprints',
+      'Revisión de código (code review)',
+      'Mentoría y capacitación del equipo',
+      'Estimación de tiempos y alcance',
+      'Definición de arquitectura y estándares',
+      'Mantenimiento y monitoreo de servidores',
+      'Publicaciones en Google Play y App Store',
+      'Despliegues a producción y control de versiones',
+      'Respaldos, seguridad y control de accesos',
+      'Atención de incidentes y soporte',
+      'Documentación técnica',
+      'Comunicación con clientes y áreas de negocio',
+    ],
   },
   {
     title: 'Otras herramientas',
