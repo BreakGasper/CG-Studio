@@ -76,6 +76,10 @@ export const techGroups = [
     items: ['HTML5 · CSS3', 'JavaScript · TypeScript', 'Vue 3 (Composition API, Pinia, Vue Router, Vite)', 'Vuetify · PrimeVue · Axios · Bootstrap', 'PHP', 'MySQL / SQL Server', 'APIs REST y AWS', 'JWT Authentication', 'Formularios reactivos y validaciones', 'Diseño responsive · Arquitectura SPA'],
   },
   {
+    title: 'Inteligencia artificial',
+    items: ['Modelos de lenguaje (LLMs)', 'Ingeniería de prompts', 'Agentes de IA y uso de herramientas', 'Chatbots y asistentes virtuales', 'Integración de APIs de IA', 'RAG: IA con datos propios', 'Automatización de flujos con IA (n8n)', 'MCP y conexión con sistemas', 'Programación asistida por IA', 'Buenas prácticas y seguridad de datos'],
+  },
+  {
     title: 'SAP ABAP',
     items: ['Desarrollo en SAP ABAP', 'ABAP orientado a objetos', 'OData Services', 'SmartForms', 'CDS Views', 'SAP Gateway', 'Integración SAP Fiori', 'ALV Grid y ALV Reports', 'Reportes clásicos', 'Functions y Forms', 'BAPI'],
   },
