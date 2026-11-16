@@ -1,4 +1,6 @@
 // Contenido del sitio. Textos de ejemplo: reemplazar por información real antes de publicar.
+// Los proyectos reales (GitHub) viven en ./projects.js
+import { projects } from './projects'
 
 export const navItems = [
   { id: 'home', label: 'Inicio', n: '01' },
@@ -37,7 +39,7 @@ export const mascotMessages = [
 
 export const stats = [
   { to: 8, suffix: '+', label: 'Años de experiencia' },
-  { to: 40, suffix: '+', label: 'Proyectos entregados' },
+  { to: projects.length, suffix: '', label: 'Proyectos en el portafolio' },
   { to: 12, suffix: '', label: 'Demos en vivo' },
 ]
 
@@ -54,22 +56,6 @@ export const awards = [
   { name: 'Innovación en IA', note: 'Ejemplo · 2024' },
   { name: 'Sitio del mes', note: 'Ejemplo · 2023' },
   { name: 'Mención especial', note: 'Ejemplo · 2022' },
-]
-
-export const projectFilters = [
-  { id: 'all', label: 'Todos' },
-  { id: 'ia', label: 'IA' },
-  { id: 'web', label: 'Plataformas' },
-  { id: 'api', label: 'APIs' },
-]
-
-export const projects = [
-  { title: 'Agente de ventas IA', cat: 'ia', from: '#0f766e', to: '#14b8a6', desc: 'Chatbot que califica leads 24/7', tags: ['IA', 'n8n'], isNew: true },
-  { title: 'Panel SaaS', cat: 'web', from: '#1e293b', to: '#475569', desc: 'Dashboard en tiempo real', tags: ['Next.js', 'Postgres'], isNew: false },
-  { title: 'API de pagos', cat: 'api', from: '#4c1d95', to: '#8b5cf6', desc: 'Backend con webhooks', tags: ['Node', 'REST'], isNew: false },
-  { title: 'Automatización CRM', cat: 'ia', from: '#9a3412', to: '#f97316', desc: 'Sincroniza tu CRM solo', tags: ['Automatización'], isNew: true },
-  { title: 'E-commerce a medida', cat: 'web', from: '#14532d', to: '#22c55e', desc: 'Tienda con checkout propio', tags: ['Next.js', 'Stripe'], isNew: false },
-  { title: 'Gateway de datos', cat: 'api', from: '#0c4a6e', to: '#0ea5e9', desc: 'Integra sistemas legados', tags: ['Python', 'GraphQL'], isNew: false },
 ]
 
 export const services = [

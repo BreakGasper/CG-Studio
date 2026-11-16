@@ -179,3 +179,16 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--line);color:v
 
 /* Fondos oscuros fijos: el logo se mantiene blanco aunque el tema sea claro */
 .msz span,.mbadge{--logo:#fff}
+
+/* ---------- Proyectos reales con mockup ---------- */
+.shot{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--card2)}
+.shot .mock{width:100%;height:100%;display:block;transition:transform .5s}
+.proj:hover .shot .mock{transform:scale(1.04)}
+.proj .shot::after{content:none}
+.tab .cnt{opacity:.6;font-size:12px;margin-left:4px}
+.plinks{margin-top:14px;font-size:13px}
+.plinks a{color:var(--acc);font-weight:600}
+.plinks a:hover{text-decoration:underline}
+.plinks .priv{display:inline-flex;gap:6px;align-items:center;color:var(--mute)}
+.shot .tag,.shot .num{top:auto;bottom:10px}
+.shot .num{right:14px;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.45);font-weight:600}
