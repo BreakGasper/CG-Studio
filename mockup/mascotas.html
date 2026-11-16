@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mascotas CG Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#101722;--card:#151d2a;--card2:#1a2434;--ink:#f4f6f8;--mute:#8d99a8;--line:#253145;--acc:#14c8d8}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 Inter,system-ui,sans-serif;padding-block:56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1180px;margin:0 auto}
+.eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--acc);font-weight:600}
+h1{font:700 clamp(44px,8vw,96px)/1 "Space Grotesk";letter-spacing:-.04em;margin:10px 0 14px}
+.intro{color:var(--mute);max-width:620px;margin-bottom:44px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:28px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.stage{background:radial-gradient(70% 60% at 50% 45%,rgba(20,200,216,.16),transparent 70%),var(--card2);aspect-ratio:1/1;display:grid;place-items:center;padding:24px}
+.stage svg{width:78%;height:auto;animation:fl 3.6s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-8px)}}
+@media(prefers-reduced-motion:reduce){.stage svg{animation:none}}
+.info{padding:20px 22px 24px;display:grid;gap:8px}
+.info small{color:var(--acc);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:11px}
+.info h2{font:700 28px "Space Grotesk";letter-spacing:-.03em}
+.info p{color:var(--mute);font-size:14px}
+.uses{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.uses span{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--mute)}
+.note{margin-top:36px;color:var(--mute);font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Propuestas de mascota</div>
+  <h1>Elige tu mascota</h1>
+  <p class="intro">Cuatro personajes construidos con las formas del logo: la C abierta, el trazo diagonal y el cierre turquesa de la G. Dime el número que prefieres y la integro a la página.</p>
+
+  <div class="grid">
+    <!-- 1 Cege -->
+    <article class="card"><div class="stage">
+      <svg viewBox="0 0 200 200" role="img" aria-label="Cege, robot con ojos C y G"><line x1="100" y1="30" x2="100" y2="54" stroke="#14c8d8" stroke-width="5"/><circle cx="100" cy="26" r="8" fill="#14c8d8"/><rect x="26" y="90" width="16" height="30" rx="8" fill="#14c8d8"/><rect x="158" y="90" width="16" height="30" rx="8" fill="#14c8d8"/><rect x="40" y="52" width="120" height="100" rx="36" fill="#1a2434" stroke="#fff" stroke-width="4"/><rect x="56" y="68" width="88" height="68" rx="24" fill="#0b111a"/><path d="M88 92 A13 13 0 1 0 88 112" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/><path d="M134 92 A13 13 0 1 0 136 102 H124" fill="none" stroke="#14c8d8" stroke-width="6" stroke-linecap="round"/><path d="M88 122 Q100 132 112 122" fill="none" stroke="#14c8d8" stroke-width="4" stroke-linecap="round"/><rect x="72" y="156" width="56" height="30" rx="14" fill="#1a2434" stroke="#fff" stroke-width="4"/><circle cx="100" cy="171" r="5" fill="#14c8d8"/></svg>
+    </div><div class="info"><small>Opción 1</small><h2>Cege</h2><p>Robot asistente. Sus ojos son una C blanca y una G turquesa. Amable, técnico y confiable.</p><div class="uses"><span>Chat de ayuda</span><span>Carga</span><span>Hero</span></div></div></article>
+
+    <!-- 2 Orbi -->
+    <article class="card"><div class="stage">
+      <svg viewBox="0 0 200 200" role="img" aria-label="Orbi, gota turquesa con audífonos"><ellipse cx="100" cy="182" rx="56" ry="8" fill="#0b111a" opacity=".6"/><path d="M34 150 C34 76 70 44 100 44 C130 44 166 76 166 150 Q166 176 140 176 H60 Q34 176 34 150 Z" fill="#14c8d8"/><path d="M42 112 A58 58 0 0 1 158 112" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round"/><rect x="30" y="104" width="20" height="38" rx="10" fill="#fff"/><rect x="150" y="104" width="20" height="38" rx="10" fill="#fff"/><circle cx="80" cy="112" r="11" fill="#06222a"/><circle cx="120" cy="112" r="11" fill="#06222a"/><circle cx="84" cy="108" r="4" fill="#fff"/><circle cx="124" cy="108" r="4" fill="#fff"/><path d="M88 136 Q100 148 112 136" fill="none" stroke="#06222a" stroke-width="5" stroke-linecap="round"/><circle cx="66" cy="132" r="6" fill="#fff" opacity=".35"/><circle cx="134" cy="132" r="6" fill="#fff" opacity=".35"/></svg>
+    </div><div class="info"><small>Opción 2</small><h2>Orbi</h2><p>Gota turquesa con audífonos en forma de C. Cercana y divertida, ideal para un tono más relajado.</p><div class="uses"><span>Redes</span><span>Stickers</span><span>Bienvenida</span></div></div></article>
+
+    <!-- 3 Bit -->
+    <article class="card"><div class="stage">
+      <svg viewBox="0 0 200 200" role="img" aria-label="Bit, robot cuadrado con el logo en el pecho"><rect x="84" y="22" width="32" height="14" rx="4" fill="#14c8d8"/><rect x="96" y="34" width="8" height="12" fill="#14c8d8"/><rect x="48" y="44" width="104" height="72" rx="18" fill="#fff"/><rect x="60" y="58" width="80" height="44" rx="12" fill="#101722"/><rect x="74" y="72" width="14" height="16" rx="5" fill="#14c8d8"/><rect x="112" y="72" width="14" height="16" rx="5" fill="#14c8d8"/><rect x="40" y="122" width="120" height="52" rx="16" fill="#1a2434" stroke="#fff" stroke-width="4"/><g transform="translate(72 134) scale(.28)"><path d="M72 28 A35 35 0 1 0 72 84 L116 34 A33 33 0 0 1 172 52" fill="none" stroke="#fff" stroke-width="15" stroke-linejoin="round"/><path d="M172 54 A33 33 0 0 1 112 74" fill="none" stroke="#14c8d8" stroke-width="15"/><path d="M146 57 H184" stroke="#14c8d8" stroke-width="15"/></g><path d="M160 134 L184 108" stroke="#fff" stroke-width="10" stroke-linecap="round"/><circle cx="186" cy="104" r="8" fill="#14c8d8"/><path d="M40 138 L22 156" stroke="#fff" stroke-width="10" stroke-linecap="round"/><rect x="62" y="176" width="20" height="14" rx="5" fill="#14c8d8"/><rect x="118" y="176" width="20" height="14" rx="5" fill="#14c8d8"/></svg>
+    </div><div class="info"><small>Opción 3</small><h2>Bit</h2><p>Robot cuadrado que saluda con el logo en el pecho. Más corporativo y fácil de animar en pasos.</p><div class="uses"><span>Onboarding</span><span>Error 404</span><span>Pie de página</span></div></div></article>
+
+    <!-- 4 Looper -->
+    <article class="card"><div class="stage">
+      <svg viewBox="0 0 200 200" role="img" aria-label="Looper, serpiente con la forma del trazo del logo"><g transform="translate(0 38) scale(1)"><path d="M72 28 A35 35 0 1 0 72 84 L116 34 A33 33 0 0 1 172 52" fill="none" stroke="#fff" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/><path d="M172 54 A33 33 0 0 1 120 76" fill="none" stroke="#14c8d8" stroke-width="15" stroke-linecap="round"/><ellipse cx="112" cy="78" rx="19" ry="16" fill="#14c8d8"/><circle cx="106" cy="73" r="6" fill="#fff"/><circle cx="107" cy="74" r="3" fill="#06222a"/><path d="M96 82 l-14 4 m14 -4 l-12 -8" stroke="#ff5d73" stroke-width="3" stroke-linecap="round" fill="none"/></g><text x="100" y="170" text-anchor="middle" fill="#8d99a8" font-family="Inter" font-size="11" letter-spacing="3">C → G</text></svg>
+    </div><div class="info"><small>Opción 4</small><h2>Looper</h2><p>Serpiente cuyo cuerpo es el trazo del logo: nace en la C y termina en la G turquesa. La más fiel a la marca.</p><div class="uses"><span>Animación al scroll</span><span>Separadores</span><span>Cursor</span></div></div></article>
+  </div>
+  <p class="note">Todas usan solo los colores del logo (blanco, turquesa y azul marino), así que funcionan igual en el tema oscuro y en el claro.</p>
+</div>
+</body>
+</html>

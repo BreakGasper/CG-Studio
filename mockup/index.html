@@ -8,8 +8,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 <style>
 /* Layout: tarjeta fija a la izquierda, contenido a la derecha, dock vertical (tfisak) + demos y menú overlay (Youth) */
-:root{--bg:#0b0c0b;--card:#141614;--card2:#1b1e1b;--ink:#f4f4f4;--mute:#8d928e;--line:#252825;--acc:#00de51;--acc-ink:#03170a;--acc-soft:rgba(0,222,81,.14)}
-:root[data-theme="light"]{--bg:#f5f5f5;--card:#fff;--card2:#efefef;--ink:#111;--mute:#6b6b6b;--line:#e2e2e2;--acc-soft:rgba(0,222,81,.18)}
+:root{--bg:#101722;--card:#151d2a;--card2:#1a2434;--ink:#f4f6f8;--mute:#8d99a8;--line:#253145;--acc:#14c8d8;--acc-ink:#04222a;--acc-soft:rgba(20,200,216,.16);--logo:#fff}
+:root[data-theme="light"]{--logo:#101722;--bg:#f2f5f8;--card:#fff;--card2:#efefef;--ink:#111;--mute:#6b6b6b;--line:#e2e2e2;--acc-soft:rgba(20,200,216,.2)}
 :root[data-theme="lavender"]{--bg:#120d1f;--card:#1a1330;--card2:#231a3f;--ink:#f1eaff;--mute:#9a8fb8;--line:#2e2450;--acc:#a78bfa;--acc-ink:#1b0f3d;--acc-soft:rgba(167,139,250,.16)}
 :root[data-theme="ocean"]{--bg:#06141a;--card:#0b1f28;--card2:#10303d;--ink:#e6f6fb;--mute:#7ea3b0;--line:#173b49;--acc:#22c7ea;--acc-ink:#03212b;--acc-soft:rgba(34,199,234,.16)}
 *{box-sizing:border-box;margin:0}
@@ -28,12 +28,12 @@ button{font:inherit;color:inherit}
 aside{position:fixed;left:40px;top:40px;bottom:40px;width:min(480px,32vw);border-radius:32px;background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);box-shadow:0 0 0 6px color-mix(in srgb,var(--card) 70%,transparent);overflow:hidden;display:flex;flex-direction:column;z-index:5}
 .mono{position:absolute;inset:0;display:grid;place-items:center;overflow:hidden}
 .mono::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 45% at 50% 38%,var(--acc-soft),transparent 70%),repeating-linear-gradient(0deg,transparent 0 47px,var(--line) 47px 48px),repeating-linear-gradient(90deg,transparent 0 47px,var(--line) 47px 48px);opacity:.8}
+.mono svg{position:relative;width:78%;margin-top:-14%;filter:drop-shadow(0 20px 40px #0008)}
 .mono b{position:relative;font:700 clamp(150px,17vw,300px)/1 "Space Grotesk";letter-spacing:-.08em;background:linear-gradient(180deg,#fff 10%,#555 90%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 20px 40px #0008);margin-top:-12%}
 :root[data-theme="light"] .mono b{background:linear-gradient(180deg,#222,#aaa);-webkit-background-clip:text;background-clip:text}
 .mono b i{font-style:normal;color:var(--acc);-webkit-text-fill-color:var(--acc)}
 .a-top{position:relative;z-index:2;display:flex;justify-content:space-between;padding:26px 26px 0}
-.a-logo{width:42px;height:42px;border-radius:50%;background:conic-gradient(from 40deg,#fff,#555,#fff);display:grid;place-items:center}
-.a-logo::after{content:"";width:18px;height:18px;border-radius:50%;background:var(--card)}
+.a-logo{width:64px;height:36px}
 .socials{display:grid;gap:10px}
 .socials a{width:40px;height:40px;border-radius:50%;background:var(--card2);border:1px solid var(--line);display:grid;place-items:center;font:600 13px Inter;transition:.2s}
 .socials a:hover{background:var(--acc);color:var(--acc-ink)}
@@ -123,6 +123,12 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--line);color:v
 .cfgbox.show{display:flex}
 .sw{width:26px;height:26px;border-radius:50%;border:2px solid var(--card);outline:1px solid var(--line);cursor:pointer}
 
+
+.mascot{position:fixed;right:110px;bottom:36px;z-index:6;display:flex;align-items:flex-end;gap:10px}
+.mascot .bub{background:var(--card);border:1px solid var(--line);border-radius:18px 18px 4px 18px;padding:10px 14px;font-size:13px;max-width:210px;box-shadow:0 8px 30px #0005}
+.mascot button{background:none;border:0;cursor:pointer;width:96px;animation:fl 3.4s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-8px)}}
+@media(max-width:1100px){.mascot{right:12px;bottom:12px}}
 /* ---------- overlay menu (Youth) ---------- */
 #ov{position:fixed;inset:0;z-index:30;background:#070807;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 8vw;clip-path:circle(0 at calc(100% - 60px) 120px);transition:clip-path .7s cubic-bezier(.7,0,.2,1)}
 #ov.open{clip-path:circle(150% at calc(100% - 60px) 120px)}
@@ -142,6 +148,11 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--line);color:v
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="cg" viewBox="0 0 200 110">
+<path d="M72 28 A35 35 0 1 0 72 84 L116 34 A33 33 0 0 1 172 52" fill="none" stroke="var(--logo)" stroke-width="15" stroke-linejoin="round"/>
+<path d="M172 54 A33 33 0 0 1 112 74" fill="none" stroke="#14c8d8" stroke-width="15"/>
+<path d="M146 57 H184" stroke="#14c8d8" stroke-width="15"/>
+</symbol></svg>
 <nav id="ov" aria-label="Menú">
   <button class="ib x" onclick="ov.classList.remove('open')" aria-label="Cerrar">✕</button>
   <a href="#home" onclick="ov.classList.remove('open')">Inicio<small>01</small></a>
@@ -155,9 +166,9 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--line);color:v
 <button class="ib mobbtn" onclick="ov.classList.add('open')" aria-label="Menú">☰</button>
 
 <aside>
-  <div class="mono"><b>CG<i>.</i></b></div>
+  <div class="mono"><svg viewBox="0 0 200 110" aria-label="CG Studio"><use href="#cg"/></svg></div>
   <div class="a-top">
-    <div class="a-logo"></div>
+    <svg class="a-logo" viewBox="0 0 200 110" aria-hidden="true"><use href="#cg"/></svg>
     <div class="socials"><a href="#" aria-label="X">X</a><a href="#" aria-label="LinkedIn">in</a><a href="#" aria-label="GitHub">Gh</a></div>
   </div>
   <div class="avail"><i class="dot"></i>Disponible para proyectos</div>
@@ -178,12 +189,14 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--line);color:v
   <button class="ib" onclick="ov.classList.add('open')" aria-label="Menú completo">☰</button>
 </div>
 <div class="cfgbox" id="cfg"><span>Color</span>
-  <i class="sw" style="background:#00de51" data-t="dark"></i><i class="sw" style="background:#f5f5f5" data-t="light"></i>
+  <i class="sw" style="background:#14c8d8" data-t="dark"></i><i class="sw" style="background:#f2f5f8" data-t="light"></i>
   <i class="sw" style="background:#a78bfa" data-t="lavender"></i><i class="sw" style="background:#22c7ea" data-t="ocean"></i>
 </div>
 
+<div class="mascot"><div class="bub" id="bub">¡Hola! Soy Cege. ¿Te ayudo a ver nuestras demos?</div><button onclick="msg()" aria-label="Mascota Cege"><svg viewBox="0 0 200 200" aria-hidden="true"><line x1="100" y1="30" x2="100" y2="54" stroke="#14c8d8" stroke-width="5"/><circle cx="100" cy="26" r="8" fill="#14c8d8"/><rect x="26" y="90" width="16" height="30" rx="8" fill="#14c8d8"/><rect x="158" y="90" width="16" height="30" rx="8" fill="#14c8d8"/><rect x="40" y="52" width="120" height="100" rx="36" fill="#1a2434" stroke="#fff" stroke-width="4"/><rect x="56" y="68" width="88" height="68" rx="24" fill="#0b111a"/><path d="M88 92 A13 13 0 1 0 88 112" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/><path d="M134 92 A13 13 0 1 0 136 102 H124" fill="none" stroke="#14c8d8" stroke-width="6" stroke-linecap="round"/><path d="M88 122 Q100 132 112 122" fill="none" stroke="#14c8d8" stroke-width="4" stroke-linecap="round"/><rect x="72" y="156" width="56" height="30" rx="14" fill="#1a2434" stroke="#fff" stroke-width="4"/><circle cx="100" cy="171" r="5" fill="#14c8d8"/></svg></button></div>
+
 <main>
-  <div class="top" id="home"><div class="av">CG</div><div><b>CG Studio</b><small>Ingeniería digital, IA y automatización</small></div></div>
+  <div class="top" id="home"><svg class="av" viewBox="0 0 200 110" aria-hidden="true" style="width:72px;height:40px;border-radius:0;background:none"><use href="#cg"/></svg><div><b>CG Studio</b><small>Ingeniería digital, IA y automatización</small></div></div>
 
   <div class="hero">
     <h1 class="disp">Construimos <span class="hl">software</span> <span class="hl o">&amp; plataformas</span> que la gente recuerda</h1>
@@ -267,11 +280,12 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--line);color:v
   </section>
 
   <section id="contact"><div class="cta-big">
+    <svg viewBox="0 0 200 110" style="width:96px;margin-bottom:10px;--logo:#04222a"><use href="#cg"/></svg>
     <h2 class="disp">Construyamos algo grande</h2>
     <span class="btn">hola@cgstudio.dev</span>
   </div></section>
 
-  <footer><span>© 2026 CG Studio. Todos los derechos reservados.</span><span>Hecho con ♥ en LATAM</span></footer>
+  <footer><span>CG Studio · Digital Engineering · © 2026. Todos los derechos reservados.</span><span>Hecho con ♥ en LATAM</span></footer>
 </main>
 
 <script>
@@ -288,6 +302,7 @@ function draw(f){const a=P.filter(p=>f==='all'||p[1]===f);g.innerHTML=a.map((p,i
 draw('all');
 document.getElementById('tabs').onclick=e=>{const b=e.target.closest('.tab');if(!b)return;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));b.classList.add('on');draw(b.dataset.f)};
 document.getElementById('cfg').onclick=e=>{const b=e.target.closest('.sw');if(b)document.documentElement.dataset.theme=b.dataset.t};
+const M=['¡Hola! Soy Cege. ¿Te ayudo a ver nuestras demos?','Automatizo lo repetitivo para que tú crees.','Psst: el menú completo está arriba a la derecha.','¿Tienes una idea? Hablemos.'];let mi=0;function msg(){mi=(mi+1)%M.length;document.getElementById('bub').textContent=M[mi]}
 /* reloj */
 function tick(){const d=new Date();document.getElementById('date').textContent=d.toLocaleDateString('es',{weekday:'short',day:'numeric',month:'short'});document.getElementById('time').textContent=d.toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'})}tick();setInterval(tick,30000);
 /* typing */
