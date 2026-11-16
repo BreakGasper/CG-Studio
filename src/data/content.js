@@ -64,11 +64,32 @@ export const services = [
   { n: '03', title: 'APIs e ingeniería', items: ['Diseño de APIs', 'Backend escalable', 'Cloud y DevOps'], text: 'Bases sólidas para tu negocio.' },
 ]
 
-export const techStack = [
-  { name: 'Next.js / React', area: 'Frontend', pct: 95 },
-  { name: 'Node / Python', area: 'Backend y APIs', pct: 92 },
-  { name: 'LLMs y agentes', area: 'Inteligencia artificial', pct: 88 },
-  { name: 'n8n', area: 'Automatización', pct: 90 },
+// Tecnologías y herramientas (tomadas del CV).
+export const techGroups = [
+  {
+    title: 'Desarrollo móvil',
+    items: ['Android Studio (Java, Kotlin)', 'Flutter (Dart)', 'Firebase (Auth, Firestore, Storage, FCM, Crashlytics)', 'SQLite / SQL Server / Room', 'SharedPreferences', 'MVVM · MVC · Clean Architecture', 'Retrofit · Dio · HTTP · APIs REST', 'JSON · XML · Material Design', 'Navigation Component', 'Coroutines · Hilt · Dagger · WorkManager', 'Google Maps SDK'],
+  },
+  {
+    title: 'Desarrollo web',
+    items: ['HTML5 · CSS3', 'JavaScript · TypeScript', 'Vue 3 (Composition API, Pinia, Vue Router, Vite)', 'Vuetify · PrimeVue · Axios · Bootstrap', 'PHP', 'MySQL / SQL Server', 'APIs REST y AWS', 'JWT Authentication', 'Formularios reactivos y validaciones', 'Diseño responsive · Arquitectura SPA'],
+  },
+  {
+    title: 'SAP ABAP',
+    items: ['Desarrollo en SAP ABAP', 'ABAP orientado a objetos', 'OData Services', 'SmartForms', 'CDS Views', 'SAP Gateway', 'Integración SAP Fiori', 'ALV Grid y ALV Reports', 'Reportes clásicos', 'Functions y Forms', 'BAPI'],
+  },
+  {
+    title: 'SQL Server',
+    items: ['SQL Server Management Studio', 'Stored Procedures', 'Views', 'Functions', 'Optimización de consultas', 'Diseño de bases de datos relacionales'],
+  },
+  {
+    title: 'AWS',
+    items: ['AWS S3', 'AWS Lambda', 'AWS API Gateway'],
+  },
+  {
+    title: 'Otras herramientas',
+    items: ['Postman', 'Visual Studio Code', 'Git', 'GitLab', 'Apache', 'Microsoft Office', 'Photoshop', 'Depuración y optimización de código'],
+  },
 ]
 
 export const steps = [
