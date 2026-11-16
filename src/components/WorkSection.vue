@@ -2,8 +2,10 @@
 import { ref, computed } from 'vue'
 import { projects, projectFilters } from '../data/projects'
 import ProjectCard from './ProjectCard.vue'
+import PreviewModal from './PreviewModal.vue'
 
 const filter = ref('all')
+const open = ref(null)
 const visible = computed(() => projects.filter((p) => filter.value === 'all' || p.cat === filter.value))
 const count = (id) => (id === 'all' ? projects.length : projects.filter((p) => p.cat === id).length)
 </script>
@@ -19,7 +21,8 @@ const count = (id) => (id === 'all' ? projects.length : projects.filter((p) => p
       </button>
     </div>
     <div class="grid">
-      <ProjectCard v-for="p in visible" :key="p.id" :project="p" />
+      <ProjectCard v-for="p in visible" :key="p.id" :project="p" @preview="open = $event" />
     </div>
+    <PreviewModal v-if="open" :project="open" @close="open = null" />
   </section>
 </template>

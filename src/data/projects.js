@@ -1,6 +1,9 @@
 // Proyectos reales tomados de los repositorios de GitHub (BreakGasper).
 // Los repos privados no muestran enlace. Los forks no se incluyen.
 
+// Muestra u oculta los enlaces "Ver código" / "Repositorio privado" en las tarjetas.
+export const SHOW_REPO_LINKS = false
+
 export const projectFilters = [
   { id: 'all', label: 'Todos' },
   { id: 'web', label: 'Web' },
