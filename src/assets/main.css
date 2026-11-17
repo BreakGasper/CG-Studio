@@ -510,3 +510,4 @@ aside{--mx:50%;--my:38%}
 .mascot button{animation:none!important}
 .mwrap{animation:fl 3.4s ease-in-out infinite}
 @media(prefers-reduced-motion:reduce){.mwrap{animation:none}}
+.bk-err{font-size:14px;color:#d4351c;font-weight:600}

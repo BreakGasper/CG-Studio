@@ -2,6 +2,7 @@
 import { ref, reactive, computed, watch } from 'vue'
 import { booking, quote, contactEmail } from '../data/content'
 import { bookTab, quoteType } from '../composables/useUi'
+import { takenSlots, saveCita, saveCotizacion } from '../firebase/store'
 
 const tab = bookTab
 const KEY = 'cg-agenda'
@@ -15,11 +16,16 @@ watch(agenda, (v) => { try { localStorage.setItem(KEY, JSON.stringify(v)) } catc
 const today = new Date().toISOString().slice(0, 10)
 const f = reactive({ name: '', contact: '', date: '', time: '', topic: booking.topics[0], notes: '' })
 const sent = ref(null)
+const busy = ref(false)
+const bookError = ref('')
+const remoteTaken = ref([])
 
-const taken = computed(() => new Set(agenda.value.filter(a => a.kind === 'cita' && a.date === f.date).map(a => a.time)))
+// Horarios ocupados: los de todos los visitantes (Firestore) más los de este navegador.
+const taken = computed(() => new Set([...agenda.value.filter(a => a.kind === 'cita' && a.date === f.date).map(a => a.time), ...remoteTaken.value]))
+async function refreshSlots() { remoteTaken.value = f.date ? (await takenSlots(f.date)) || [] : [] }
 const canBook = computed(() => f.name.trim() && f.contact.trim() && f.date && f.time)
 const sortedAgenda = computed(() => [...agenda.value].sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time)))
-watch(() => f.date, () => { if (taken.value.has(f.time)) f.time = '' })
+watch(() => f.date, async () => { bookError.value = ''; await refreshSlots(); if (taken.value.has(f.time)) f.time = '' })
 
 const fmtDate = (d) => new Date(d + 'T12:00').toLocaleDateString('es', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6)
@@ -30,16 +36,33 @@ function send(subject, body) {
   return `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
 
-function book() {
-  if (!canBook.value) return
-  const item = { id: uid(), kind: 'cita', ...f }
+async function book() {
+  if (!canBook.value || busy.value) return
+  busy.value = true
+  bookError.value = ''
+  const data = { ...f }
+  const r = await saveCita(data)
+  if (!r.ok && r.reason !== 'unavailable') {
+    // Otro visitante reservó ese horario, o no se pudo guardar.
+    await refreshSlots()
+    if (taken.value.has(f.time)) f.time = ''
+    bookError.value = r.reason === 'taken'
+      ? 'Ese horario acaba de ser reservado. Elige otro, por favor.'
+      : 'No pudimos guardar tu cita. Inténtalo de nuevo o escríbenos por correo.'
+    busy.value = false
+    return
+  }
+  const item = { id: uid(), kind: 'cita', ...data }
   agenda.value.push(item)
   sent.value = {
     item,
-    href: send(`Cita CG Studio: ${f.topic}`,
-      `Nombre: ${f.name}\nContacto: ${f.contact}\nFecha: ${fmtDate(f.date)} ${f.time}\nTema: ${f.topic}\nNotas: ${f.notes || '-'}`),
+    saved: r.ok,
+    href: send(`Cita CG Studio: ${data.topic}`,
+      `Nombre: ${data.name}\nContacto: ${data.contact}\nFecha: ${fmtDate(data.date)} ${data.time}\nTema: ${data.topic}\nNotas: ${data.notes || '-'}`),
   }
   Object.assign(f, { name: '', contact: '', time: '', notes: '' })
+  await refreshSlots()
+  busy.value = false
 }
 
 function remove(id) { agenda.value = agenda.value.filter(a => a.id !== id) }
@@ -76,11 +99,21 @@ function summary() {
   return `Tipo: ${c.t.label}\nExtras: ${c.ex.map(x => x.label).join(', ') || 'ninguno'}\nComplejidad: ${quote.complexity.find(x => x.id === q.cx).label}\nUrgencia: ${quote.urgency.find(x => x.id === q.ug).label}\n` +
     `Mantenimiento: ${q.maint ? 'sí' : 'no'}\nEstimado: ${money(c.min)} – ${money(c.max)} (~${c.weeks} sem.)`
 }
-function requestQuote() {
-  if (!qc.name.trim() || !qc.contact.trim()) return
+const qBusy = ref(false)
+const qSaved = ref(false)
+async function requestQuote() {
+  if (!qc.name.trim() || !qc.contact.trim() || qBusy.value) return
+  qBusy.value = true
+  const c = calc.value
+  const r = await saveCotizacion({
+    name: qc.name, contact: qc.contact, type: q.type, extras: [...q.extras], complexity: q.cx, urgency: q.ug,
+    maint: q.maint, min: c.min, max: c.max, weeks: c.weeks,
+  })
+  qSaved.value = r.ok
   const body = `Nombre: ${qc.name}\nContacto: ${qc.contact}\n${summary()}`
-  agenda.value.push({ id: uid(), kind: 'cotización', date: today, time: '', name: qc.name, contact: qc.contact, topic: `${calc.value.t.label} · ${money(calc.value.min)}–${money(calc.value.max)}` })
+  agenda.value.push({ id: uid(), kind: 'cotización', date: today, time: '', name: qc.name, contact: qc.contact, topic: `${c.t.label} · ${money(c.min)}–${money(c.max)}` })
   qSent.value = send('Solicitud de cotización CG Studio', body)
+  qBusy.value = false
 }
 </script>
 
@@ -113,10 +146,12 @@ function requestQuote() {
             :disabled="!f.date || taken.has(s)" @click="f.time = s">{{ s }}</button>
         </div>
         <label>Notas (opcional)<textarea v-model="f.notes" rows="2" /></label>
-        <button class="btn pri" :disabled="!canBook">Registrar cita</button>
+        <button class="btn pri" :disabled="!canBook || busy">{{ busy ? 'Guardando…' : 'Registrar cita' }}</button>
+        <p v-if="bookError" class="bk-err" role="alert">{{ bookError }}</p>
         <p v-if="sent" class="bk-ok">
-          ✓ Cita registrada para el {{ fmtDate(sent.item.date) }} a las {{ sent.item.time }}.
-          <a :href="sent.href" target="_blank" rel="noopener">Enviar confirmación →</a>
+          <template v-if="sent.saved">✓ Cita recibida para el {{ fmtDate(sent.item.date) }} a las {{ sent.item.time }}. Te confirmaremos pronto.</template>
+          <template v-else>✓ Cita registrada para el {{ fmtDate(sent.item.date) }} a las {{ sent.item.time }}.
+            <a :href="sent.href" target="_blank" rel="noopener">Enviar confirmación →</a></template>
         </p>
       </form>
 
@@ -155,8 +190,8 @@ function requestQuote() {
           <label>Nombre<input v-model="qc.name" autocomplete="name" /></label>
           <label>Correo o WhatsApp<input v-model="qc.contact" autocomplete="email" /></label>
         </div>
-        <button class="btn pri" :disabled="!qc.name.trim() || !qc.contact.trim()" @click="requestQuote">Solicitar esta cotización</button>
-        <p v-if="qSent" class="bk-ok">✓ Cotización registrada. <a :href="qSent" target="_blank" rel="noopener">Enviar solicitud →</a></p>
+        <button class="btn pri" :disabled="!qc.name.trim() || !qc.contact.trim() || qBusy" @click="requestQuote">{{ qBusy ? 'Enviando…' : 'Solicitar esta cotización' }}</button>
+        <p v-if="qSent" class="bk-ok"><template v-if="qSaved">✓ Solicitud recibida. Te enviaremos tu cotización pronto.</template><template v-else>✓ Cotización registrada. <a :href="qSent" target="_blank" rel="noopener">Enviar solicitud →</a></template></p>
         <p class="bk-note">Estimado orientativo; la cotización final se confirma tras revisar el alcance.</p>
       </div>
 
@@ -164,7 +199,7 @@ function requestQuote() {
 
       <!-- AGENDA -->
       <div class="bk-card bk-agenda">
-        <h3>Mi agenda <span class="cnt">{{ sortedAgenda.length }}</span></h3>
+        <h3>Mis solicitudes <span class="cnt">{{ sortedAgenda.length }}</span></h3>
         <p v-if="!sortedAgenda.length" class="bk-note">Aún no hay citas ni cotizaciones registradas.</p>
         <ul>
           <li v-for="a in sortedAgenda" :key="a.id">

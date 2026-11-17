@@ -1,0 +1,86 @@
+rules_version = '2';
+
+// Reglas de CG Studio.
+//  - Los visitantes solo pueden CREAR registros válidos (citas, cotizaciones, contactos).
+//  - Solo el administrador (correo verificado) puede LEER, editar o borrar.
+//  - /horarios guarda únicamente fecha y hora ocupadas (sin datos personales) y es de lectura pública
+//    para bloquear los horarios ya reservados.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email == 'breakgasper@gmail.com';
+    }
+    function text(v, min, max) { return v is string && v.size() >= min && v.size() <= max; }
+    function validDate(v) { return v is string && v.matches('^20[0-9]{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$'); }
+    function validTime(v) { return v in ['09:00', '10:00', '11:00', '12:00', '13:00', '16:00', '17:00', '18:00']; }
+    function validTopic(v) { return v in ['Proyecto nuevo', 'Cotización', 'Asesoría técnica', 'Soporte / mantenimiento', 'Inteligencia artificial']; }
+    function keysOnly(allowed) { return request.resource.data.keys().hasOnly(allowed); }
+    function keysAll(required) { return request.resource.data.keys().hasAll(required); }
+
+    // Horarios ocupados: no se pueden pisar (un create sobre un documento existente cuenta como update y se rechaza).
+    match /horarios/{slot} {
+      allow read: if true;
+      allow create: if keysOnly(['date', 'time', 'createdAt'])
+        && keysAll(['date', 'time', 'createdAt'])
+        && validDate(request.resource.data.date)
+        && validTime(request.resource.data.time)
+        && slot == request.resource.data.date + '_' + request.resource.data.time
+        && request.resource.data.createdAt == request.time;
+      allow update, delete: if isAdmin();
+    }
+
+    match /citas/{id} {
+      allow create: if keysOnly(['name', 'contact', 'date', 'time', 'topic', 'notes', 'status', 'createdAt'])
+        && keysAll(['name', 'contact', 'date', 'time', 'topic', 'notes', 'status', 'createdAt'])
+        && text(request.resource.data.name, 1, 80)
+        && text(request.resource.data.contact, 3, 120)
+        && validDate(request.resource.data.date)
+        && validTime(request.resource.data.time)
+        && validTopic(request.resource.data.topic)
+        && text(request.resource.data.notes, 0, 500)
+        && request.resource.data.status == 'nueva'
+        && request.resource.data.createdAt == request.time
+        // la cita debe reservar su horario en la misma operación
+        && existsAfter(/databases/$(database)/documents/horarios/$(request.resource.data.date + '_' + request.resource.data.time));
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /cotizaciones/{id} {
+      allow create: if keysOnly(['name', 'contact', 'type', 'extras', 'complexity', 'urgency', 'maint', 'min', 'max', 'weeks', 'status', 'createdAt'])
+        && keysAll(['name', 'contact', 'type', 'extras', 'complexity', 'urgency', 'maint', 'min', 'max', 'weeks', 'status', 'createdAt'])
+        && text(request.resource.data.name, 1, 80)
+        && text(request.resource.data.contact, 3, 120)
+        && request.resource.data.type in ['web', 'app', 'platform', 'api', 'ai']
+        && request.resource.data.extras is list && request.resource.data.extras.size() <= 5
+        && request.resource.data.complexity in ['low', 'mid', 'high']
+        && request.resource.data.urgency in ['normal', 'fast']
+        && request.resource.data.maint is bool
+        && request.resource.data.min is number && request.resource.data.min >= 0 && request.resource.data.min <= 1000000
+        && request.resource.data.max is number && request.resource.data.max >= 0 && request.resource.data.max <= 1000000
+        && request.resource.data.weeks is number && request.resource.data.weeks >= 0 && request.resource.data.weeks <= 200
+        && request.resource.data.status == 'nueva'
+        && request.resource.data.createdAt == request.time;
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /contactos/{id} {
+      allow create: if keysOnly(['name', 'email', 'phone', 'subject', 'message', 'status', 'createdAt'])
+        && keysAll(['name', 'email', 'phone', 'subject', 'message', 'status', 'createdAt'])
+        && text(request.resource.data.name, 1, 80)
+        && request.resource.data.email is string && request.resource.data.email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$') && request.resource.data.email.size() <= 120
+        && text(request.resource.data.phone, 0, 40)
+        && validTopic(request.resource.data.subject)
+        && text(request.resource.data.message, 10, 2000)
+        && request.resource.data.status == 'nueva'
+        && request.resource.data.createdAt == request.time;
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

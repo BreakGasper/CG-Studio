@@ -2,6 +2,7 @@
 import { reactive, ref, computed } from 'vue'
 import { contactEmail, booking } from '../data/content'
 import { openBooking } from '../composables/useUi'
+import { saveContacto } from '../firebase/store'
 
 const f = reactive({ name: '', email: '', phone: '', subject: 'Proyecto nuevo', message: '', website: '' })
 const done = ref(false)
@@ -13,19 +14,27 @@ function body() {
   return `Nombre: ${f.name}\nCorreo: ${f.email}\nTeléfono: ${f.phone || '-'}\n\n${f.message}`
 }
 
-function submit() {
-  if (!valid.value || f.website) return // f.website es un campo trampa para bots
+const sending = ref(false)
+const saved = ref(false)
+async function submit() {
+  if (!valid.value || f.website || sending.value) return // f.website es un campo trampa para bots
+  sending.value = true
   const subject = `Contacto CG Studio: ${f.subject}`
+  const r = await saveContacto({ name: f.name, email: f.email, phone: f.phone, subject: f.subject, message: f.message })
+  saved.value = r.ok
   href.value = booking.whatsapp
     ? `https://wa.me/${booking.whatsapp}?text=${encodeURIComponent(subject + '\n\n' + body())}`
     : `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body())}`
+  // Si Firebase no está disponible, se usa el correo del visitante como respaldo.
+  if (!r.ok) window.open(href.value, '_blank', 'noopener')
   done.value = true
-  window.open(href.value, '_blank', 'noopener')
+  sending.value = false
 }
 
 function reset() {
   Object.assign(f, { name: '', email: '', phone: '', message: '', website: '' })
   done.value = false
+  saved.value = false
 }
 </script>
 
@@ -66,13 +75,14 @@ function reset() {
         </div>
         <label>Mensaje<textarea v-model="f.message" rows="5" required minlength="10" placeholder="Cuéntanos qué necesitas…" /></label>
         <input v-model="f.website" class="cf-trap" tabindex="-1" autocomplete="off" aria-hidden="true" />
-        <button class="btn pri" :disabled="!valid">Enviar mensaje</button>
-        <p class="bk-note">Al enviar se abrirá tu aplicación de correo con el mensaje listo para mandar.</p>
+        <button class="btn pri" :disabled="!valid || sending">{{ sending ? 'Enviando…' : 'Enviar mensaje' }}</button>
+        <p class="bk-note">Tu mensaje llega directo a nuestro equipo y te respondemos por correo.</p>
       </form>
 
       <div v-else class="bk-card cf-form cf-done">
         <h3>¡Gracias, {{ f.name.split(' ')[0] }}!</h3>
-        <p>Preparamos tu mensaje. Si no se abrió tu correo, <a :href="href" target="_blank" rel="noopener">ábrelo aquí</a> o escríbenos a {{ contactEmail }}.</p>
+        <p v-if="saved">Recibimos tu mensaje y te responderemos pronto.</p>
+        <p v-else>Preparamos tu mensaje. Si no se abrió tu correo, <a :href="href" target="_blank" rel="noopener">ábrelo aquí</a> o escríbenos a {{ contactEmail }}.</p>
         <button class="btn" @click="reset">Enviar otro mensaje</button>
       </div>
     </div>
