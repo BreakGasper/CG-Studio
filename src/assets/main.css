@@ -460,10 +460,35 @@ aside{--mx:50%;--my:38%}
 :root[data-theme="tomate"] aside .socials a,:root[data-theme="tomate"] aside .avail,:root[data-theme="tomate"] aside .a-say{color:#efe7d3}
 :root[data-theme="tomate"] aside .socials a,:root[data-theme="tomate"] aside .avail{background:#26493a;border-color:#2f5642}
 
-/* Mascota flotante: sin fondo gris al tocar/hacer clic, y giro al hacer clic */
+/* Mascota flotante: sin fondo gris al tocar/hacer clic, y manita fantasma que saluda */
+.mascot{align-items:flex-end}
+.mwrap{position:relative;display:block}
 .mascot button{-webkit-tap-highlight-color:transparent;background:transparent!important;outline:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .mascot button:hover,.mascot button:active,.mascot button:focus{background:transparent!important;box-shadow:none}
 .mascot button:focus-visible{outline:2px solid var(--hl);outline-offset:4px;border-radius:12px}
-.mascot button svg{transform-origin:50% 50%}
-.mascot button svg.spin{animation:mascotSpin .7s cubic-bezier(.4,.1,.2,1)}
-@keyframes mascotSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.mascot button:active svg{transform:scale(.94)}
+.hand{position:absolute;left:74%;top:-3%;width:40px;height:60px;pointer-events:none;z-index:3;transform-origin:0 100%}
+.hand-pop{width:100%;height:100%;transform-origin:15% 95%;animation:handIn 3s cubic-bezier(.3,1.4,.5,1) both}
+.hand-svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 7px color-mix(in srgb,var(--acc) 70%,transparent))}
+.hand-svg .arm{fill:none;stroke:var(--acc);stroke-width:13;stroke-linecap:round;opacity:.9}
+.hand-svg .palm{fill:var(--acc);opacity:.95}
+.hand-svg .fg{stroke:var(--acc);stroke-width:9;stroke-linecap:round;transform-box:fill-box;transform-origin:50% 100%}
+.hand-svg .gl{fill:#fff;opacity:.55}
+.hand-svg .wv{transform-box:view-box;transform-origin:20% 95%}
+@keyframes handIn{0%{transform:translate(-6px,14px) scale(.1);opacity:0}10%{transform:translate(0,0) scale(1.12);opacity:1}16%{transform:scale(1)}86%{transform:scale(1);opacity:1}100%{transform:translate(-6px,14px) scale(.1);opacity:0}}
+@keyframes wave{0%,100%{transform:rotate(-16deg)}50%{transform:rotate(22deg)}}
+@keyframes hop{0%,100%{transform:translateY(0)}40%{transform:translateY(-9px)}60%{transform:translateY(-9px) rotate(8deg)}}
+@keyframes clap{0%,100%{transform:translateX(0) rotate(0)}25%{transform:translateX(-4px) rotate(-10deg)}75%{transform:translateX(5px) rotate(12deg)}}
+@keyframes wig{0%,100%{transform:rotate(0)}50%{transform:rotate(18deg)}}
+@keyframes bit{0%{transform:translate(0,0) scale(.3);opacity:0}25%{opacity:1}100%{transform:translate(var(--x),var(--y)) scale(1.15) rotate(25deg);opacity:0}}
+.fx1 .wv{animation:wave .5s ease-in-out .35s 5}
+.fx2 .wv{animation:wave .75s ease-in-out .35s 3}
+.fx3 .wv{animation:hop .7s ease-in-out .35s 3}
+.fx4 .wv{animation:clap .22s ease-in-out .35s 9}
+.fx5 .wv{animation:wave 1s ease-in-out .35s 2}
+.fx5 .fg{animation:wig .35s ease-in-out infinite alternate}
+.fx5 .f1{animation-delay:0s}.fx5 .f2{animation-delay:.08s}.fx5 .f3{animation-delay:.16s}.fx5 .f4{animation-delay:.24s}
+.hand .bit{position:absolute;left:18px;top:8px;font-size:15px;line-height:1;color:var(--acc);opacity:0;animation:bit 1.4s ease-out 4 both;text-shadow:0 0 8px color-mix(in srgb,var(--acc) 60%,transparent)}
+.fx3 .bit{color:var(--hl)}.fx4 .bit{color:var(--acc)}
+@media(max-width:1100px){.mascot{right:36px}}
+@media(prefers-reduced-motion:reduce){.hand .wv,.hand .fg,.hand .bit{animation:none!important}.hand-pop{animation-duration:3s}}
