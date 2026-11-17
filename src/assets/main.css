@@ -335,3 +335,4 @@ html.pv-lock{overflow:hidden}
 .pbtn{background:#fff;color:#101722;transition:background .2s,color .2s,transform .2s,box-shadow .2s}
 .pbtn:hover,.pbtn:focus-visible{background:var(--hl);color:#fff}
 .priv-btn,.priv-btn:hover{cursor:default;background:#fff;color:#101722;transform:translate(-50%,-50%);box-shadow:0 10px 30px rgba(0,0,0,.3),0 0 0 6px rgba(255,255,255,.18)}
+.awards small{white-space:nowrap}

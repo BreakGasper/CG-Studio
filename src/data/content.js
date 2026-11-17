@@ -61,16 +61,18 @@ export const missionVision = [
 ]
 
 export const timeline = [
-  { when: '2024 — Hoy', title: 'Plataformas con IA', text: 'Agentes, automatizaciones y APIs en producción.' },
-  { when: '2021 — 2024', title: 'Producto y plataformas web', text: 'SaaS, paneles y e-commerce a medida.' },
-  { when: '2018 — 2021', title: 'Ingeniería digital', text: 'Integraciones y desarrollo para empresas.' },
+  { when: '2025 — Hoy', title: 'Líder técnico', text: 'Equipo de 8 programadores, servidores y publicaciones. Crustore, Sanara y Mi Invitación en producción.' },
+  { when: '2022 — 2025', title: 'Desarrollo Android senior', text: 'Apps nativas con Kotlin, MVVM y Clean Architecture, publicadas en Google Play. Anonimus Pizza y GEC · Calidad.' },
+  { when: '2020 — 2022', title: 'Calidad e inventarios', text: 'Sistema de gestión de calidad con Firebase e inventarios con SQLite.' },
+  { when: '2018 — 2019', title: 'Primeros proyectos', text: 'Punto de venta en Android con módulos de ventas, productos y reportes.' },
 ]
 
 export const awards = [
-  { name: 'Mejor plataforma', note: 'Ejemplo · 2025' },
-  { name: 'Innovación en IA', note: 'Ejemplo · 2024' },
-  { name: 'Sitio del mes', note: 'Ejemplo · 2023' },
-  { name: 'Mención especial', note: 'Ejemplo · 2022' },
+  { name: 'Ingeniería en Sistemas Computacionales', note: '2017 — 2022' },
+  { name: 'Inspector de Calidad (certificado)', note: '2020' },
+  { name: `${projects.length} proyectos desplegados`, note: 'Hasta hoy' },
+  { name: '8 programadores al mando', note: 'Desde 2025' },
+  { name: 'Más de 6 años de experiencia', note: 'Desde 2018' },
 ]
 
 export const services = [
