@@ -42,24 +42,32 @@ onBeforeUnmount(() => clearTimeout(timer))
       </button>
       <div v-if="show" :key="tick" class="ghost" :class="'fx' + fx" aria-hidden="true">
         <svg viewBox="0 0 560 1150">
-          <!-- fantasma de una sola pieza: cabeza (rellena la C), brazo por la diagonal y manita grande -->
-          <g class="hand-pop">
-            <g class="body">
-              <path d="M176 392 C112 330 118 214 200 160 C270 112 390 128 436 218 C456 262 452 316 436 352 C420 392 300 428 176 392 Z" />
-              <path class="armb" d="M236 330 L474 612" />
-              <path class="armb" d="M380 262 L556 360" />
-              <g class="wv">
-                <rect x="528" y="330" width="164" height="330" rx="70" />
-                <line class="fg f1" x1="560" y1="350" x2="556" y2="218" />
-                <line class="fg f2" x1="602" y1="340" x2="602" y2="186" />
-                <line class="fg f3" x1="644" y1="342" x2="648" y2="198" />
-                <line class="fg f4" x1="676" y1="372" x2="688" y2="262" />
-                <line class="fg th" x1="544" y1="440" x2="486" y2="392" />
-              </g>
-            </g>
-            <circle class="geye" cx="236" cy="257" r="21" />
-            <circle class="geye" cx="326" cy="257" r="21" />
+          <defs>
+            <linearGradient id="gGhost" gradientUnits="userSpaceOnUse" x1="150" y1="140" x2="640" y2="690">
+              <stop offset="0" class="gs0" /><stop offset=".5" class="gs1" /><stop offset="1" class="gs2" />
+            </linearGradient>
+          </defs>
+          <!-- el fantasma solo ocupa el hueco de la C y el espacio libre junto a la diagonal: nunca toca lo negro -->
+          <g class="gh-head">
+            <path class="gh-fill" d="M282 152 C304 152 328 161 345 171 C362 181 374 196 384 212 C394 228 400 246 403 264 C406 282 405 302 401 319 C397 336 389 353 380 366 C371 379 358 390 345 399 C332 408 314 416 299 418 C284 420 267 415 252 409 C237 403 223 393 210 381 C197 369 184 353 176 336 C168 319 160 299 159 280 C158 261 160 238 168 220 C176 202 191 184 210 173 C229 162 260 152 282 152 Z" />
+            <path class="gh-rim" d="M282 152 C304 152 328 161 345 171 C362 181 374 196 384 212 C394 228 400 246 403 264 C406 282 405 302 401 319 C397 336 389 353 380 366 C371 379 358 390 345 399 C332 408 314 416 299 418 C284 420 267 415 252 409 C237 403 223 393 210 381 C197 369 184 353 176 336 C168 319 160 299 159 280 C158 261 160 238 168 220 C176 202 191 184 210 173 C229 162 260 152 282 152 Z" />
+            <ellipse class="gh-shine" cx="222" cy="204" rx="46" ry="24" transform="rotate(-32 222 204)" />
           </g>
+          <path class="gh-tube" pathLength="1" d="M309 411 C314 420 326 446 337 465 C348 484 358 506 375 527 C392 548 417 573 437 593 C457 613 478 633 497 648 C516 663 535 683 552 685 C569 687 589 672 599 661 C609 650 609 626 611 619" />
+          <g class="gh-hand">
+            <g class="wv">
+              <circle class="gh-fill" cx="620" cy="545" r="62" />
+              <line class="fg f1" x1="584" y1="510" x2="574" y2="415" />
+              <line class="fg f2" x1="612" y1="490" x2="612" y2="395" />
+              <line class="fg f3" x1="642" y1="492" x2="652" y2="405" />
+              <line class="fg f4" x1="668" y1="520" x2="686" y2="452" />
+              <line class="fg th" x1="572" y1="562" x2="522" y2="524" />
+              <circle class="gl" cx="604" cy="556" r="8" />
+              <circle class="gl" cx="638" cy="556" r="8" />
+            </g>
+          </g>
+          <circle class="geye" cx="234" cy="256" r="21" />
+          <circle class="geye" cx="324" cy="256" r="21" />
         </svg>
         <template v-if="fx > 1">
           <span v-for="(b, i) in bits" :key="i" class="bit" :style="{ '--x': b.x + 'px', '--y': b.y + 'px', animationDelay: b.d + 's' }">{{ glyphs[fx - 1] }}</span>
