@@ -1,5 +1,6 @@
 <script setup>
 import { packages, booking } from '../data/content'
+import { openBooking } from '../composables/useUi'
 const money = (n) => new Intl.NumberFormat('es', { style: 'currency', currency: booking.currency, maximumFractionDigits: 0 }).format(n)
 </script>
 
@@ -17,7 +18,7 @@ const money = (n) => new Intl.NumberFormat('es', { style: 'currency', currency: 
         <ul>
           <li v-for="i in p.items" :key="i">{{ i }}</li>
         </ul>
-        <a class="btn" href="#book">Cotizar este paquete</a>
+        <a class="btn" href="#book" @click.prevent="openBooking('cotiza', p.quote)">Cotizar este paquete</a>
       </article>
     </div>
   </section>

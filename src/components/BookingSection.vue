@@ -1,8 +1,9 @@
 <script setup>
 import { ref, reactive, computed, watch } from 'vue'
 import { booking, quote, contactEmail } from '../data/content'
+import { bookTab, quoteType } from '../composables/useUi'
 
-const tab = ref('cita')
+const tab = bookTab
 const KEY = 'cg-agenda'
 const money = (n) => new Intl.NumberFormat('es', { style: 'currency', currency: booking.currency, maximumFractionDigits: 0 }).format(n)
 
@@ -66,6 +67,7 @@ const calc = computed(() => {
   const r = (n) => Math.round(n / 50) * 50
   return { t, ex, total: r(total), min: r(total * (1 - quote.spread)), max: r(total * (1 + quote.spread)), weeks }
 })
+watch(quoteType, (t) => { if (t) q.type = t }, { immediate: true })
 const qc = reactive({ name: '', contact: '' })
 const qSent = ref(null)
 

@@ -29,3 +29,13 @@ export function loadTheme() {
   theme.value = prefersLight ? 'light' : 'dark'
   document.documentElement.dataset.theme = theme.value
 }
+
+// Agenda/cotizador: pestaña activa y tipo de proyecto preseleccionado desde otras secciones.
+export const bookTab = ref('cita')
+export const quoteType = ref(null)
+
+export function openBooking(tab, type = null) {
+  bookTab.value = tab
+  if (type) quoteType.value = type
+  document.getElementById('book')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}

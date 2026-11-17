@@ -1,6 +1,7 @@
 <script setup>
 import { reactive, ref, computed } from 'vue'
 import { contactEmail, booking } from '../data/content'
+import { openBooking } from '../composables/useUi'
 
 const f = reactive({ name: '', email: '', phone: '', subject: 'Proyecto nuevo', message: '', website: '' })
 const done = ref(false)
@@ -35,8 +36,8 @@ function reset() {
       <h2 class="disp">Construyamos algo grande</h2>
       <a class="btn" :href="`mailto:${contactEmail}`">{{ contactEmail }}</a>
       <div class="cta-acts">
-        <a class="btn pri" href="#book">Agendar cita</a>
-        <a class="btn" href="#book">Cotizar proyecto</a>
+        <a class="btn pri" href="#book" @click.prevent="openBooking('cita')">Agendar cita</a>
+        <a class="btn" href="#book" @click.prevent="openBooking('cotiza')">Cotizar proyecto</a>
       </div>
     </div>
 
