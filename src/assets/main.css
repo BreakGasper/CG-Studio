@@ -349,3 +349,23 @@ html.pv-lock{overflow:hidden}
 .faq-ic::after{transform:rotate(90deg)}
 .faq details[open] .faq-ic::after{transform:rotate(0)}
 .faq details p{padding:0 22px 20px;color:var(--mute);max-width:70ch}
+
+/* Paquetes */
+.pk-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:28px;align-items:stretch}
+.pk{position:relative;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:28px;display:flex;flex-direction:column;gap:14px}
+.pk.feat{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc),0 18px 50px -20px var(--acc)}
+.pk-tag{align-self:flex-start;font-size:11px;text-transform:uppercase;letter-spacing:.12em;padding:5px 11px;border-radius:999px;background:var(--acc-soft);color:var(--ink)}
+.pk.feat .pk-tag{background:var(--hl);color:#fff}
+.pk h3{font-size:24px;font-weight:600}
+.pk-text{color:var(--mute);font-size:15px}
+.pk-price{display:flex;flex-direction:column;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pk-price small{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.1em}
+.pk-price b{font-size:34px;font-weight:600;line-height:1.1}
+.pk-price span{font-size:13px;color:var(--mute)}
+.pk ul{list-style:none;display:flex;flex-direction:column;gap:9px;flex:1;font-size:14px}
+.pk li{padding-left:24px;position:relative}
+.pk li::before{content:"";position:absolute;left:0;top:5px;width:12px;height:7px;border-left:2px solid var(--acc);border-bottom:2px solid var(--acc);transform:rotate(-45deg)}
+.pk .btn{justify-content:center}
+@media(max-width:900px){.pk-grid{grid-template-columns:1fr}}
+.pk ul{padding:0;margin:0}.pk li{padding-left:22px;margin:0}.pk-text{min-height:3.2em}
+@media(min-width:901px){.pk-text{min-height:4.8em}}

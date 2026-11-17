@@ -194,3 +194,23 @@ export const faqs = [
   { q: '¿Puedo ver ejemplos de su trabajo?', a: 'Sí, en la sección de proyectos. Algunos tienen vista previa en vivo; los marcados como privados pertenecen a clientes y no se muestran públicamente.' },
   { q: '¿Cómo empiezo?', a: 'Agenda una cita en esta página o escríbenos por correo. Platicamos tu idea y te enviamos una propuesta.' },
 ]
+
+// Paquetes: los precios "desde" salen del cotizador (valores de ejemplo, ajústalos).
+const priceOf = (id) => quote.types.find((t) => t.id === id)
+export const packages = [
+  {
+    id: 'web', name: 'Sitio web', tag: 'Para empezar', from: priceOf('web').price, weeks: priceOf('web').weeks,
+    text: 'Presencia profesional, rápida y lista para crecer.',
+    items: ['Diseño responsive a medida', 'Hasta 5 secciones', 'Formulario de contacto', 'Hosting y despliegue', 'SEO básico'],
+  },
+  {
+    id: 'app', name: 'App móvil', tag: 'Más pedido', from: priceOf('app').price, weeks: priceOf('app').weeks, featured: true,
+    text: 'Aplicación Android o Flutter publicada en Google Play.',
+    items: ['Android (Kotlin) o Flutter', 'Firebase y APIs REST', 'Diseño UI/UX', 'Publicación en Google Play', 'Mantenimiento opcional'],
+  },
+  {
+    id: 'ai', name: 'Plataforma con IA', tag: 'A la medida', from: priceOf('platform').price, weeks: priceOf('platform').weeks,
+    text: 'Sistema web con panel, automatización y agentes de IA.',
+    items: ['Panel de administración', 'APIs y base de datos', 'Agentes y automatizaciones con IA', 'Pagos en línea', 'Líder técnico dedicado'],
+  },
+]
