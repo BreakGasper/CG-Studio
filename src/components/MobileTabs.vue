@@ -13,9 +13,13 @@ const go = (id) => { menuOpen.value = false; setTab(id) }
 
 <template>
   <nav class="mtabs" aria-label="Secciones">
-    <button v-for="i in items" :key="i.id" type="button" :class="{ on: tab === i.id }" :aria-current="tab === i.id ? 'page' : undefined" @click="go(i.id)">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path :d="i.d" /></svg>
-      <span>{{ i.label }}</span>
-    </button>
+    <template v-for="(i, n) in items" :key="i.id">
+      <!-- hueco central: aquí se asoma la mascota (ver MascotWidget en móvil) -->
+      <span v-if="n === 2" class="mtabs-gap" aria-hidden="true"></span>
+      <button type="button" :class="{ on: tab === i.id }" :aria-current="tab === i.id ? 'page' : undefined" @click="go(i.id)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path :d="i.d" /></svg>
+        <span>{{ i.label }}</span>
+      </button>
+    </template>
   </nav>
 </template>
