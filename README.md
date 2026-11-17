@@ -72,10 +72,8 @@ Las citas, cotizaciones y mensajes de contacto se guardan en **Firestore** (plan
 - **Panel privado:** `/admin` (inicio de sesión con Google, en tiempo real, con aviso sonoro de nuevas
   solicitudes). Para cambiar el correo autorizado edita `ADMIN_EMAIL` en `src/admin/AdminApp.vue`
   **y** el correo en `firestore.rules`.
-- **Configuración:** la página lee las claves públicas de Firebase de `/__/firebase/init.json`
-  (las sirve Firebase Hosting; requiere que el proyecto tenga una app web registrada). En desarrollo local
-  puedes definirlas en `.env.local` con `VITE_FIREBASE_CONFIG='{"apiKey":"...","projectId":"...","appId":"..."}'`.
-  Si Firebase no está disponible, los formularios usan el correo/WhatsApp como respaldo.
+- **Configuración:** las claves públicas de la app web de Firebase están en `src/firebase/config.js` (no son secretas; las protegen las reglas de seguridad). En pruebas locales se pueden sustituir con `VITE_FIREBASE_CONFIG` en `.env.local`.
+  Si Firebase no responde o las reglas no están publicadas, los formularios usan el correo/WhatsApp de respaldo.
 - **Probar las reglas:** `npx firebase-tools emulators:exec --only firestore --project demo "<comando de pruebas>"`.
 
 ### Permisos extra para publicar las reglas desde GitHub (una sola vez, en Cloud Shell)
