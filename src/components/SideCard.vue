@@ -36,8 +36,8 @@ function onMove(e) {
   c.style.setProperty('--mx', px + 'px')
   c.style.setProperty('--my', py + 'px')
   const tr = t.getBoundingClientRect()
-  const dx = (e.clientX - (tr.left + tr.width / 2)) / (window.innerWidth / 2)
-  const dy = (e.clientY - (tr.top + tr.height / 2)) / (window.innerHeight / 2)
+  const dx = (e.clientX - (tr.left + tr.width / 2)) / 650
+  const dy = (e.clientY - (tr.top + tr.height / 2)) / 450
   target.x = Math.max(-1, Math.min(1, dx))
   target.y = Math.max(-1, Math.min(1, dy))
 }
@@ -54,14 +54,14 @@ function onScroll() {
 }
 
 function loop() {
-  cx += (target.x - cx) * 0.12
-  cy += (target.y - cy) * 0.12
+  cx += (target.x - cx) * 0.18
+  cy += (target.y - cy) * 0.18
   const t = tilt.value
   if (t) {
-    t.style.setProperty('--ex', (cx * 13).toFixed(2) + 'px')
-    t.style.setProperty('--ey', (cy * 8).toFixed(2) + 'px')
-    t.style.setProperty('--ry', (cx * 9).toFixed(2) + 'deg')
-    t.style.setProperty('--rx', (-cy * 6).toFixed(2) + 'deg')
+    t.style.setProperty('--ex', (cx * 40).toFixed(2) + 'px')
+    t.style.setProperty('--ey', (cy * 26).toFixed(2) + 'px')
+    t.style.setProperty('--ry', (cx * 12).toFixed(2) + 'deg')
+    t.style.setProperty('--rx', (-cy * 8).toFixed(2) + 'deg')
   }
   raf = requestAnimationFrame(loop)
 }
