@@ -27,6 +27,7 @@ export const themes = [
   { id: 'light', color: '#f2f5f8' },
   { id: 'lavender', color: '#a78bfa' },
   { id: 'ocean', color: '#22c7ea' },
+  { id: 'tomate', color: '#ee4129' },
 ]
 
 export const typedWords = ['Developers', 'Builders de IA', 'Ingenieros', 'Automatizadores']

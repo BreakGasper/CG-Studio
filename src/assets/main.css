@@ -3,6 +3,15 @@
 :root[data-theme="light"]{--logo:#101722;--bg:#f2f5f8;--card:#fff;--card2:#efefef;--ink:#111;--mute:#6b6b6b;--line:#e2e2e2;--acc-soft:rgba(20,200,216,.2)}
 :root[data-theme="lavender"]{--bg:#120d1f;--card:#1a1330;--card2:#231a3f;--ink:#f1eaff;--mute:#9a8fb8;--line:#2e2450;--acc:#a78bfa;--acc-ink:#1b0f3d;--acc-soft:rgba(167,139,250,.16)}
 :root[data-theme="ocean"]{--bg:#06141a;--card:#0b1f28;--card2:#10303d;--ink:#e6f6fb;--mute:#7ea3b0;--line:#173b49;--acc:#22c7ea;--acc-ink:#03212b;--acc-soft:rgba(34,199,234,.16)}
+/* Tema Crema · Abeto · Tomate: 60% crema (fondo), 30% verde abeto (panel y bloques), 10% rojo tomate (acento #EE4129) */
+:root[data-theme="tomate"]{--logo:#1e3a2b;--bg:#efe7d3;--card:#f8f2e3;--card2:#e6dcc3;--ink:#1e3a2b;--mute:#5d6e60;--line:#d9cfb4;--acc:#ee4129;--acc-ink:#fff;--acc-soft:rgba(238,65,41,.14);--hl:#bf2f1b}
+:root[data-theme="tomate"] aside{color:#efe7d3;--card:#1e3a2b;--card2:#26493a;--ink:#efe7d3;--mute:#b9c6b8;--line:#2f5642;--logo:#efe7d3;--acc-soft:rgba(238,65,41,.28)}
+:root[data-theme="tomate"] .cta-big{background:#1e3a2b;color:#efe7d3}
+:root[data-theme="tomate"] .cta-big .btn{background:#efe7d3;color:#1e3a2b;border-color:#efe7d3}
+:root[data-theme="tomate"] .cta-big .btn:hover{background:var(--acc);color:#fff;border-color:var(--acc)}
+:root[data-theme="tomate"] .theme-toggle .ic-sun{opacity:0;transform:rotate(60deg) scale(.5)}
+:root[data-theme="tomate"] .theme-toggle .ic-moon{opacity:1;transform:none}
+:root[data-theme="tomate"] .btn{border-color:var(--line)}
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font:400 16px/1.6 Inter,system-ui,sans-serif;transition:background .3s,color .3s;overflow-x:hidden}
@@ -447,3 +456,6 @@ aside{--mx:50%;--my:38%}
 .a-bot{margin-top:0}
 @media(max-height:760px){.a-say{display:none}}
 @media(max-width:1100px){.a-say{display:none}.mono .tilt{width:64%;margin-top:-34%}aside{min-height:600px}}
+
+:root[data-theme="tomate"] aside .socials a,:root[data-theme="tomate"] aside .avail,:root[data-theme="tomate"] aside .a-say{color:#efe7d3}
+:root[data-theme="tomate"] aside .socials a,:root[data-theme="tomate"] aside .avail{background:#26493a;border-color:#2f5642}
