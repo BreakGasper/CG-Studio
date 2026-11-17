@@ -8,7 +8,8 @@ export const navItems = [
   { id: 'work', label: 'Proyectos', n: '03' },
   { id: 'services', label: 'Servicios', n: '04' },
   { id: 'method', label: 'Método', n: '05' },
-  { id: 'contact', label: 'Contacto', n: '06' },
+  { id: 'book', label: 'Agenda y cotiza', n: '06' },
+  { id: 'contact', label: 'Contacto', n: '07' },
 ]
 
 export const dockItems = [
@@ -142,3 +143,40 @@ export const testimonials = [
 ]
 
 export const contactEmail = 'hola@cgstudio.dev'
+
+// ---- Agenda y cotizador ------------------------------------------------
+// Precios y plazos de EJEMPLO: ajústalos a tus tarifas reales.
+export const booking = {
+  currency: 'USD',
+  whatsapp: '', // ej. '5215512345678' (código de país + número). Vacío = solo correo.
+  slots: ['09:00', '10:00', '11:00', '12:00', '13:00', '16:00', '17:00', '18:00'],
+  topics: ['Proyecto nuevo', 'Cotización', 'Asesoría técnica', 'Soporte / mantenimiento', 'Inteligencia artificial'],
+}
+
+export const quote = {
+  types: [
+    { id: 'web', label: 'Sitio web', price: 800, weeks: 2 },
+    { id: 'app', label: 'App móvil', price: 2500, weeks: 6 },
+    { id: 'platform', label: 'Plataforma / sistema web', price: 3500, weeks: 8 },
+    { id: 'api', label: 'API / backend', price: 1500, weeks: 3 },
+    { id: 'ai', label: 'IA y automatización', price: 1800, weeks: 4 },
+  ],
+  extras: [
+    { id: 'admin', label: 'Panel de administración', price: 600, weeks: 1 },
+    { id: 'design', label: 'Diseño UI/UX', price: 500, weeks: 1 },
+    { id: 'pay', label: 'Pagos en línea', price: 400, weeks: 1 },
+    { id: 'agents', label: 'Agentes / integración IA', price: 900, weeks: 2 },
+    { id: 'deploy', label: 'Hosting y despliegue', price: 200, weeks: 0 },
+  ],
+  complexity: [
+    { id: 'low', label: 'Básica', mult: 1 },
+    { id: 'mid', label: 'Media', mult: 1.4 },
+    { id: 'high', label: 'Alta', mult: 2 },
+  ],
+  urgency: [
+    { id: 'normal', label: 'Normal', mult: 1 },
+    { id: 'fast', label: 'Prioritaria', mult: 1.25 },
+  ],
+  maintenance: { label: 'Mantenimiento mensual', price: 150 },
+  spread: 0.15, // rango ± sobre el estimado
+}
