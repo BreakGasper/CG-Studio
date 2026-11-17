@@ -31,12 +31,9 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      - id: auth
-        uses: google-github-actions/auth@v2
+      - uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
           service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
           create_credentials_file: true
-      - run: |
-          echo "tipo de credencial:"; python3 -c "import json,os;d=json.load(open(os.environ['GOOGLE_APPLICATION_CREDENTIALS']));print(d.get('type'), list(d.keys()))"
-          npx --yes firebase-tools@latest deploy --only hosting --project cg-studio-1d248 --non-interactive --debug
+      - run: npx --yes firebase-tools@latest deploy --only hosting --project cg-studio-1d248 --non-interactive
