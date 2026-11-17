@@ -42,22 +42,23 @@ onBeforeUnmount(() => clearTimeout(timer))
       </button>
       <div v-if="show" :key="tick" class="ghost" :class="'fx' + fx" aria-hidden="true">
         <svg viewBox="0 0 560 1150">
-          <!-- contorno claro alrededor de los ojos (dentro de la C) -->
-          <path class="cont-fill" d="M170 400 C140 330 150 230 215 175 C280 135 370 150 405 235 C425 290 415 360 385 410 Z" />
-          <path class="cont" pathLength="1" d="M170 400 C140 330 150 230 215 175 C280 135 370 150 405 235 C425 290 415 360 385 410" />
-          <!-- brazo y manita que salen por la abertura de la C -->
+          <!-- fantasma de una sola pieza: cabeza (rellena la C), brazo por la diagonal y manita grande -->
           <g class="hand-pop">
-            <g class="wv">
-              <path class="arm" d="M385 410 C395 450 410 485 460 490 C520 495 560 450 585 395" />
-              <circle class="palm" cx="620" cy="330" r="80" />
-              <line class="fg f1" x1="582" y1="300" x2="572" y2="190" />
-              <line class="fg f2" x1="612" y1="262" x2="614" y2="150" />
-              <line class="fg f3" x1="650" y1="266" x2="662" y2="160" />
-              <line class="fg f4" x1="685" y1="296" x2="702" y2="215" />
-              <line class="fg th" x1="560" y1="350" x2="505" y2="308" />
-              <circle class="gl" cx="606" cy="345" r="9" />
-              <circle class="gl" cx="644" cy="345" r="9" />
+            <g class="body">
+              <path d="M176 392 C112 330 118 214 200 160 C270 112 390 128 436 218 C456 262 452 316 436 352 C420 392 300 428 176 392 Z" />
+              <path class="armb" d="M236 330 L474 612" />
+              <path class="armb" d="M380 262 L556 360" />
+              <g class="wv">
+                <rect x="528" y="330" width="164" height="330" rx="70" />
+                <line class="fg f1" x1="560" y1="350" x2="556" y2="218" />
+                <line class="fg f2" x1="602" y1="340" x2="602" y2="186" />
+                <line class="fg f3" x1="644" y1="342" x2="648" y2="198" />
+                <line class="fg f4" x1="676" y1="372" x2="688" y2="262" />
+                <line class="fg th" x1="544" y1="440" x2="486" y2="392" />
+              </g>
             </g>
+            <circle class="geye" cx="236" cy="257" r="21" />
+            <circle class="geye" cx="326" cy="257" r="21" />
           </g>
         </svg>
         <template v-if="fx > 1">
