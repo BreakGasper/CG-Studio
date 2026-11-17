@@ -321,3 +321,9 @@ html.pv-lock{overflow:hidden}
 .bk-act button:hover{color:var(--hl)}
 @media(max-width:900px){.bk{grid-template-columns:1fr}.bk-row{grid-template-columns:1fr}}
 .cta-acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+/* pestañas tipo carpeta pegadas a la tarjeta */
+.bk-main{display:flex;flex-direction:column}
+.bk-tabs{display:flex;gap:4px;padding-left:18px;margin-bottom:-1px;position:relative;z-index:1}
+.bk-tabs button{padding:11px 22px;border:1px solid var(--line);border-bottom:0;border-radius:16px 16px 0 0;background:var(--card2);color:var(--mute);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.bk-tabs button.on{background:var(--card);color:var(--ink);border-color:var(--line);border-top:3px solid var(--acc);padding-top:9px;padding-bottom:12px;margin-bottom:-1px}
+.bk-main>.bk-card{border-radius:22px;border-top-left-radius:22px;position:relative}

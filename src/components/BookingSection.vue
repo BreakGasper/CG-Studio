@@ -87,12 +87,12 @@ function requestQuote() {
     <div class="eyebrow">Agenda y cotización</div>
     <h2 class="disp">Agenda una cita o cotiza en minutos</h2>
 
-    <div class="tabs" role="tablist">
-      <button class="tab" :class="{ on: tab === 'cita' }" role="tab" @click="tab = 'cita'">Agendar cita</button>
-      <button class="tab" :class="{ on: tab === 'cotiza' }" role="tab" @click="tab = 'cotiza'">Cotizador</button>
-    </div>
-
     <div class="bk">
+      <div class="bk-main">
+        <div class="bk-tabs" role="tablist">
+          <button type="button" :class="{ on: tab === 'cita' }" role="tab" @click="tab = 'cita'">Agendar cita</button>
+          <button type="button" :class="{ on: tab === 'cotiza' }" role="tab" @click="tab = 'cotiza'">Cotizador</button>
+        </div>
       <!-- CITA -->
       <form v-if="tab === 'cita'" class="bk-card" @submit.prevent="book">
         <div class="bk-row">
@@ -156,6 +156,8 @@ function requestQuote() {
         <button class="btn pri" :disabled="!qc.name.trim() || !qc.contact.trim()" @click="requestQuote">Solicitar esta cotización</button>
         <p v-if="qSent" class="bk-ok">✓ Cotización registrada. <a :href="qSent" target="_blank" rel="noopener">Enviar solicitud →</a></p>
         <p class="bk-note">Estimado orientativo; la cotización final se confirma tras revisar el alcance.</p>
+      </div>
+
       </div>
 
       <!-- AGENDA -->
