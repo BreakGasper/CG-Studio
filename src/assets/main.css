@@ -505,3 +505,8 @@ aside{--mx:50%;--my:38%}
 
 .mascot button{padding:0!important;border:0!important}
 .mascot button{display:block!important;line-height:0}.mwrap{line-height:0}
+
+/* La flotación va en el contenedor para que mascota y fantasma suban y bajen juntos */
+.mascot button{animation:none!important}
+.mwrap{animation:fl 3.4s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.mwrap{animation:none}}
