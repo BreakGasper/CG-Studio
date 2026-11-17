@@ -147,7 +147,7 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--line);color:v
 }
 .mobbtn{display:none;position:fixed;right:16px;top:16px;z-index:8}
 
-.eye{fill:#14c8d8;transform-box:fill-box;transform-origin:center;translate:var(--ex,0px) var(--ey,0px);animation:blink 5s infinite}
+.eye{fill:var(--acc);transform-box:fill-box;transform-origin:center;translate:var(--ex,0px) var(--ey,0px);animation:blink 5s infinite}
 @keyframes blink{0%,91%,100%{scale:1 1}94%{scale:1 .08}}
 .mono svg.float{animation:fl2 4.2s ease-in-out infinite;display:block;width:100%}
 @keyframes fl2{50%{transform:translateY(-10px)}}

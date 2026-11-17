@@ -7,7 +7,7 @@ import { logoWhite, logoTeal } from '../assets/logoPaths'
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <symbol id="cg" viewBox="148 349 1114 530">
       <path fill="var(--logo)" :d="logoWhite" />
-      <path fill="#14c8d8" :d="logoTeal" />
+      <path fill="var(--acc)" :d="logoTeal" />
     </symbol>
     <symbol id="mc" viewBox="148 349 1114 530">
       <use href="#cg" x="148" y="349" width="1114" height="530" />
