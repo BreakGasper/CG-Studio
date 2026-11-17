@@ -15,6 +15,28 @@ export const projectFilters = [
 
 export const projects = [
   {
+    "id": "dailyexpress",
+    "name": "Daily Express",
+    "cat": "web",
+    "platform": "Web",
+    "year": 2026,
+    "visibility": "private",
+    "repo": "",
+    "desc": "Bitácora diaria para equipos de desarrollo: cada persona registra sus actividades y su avance, y los líderes ven tareas, equipo y proyectos en un solo lugar.",
+    "tags": [
+      "Vue 3",
+      "Vite",
+      "Web API"
+    ],
+    "mock": {
+      "device": "browser",
+      "layout": "image",
+      "c1": "#0b4a8b",
+      "c2": "#1e6fd0",
+      "image": "img/daily-express.webp"
+    }
+  },
+  {
     "id": "crustore",
     "name": "Crustore",
     "cat": "web",

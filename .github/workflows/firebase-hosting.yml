@@ -36,6 +36,6 @@ jobs:
           workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
           service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
           create_credentials_file: true
-      # Primero las reglas de seguridad de Firestore (si fallan, no se publica un sitio que dependa de ellas) y luego el hosting.
-      - run: npx --yes firebase-tools@latest deploy --only firestore:rules --project cg-studio-1d248 --non-interactive
+      # Primero el hosting (la página usa el correo de respaldo mientras las reglas no estén activas) y luego las reglas de Firestore.
       - run: npx --yes firebase-tools@latest deploy --only hosting --project cg-studio-1d248 --non-interactive
+      - run: npx --yes firebase-tools@latest deploy --only firestore:rules --project cg-studio-1d248 --non-interactive

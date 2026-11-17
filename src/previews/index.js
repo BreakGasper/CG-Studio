@@ -16,4 +16,10 @@ export const previews = {
   },
 }
 
+// Daily Express: demo autónoma con usuarios y datos ficticios (sin conexión a ningún servicio).
+previews.dailyexpress = {
+  host: 'dailyexpress.demo',
+  views: [{ id: 'demo', label: 'Demo', url: `${base}demos/daily-express/index.html`, mode: 'desktop' }],
+}
+
 export const hasPreview = (id) => id in previews
