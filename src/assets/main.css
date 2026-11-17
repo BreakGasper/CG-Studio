@@ -336,3 +336,16 @@ html.pv-lock{overflow:hidden}
 .pbtn:hover,.pbtn:focus-visible{background:var(--hl);color:#fff}
 .priv-btn,.priv-btn:hover{cursor:default;background:#fff;color:#101722;transform:translate(-50%,-50%);box-shadow:0 10px 30px rgba(0,0,0,.3),0 0 0 6px rgba(255,255,255,.18)}
 .awards small{white-space:nowrap}
+
+/* Preguntas frecuentes */
+.faq{display:flex;flex-direction:column;gap:10px;max-width:860px}
+.faq details{background:var(--card);border:1px solid var(--line);border-radius:18px;transition:border-color .2s}
+.faq details[open]{border-color:var(--acc)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 22px;font-weight:600;font-size:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:hover{color:var(--hl)}
+.faq-ic{flex:none;width:14px;height:14px;position:relative}
+.faq-ic::before,.faq-ic::after{content:"";position:absolute;left:0;top:6px;width:14px;height:2px;background:currentColor;border-radius:2px;transition:transform .25s}
+.faq-ic::after{transform:rotate(90deg)}
+.faq details[open] .faq-ic::after{transform:rotate(0)}
+.faq details p{padding:0 22px 20px;color:var(--mute);max-width:70ch}

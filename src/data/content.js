@@ -182,3 +182,15 @@ export const quote = {
   maintenance: { label: 'Mantenimiento mensual', price: 150 },
   spread: 0.15, // rango ± sobre el estimado
 }
+
+// Preguntas frecuentes (texto propuesto: ajusta plazos y condiciones a tu forma de trabajar).
+export const faqs = [
+  { q: '¿Cuánto cuesta un proyecto?', a: 'Depende del alcance. Un sitio web puede empezar desde unos cientos de dólares y una app o plataforma desde unos miles. Usa el cotizador de esta página para obtener un rango en minutos; la cifra final se confirma tras revisar el alcance.' },
+  { q: '¿Cuánto tarda en estar listo?', a: 'Un sitio web suele tomar de 2 a 3 semanas, una API o automatización de 3 a 4, y una app móvil o plataforma de 6 a 8. Los plazos cambian según la complejidad y qué tan rápido recibamos contenido y aprobaciones.' },
+  { q: '¿Qué tecnologías usan?', a: 'Android (Kotlin/Java), Flutter, Vue 3, Firebase, AWS, SQL Server, SAP ABAP e inteligencia artificial. Elegimos la herramienta que mejor resuelve tu caso, no la que esté de moda.' },
+  { q: '¿Pueden integrar inteligencia artificial en mi negocio?', a: 'Sí. Creamos agentes, automatizaciones y asistentes conectados a tus sistemas para ahorrar tareas repetitivas, siempre empezando por un caso pequeño y medible.' },
+  { q: '¿Publican la app y se encargan del hosting?', a: 'Sí. Nos encargamos de la publicación en Google Play, el despliegue web y la configuración de servidores, y podemos darle mantenimiento mensual después del lanzamiento.' },
+  { q: '¿Cómo trabajan y cómo me mantienen informado?', a: 'Dividimos el proyecto en entregas cortas, con una cita inicial para definir el alcance y avances que puedes probar. Tienes un líder técnico como punto de contacto.' },
+  { q: '¿Puedo ver ejemplos de su trabajo?', a: 'Sí, en la sección de proyectos. Algunos tienen vista previa en vivo; los marcados como privados pertenecen a clientes y no se muestran públicamente.' },
+  { q: '¿Cómo empiezo?', a: 'Agenda una cita en esta página o escríbenos por correo. Platicamos tu idea y te enviamos una propuesta.' },
+]

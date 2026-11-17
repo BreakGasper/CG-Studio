@@ -16,6 +16,7 @@ import ServicesSection from './components/ServicesSection.vue'
 import TechSection from './components/TechSection.vue'
 import MethodSection from './components/MethodSection.vue'
 import TestimonialsSection from './components/TestimonialsSection.vue'
+import FaqSection from './components/FaqSection.vue'
 import BookingSection from './components/BookingSection.vue'
 import ContactSection from './components/ContactSection.vue'
 import SiteFooter from './components/SiteFooter.vue'
@@ -40,6 +41,7 @@ onMounted(loadTheme)
     <TechSection />
     <MethodSection />
     <TestimonialsSection />
+    <FaqSection />
     <BookingSection />
     <ContactSection />
     <SiteFooter />
