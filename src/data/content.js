@@ -226,3 +226,26 @@ export const experience = [
   { id: 'food', title: 'Restaurantes y pedidos', text: 'Menús, pedidos y atención para restaurantes, bares y negocios de comida.', tags: ['Pedidos', 'Menú', 'Móvil'], icon: 'M6 3v8a2 2 0 0 0 2 2v8M10 3v6M6 7h4M17 3c-2 2-2 6 0 8v10' },
   { id: 'events', title: 'Eventos e invitaciones', text: 'Invitaciones digitales con confirmación de asistencia y panel para organizar mesas y gastos.', tags: ['RSVP', 'Panel', 'Presupuesto'], icon: 'M3 7h18v13H3zM3 7l9 7 9-7M12 3v4' },
 ]
+
+// Panel lateral: mensaje según la sección visible y datos que rotan.
+export const sectionSays = {
+  home: '¡Bienvenido! Soy la mascota de CG Studio.',
+  about: 'Esta es nuestra trayectoria.',
+  mission: 'Esto es lo que nos mueve.',
+  work: 'Mira nuestros proyectos. ¡Prueba los Preview!',
+  services: 'Esto es lo que hacemos.',
+  experience: 'Hemos desarrollado en muchos sectores.',
+  packages: 'Elige cómo empezar.',
+  tech: 'Estas son nuestras herramientas.',
+  method: 'Así trabajamos, paso a paso.',
+  faq: '¿Dudas? Aquí las resolvemos.',
+  book: 'Agenda tu cita o cotiza aquí.',
+  contact: '¡Hablemos de tu proyecto!',
+}
+
+export const sideFacts = [
+  { n: '8', l: 'programadores al mando' },
+  { n: String(projects.length), l: 'proyectos desplegados' },
+  { n: '6+', l: 'años de experiencia' },
+  { n: 'IA', l: 'Android · Flutter · Vue · SAP' },
+]
