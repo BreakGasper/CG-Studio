@@ -475,7 +475,7 @@ aside{--mx:50%;--my:38%}
 .ghost .gh-fill{fill:url(#gGhost)}
 .ghost .gh-rim{fill:none;stroke:#fff;stroke-width:7;opacity:.45}
 .ghost .gh-shine{fill:#fff;opacity:.5}
-.ghost .gh-tube{fill:none;stroke:url(#gGhost);stroke-width:40;stroke-linecap:round;stroke-dasharray:1 1;stroke-dashoffset:1;animation:tubeIn .75s ease-out .2s forwards,tubeOut .5s ease-in 2.5s forwards}
+.ghost .gh-tube{fill:none;stroke:url(#gGhost);stroke-width:56;stroke-linecap:round;stroke-dasharray:1 1;stroke-dashoffset:1;animation:tubeIn .75s ease-out .2s forwards,tubeOut .5s ease-in 2.5s forwards}
 .ghost .fg{stroke:url(#gGhost);stroke-width:34;stroke-linecap:round;transform-box:fill-box;transform-origin:50% 100%}
 .ghost .gl{fill:#fff;opacity:.6}
 .ghost .geye{fill:color-mix(in srgb,var(--acc) 55%,#000);animation:headIn 3s both;transform-origin:280px 285px}
