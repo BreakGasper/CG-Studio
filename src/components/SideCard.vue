@@ -113,7 +113,7 @@ onBeforeUnmount(() => {
       <h3><span>{{ typed }}</span><span class="caret"></span></h3>
       <p>Desarrollamos software, plataformas e inteligencia artificial para que tu negocio crezca y automatice, con sede en LATAM.</p>
       <div class="row">
-        <a class="btn blue" href="#contact">Hablemos</a>
+        <a class="btn" href="#contact">Hablemos</a>
         <a class="btn blue" href="#work">Ver demos</a>
       </div>
     </div>
