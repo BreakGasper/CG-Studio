@@ -1,8 +1,11 @@
-# Publica la página en Firebase Hosting (https://cg-studio-1d248.web.app).
-# Se ejecuta al subir cambios a `main` y también a mano desde la pestaña Actions
-# (botón "Run workflow", eligiendo la rama que quieras publicar).
+# Publica la página en Firebase Hosting (https://cg-studio-1d248.web.app) SIN llaves de cuenta
+# de servicio: GitHub se autentica con Google mediante Workload Identity Federation.
+# Se ejecuta al subir cambios a `main` y a mano desde Actions → Run workflow (eligiendo rama).
 #
-# Requiere un secreto en GitHub: FIREBASE_SERVICE_ACCOUNT (ver README, sección "Deploy desde GitHub").
+# Requiere dos variables en GitHub (Settings → Secrets and variables → Actions → Variables):
+#   GCP_WIF_PROVIDER     projects/<NUMERO>/locations/global/workloadIdentityPools/github/providers/github-provider
+#   GCP_SERVICE_ACCOUNT  github-deployer@cg-studio-1d248.iam.gserviceaccount.com
+# (los comandos para crearlas están en el README).
 name: Deploy a Firebase Hosting
 
 on:
@@ -19,6 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -27,8 +31,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - uses: google-github-actions/auth@v2
         with:
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          projectId: cg-studio-1d248
-          channelId: live
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
+      - run: npx --yes firebase-tools@latest deploy --only hosting --project cg-studio-1d248 --non-interactive
