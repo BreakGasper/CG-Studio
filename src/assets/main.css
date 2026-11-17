@@ -327,3 +327,8 @@ html.pv-lock{overflow:hidden}
 .bk-tabs button{padding:11px 22px;border:1px solid var(--line);border-bottom:0;border-radius:16px 16px 0 0;background:var(--card2);color:var(--mute);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
 .bk-tabs button.on{background:var(--card);color:var(--ink);border-color:var(--line);border-top:3px solid var(--acc);padding-top:9px;padding-bottom:12px;margin-bottom:-1px}
 .bk-main>.bk-card{border-radius:22px;border-top-left-radius:22px;position:relative}
+
+/* Botones: blancos con texto oscuro; rosa al pasar el puntero */
+.btn,.btn.pri,.cta-big .btn{background:#fff;color:#101722;border:1px solid #fff;transition:background .2s,color .2s,border-color .2s,transform .2s}
+.btn:hover:not(:disabled),.btn:focus-visible:not(:disabled),.btn.pri:hover:not(:disabled),.cta-big .btn:hover,.cta-big .btn:focus-visible{background:var(--hl);color:#fff;border-color:var(--hl);transform:translateY(-1px)}
+:root[data-theme="light"] .btn{border-color:var(--line)}
