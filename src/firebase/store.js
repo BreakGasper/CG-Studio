@@ -2,9 +2,25 @@ import { getFirebase } from './client'
 
 const clean = (v, max) => String(v ?? '').trim().slice(0, max)
 
+// Firebase solo se usa si las reglas de seguridad ya están publicadas (los horarios son de lectura pública).
+// Si Firestore responde "permiso denegado" (reglas aún sin publicar), la página usa el correo/WhatsApp de respaldo.
+let liveP
+async function live() {
+  const f = await getFirebase()
+  if (!f) return null
+  liveP ??= (async () => {
+    try {
+      const { collection, query, limit, getDocs } = f.fs
+      await getDocs(query(collection(f.db, 'horarios'), limit(1)))
+      return true
+    } catch { return false }
+  })()
+  return (await liveP) ? f : null
+}
+
 // Horarios ya ocupados para una fecha (null si Firebase no está disponible).
 export async function takenSlots(date) {
-  const f = await getFirebase()
+  const f = await live()
   if (!f || !date) return null
   try {
     const { collection, query, where, getDocs } = f.fs
@@ -17,7 +33,7 @@ export async function takenSlots(date) {
 
 // Resultado: { ok:true } | { ok:false, reason:'unavailable'|'taken'|'error' }
 async function write(fn) {
-  const f = await getFirebase()
+  const f = await live()
   if (!f) return { ok: false, reason: 'unavailable' }
   try {
     await fn(f)

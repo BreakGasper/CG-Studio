@@ -12,13 +12,14 @@ import ScreenInvite from './ScreenInvite.vue'
 import ScreenDashboard from './ScreenDashboard.vue'
 import ScreenStore from './ScreenStore.vue'
 import ScreenCode from './ScreenCode.vue'
+import ScreenImage from './ScreenImage.vue'
 
 const props = defineProps({ project: { type: Object, required: true } })
 const m = computed(() => props.project.mock)
 const screens = {
   shop: ScreenShop, list: ScreenList, auth: ScreenAuth, fingerprint: ScreenFingerprint,
   location: ScreenLocation, reviews: ScreenReviews, invite: ScreenInvite,
-  dashboard: ScreenDashboard, store: ScreenStore, code: ScreenCode,
+  dashboard: ScreenDashboard, store: ScreenStore, code: ScreenCode, image: ScreenImage,
 }
 const screen = computed(() => screens[m.value.layout])
 const url = computed(() => props.project.id.replace(/-/g, '') + '.app')
