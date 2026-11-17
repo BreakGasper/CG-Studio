@@ -7,7 +7,7 @@ import { contactEmail } from '../data/content'
     <div class="cta-big">
       <div class="mbadge"><svg viewBox="0 0 560 1150" aria-label="Mascota CG"><use href="#mcv" /></svg></div>
       <h2 class="disp">Construyamos algo grande</h2>
-      <span class="btn">{{ contactEmail }}</span>
+      <a class="btn" :href="`mailto:${contactEmail}`">{{ contactEmail }}</a>
       <div class="cta-acts">
         <a class="btn pri" href="#book">Agendar cita</a>
         <a class="btn" href="#book">Cotizar proyecto</a>

@@ -142,7 +142,7 @@ export const testimonials = [
   { quote: 'Calidad técnica sobresaliente de principio a fin.', name: 'Marco T.', role: 'CTO' },
 ]
 
-export const contactEmail = 'hola@cgstudio.dev'
+export const contactEmail = 'breakgasper@gmail.com'
 
 // ---- Agenda y cotizador ------------------------------------------------
 // Precios y plazos de EJEMPLO: ajústalos a tus tarifas reales.
