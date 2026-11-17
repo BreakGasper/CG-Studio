@@ -369,3 +369,14 @@ html.pv-lock{overflow:hidden}
 @media(max-width:900px){.pk-grid{grid-template-columns:1fr}}
 .pk ul{padding:0;margin:0}.pk li{padding-left:22px;margin:0}.pk-text{min-height:3.2em}
 @media(min-width:901px){.pk-text{min-height:4.8em}}
+
+/* Experiencia por sector */
+.xp-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:28px}
+.xp{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s,transform .2s}
+.xp:hover{border-color:var(--hl);transform:translateY(-3px)}
+.xp-ic{width:46px;height:46px;border-radius:14px;background:var(--acc-soft);display:grid;place-items:center;color:var(--acc)}
+.xp-ic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.xp h3{font-size:18px;font-weight:600}
+.xp p{color:var(--mute);font-size:14px;flex:1}
+@media(max-width:1200px){.xp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.xp-grid{grid-template-columns:1fr}}

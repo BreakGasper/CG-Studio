@@ -13,6 +13,7 @@ import AboutSection from './components/AboutSection.vue'
 import MissionVision from './components/MissionVision.vue'
 import WorkSection from './components/WorkSection.vue'
 import ServicesSection from './components/ServicesSection.vue'
+import ExperienceSection from './components/ExperienceSection.vue'
 import PackagesSection from './components/PackagesSection.vue'
 import TechSection from './components/TechSection.vue'
 import MethodSection from './components/MethodSection.vue'
@@ -39,6 +40,7 @@ onMounted(loadTheme)
     <MissionVision />
     <WorkSection />
     <ServicesSection />
+    <ExperienceSection />
     <PackagesSection />
     <TechSection />
     <MethodSection />

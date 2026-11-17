@@ -214,3 +214,15 @@ export const packages = [
     items: ['Panel de administración', 'APIs y base de datos', 'Agentes y automatizaciones con IA', 'Pagos en línea', 'Líder técnico dedicado'],
   },
 ]
+
+// Áreas de experiencia (texto propuesto a partir de tus proyectos: ajústalo).
+export const experience = [
+  { id: 'health', title: 'Salud', text: 'Registro de pacientes, citas y seguimiento para clínicas y personal de enfermería.', tags: ['Expedientes', 'Citas', 'Reportes'], icon: 'M12 21s-7-4.5-9.3-9A5.2 5.2 0 0 1 12 6a5.2 5.2 0 0 1 9.3 6c-2.3 4.5-9.3 9-9.3 9zM12 9v6M9 12h6' },
+  { id: 'commerce', title: 'Comercio y punto de venta', text: 'Tiendas en línea, marketplaces y puntos de venta con ventas, productos y reportes.', tags: ['Punto de venta', 'Catálogo', 'Reportes'], icon: 'M3 4h2l2.4 11h10.2L20 7H6M9 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM17 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2z' },
+  { id: 'inventory', title: 'Inventarios', text: 'Control de existencias, entradas y salidas, y almacén, también sin conexión.', tags: ['Existencias', 'SQLite', 'Offline'], icon: 'M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8' },
+  { id: 'credit', title: 'Cobranza y créditos', text: 'Herramientas para dar seguimiento a créditos, pagos y cartera de clientes.', tags: ['Cartera', 'Pagos', 'Recordatorios'], icon: 'M3 6h18v12H3zM3 10h18M7 15h3' },
+  { id: 'cards', title: 'Pagos con tarjeta', text: 'Cobros en línea y en la app con pasarelas de pago, conciliación y comprobantes.', tags: ['Pasarelas', 'Cobros', 'Seguridad'], icon: 'M2 7a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zM2 10h20M6 15h4' },
+  { id: 'quality', title: 'Calidad y operación', text: 'Sistemas de gestión de calidad, inspecciones y procesos internos con evidencia.', tags: ['Inspecciones', 'Firebase', 'Auditoría'], icon: 'M9 12l2 2 4-4M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z' },
+  { id: 'food', title: 'Restaurantes y pedidos', text: 'Menús, pedidos y atención para restaurantes, bares y negocios de comida.', tags: ['Pedidos', 'Menú', 'Móvil'], icon: 'M6 3v8a2 2 0 0 0 2 2v8M10 3v6M6 7h4M17 3c-2 2-2 6 0 8v10' },
+  { id: 'events', title: 'Eventos e invitaciones', text: 'Invitaciones digitales con confirmación de asistencia y panel para organizar mesas y gastos.', tags: ['RSVP', 'Panel', 'Presupuesto'], icon: 'M3 7h18v13H3zM3 7l9 7 9-7M12 3v4' },
+]
