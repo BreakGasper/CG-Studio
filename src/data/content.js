@@ -44,7 +44,7 @@ export const stats = [
   { to: 12, suffix: '', label: 'Demos en vivo' },
 ]
 
-export const clients = ['◐ Logoipsum', 'Logoipsum', '◑ Logoipsum', 'Logoipsum']
+export const clients = ['Supollo Comercial', 'Bar Fortin', 'Anonimus Pizzas', 'Mr Novedades', 'Lic. Monserrat Ruelas']
 
 // Misión y visión (texto propuesto: ajústalo a tu estilo).
 export const missionVision = [

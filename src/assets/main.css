@@ -55,7 +55,7 @@ main{margin-left:max(560px,calc(32vw + 100px));padding:40px 120px 60px 0;max-wid
 .hstats span{color:var(--mute);font-size:14px}
 .clients{margin-top:56px}
 .clients .eyebrow{display:flex;gap:8px;align-items:center;text-transform:none;letter-spacing:0;font-size:14px;color:var(--ink)}
-.logos{display:flex;gap:40px;flex-wrap:wrap;margin-top:20px;color:var(--mute);font:700 20px "Space Grotesk";letter-spacing:-.03em}
+.logos{display:flex;gap:14px 30px;flex-wrap:wrap;margin-top:20px;color:var(--mute);font:700 18px "Space Grotesk";letter-spacing:-.03em}
 .logos span:nth-child(even){font-style:italic;color:var(--ink)}
 
 section{padding:110px 0 0}
