@@ -1,6 +1,7 @@
 <script setup>
-import { onMounted } from 'vue'
-import { loadTheme } from './composables/useUi'
+import { onMounted, onBeforeUnmount } from 'vue'
+import { loadTheme, goToSection, isMobileMode } from './composables/useUi'
+import MobileTabs from './components/MobileTabs.vue'
 import SvgSprite from './components/SvgSprite.vue'
 import OverlayMenu from './components/OverlayMenu.vue'
 import SideCard from './components/SideCard.vue'
@@ -23,7 +24,21 @@ import BookingSection from './components/BookingSection.vue'
 import ContactSection from './components/ContactSection.vue'
 import SiteFooter from './components/SiteFooter.vue'
 
-onMounted(loadTheme)
+// En móvil, los enlaces internos (#sección) cambian primero a la pestaña que contiene la sección.
+function onLink(e) {
+  const a = e.target.closest?.('a[href^="#"]')
+  if (!a || !isMobileMode()) return
+  const id = a.getAttribute('href').slice(1)
+  if (!id || !document.getElementById(id)) return
+  e.preventDefault()
+  goToSection(id)
+}
+onMounted(() => {
+  loadTheme()
+  document.addEventListener('click', onLink)
+  if (location.hash.length > 1 && isMobileMode()) goToSection(location.hash.slice(1))
+})
+onBeforeUnmount(() => document.removeEventListener('click', onLink))
 </script>
 
 <template>
@@ -32,22 +47,23 @@ onMounted(loadTheme)
   <SideCard />
   <DockNav />
   <MascotWidget />
+  <MobileTabs />
   <main>
     <TopBar />
-    <HeroSection />
-    <ClientsStrip />
-    <AboutSection />
-    <MissionVision />
-    <WorkSection />
-    <ServicesSection />
-    <ExperienceSection />
-    <PackagesSection />
-    <TechSection />
-    <MethodSection />
-    <TestimonialsSection />
-    <FaqSection />
-    <BookingSection />
-    <ContactSection />
+    <div data-pane="inicio"><HeroSection /></div>
+    <div data-pane="inicio"><ClientsStrip /></div>
+    <div data-pane="empresa"><AboutSection /></div>
+    <div data-pane="empresa"><MissionVision /></div>
+    <div data-pane="inicio"><WorkSection /></div>
+    <div data-pane="empresa"><ServicesSection /></div>
+    <div data-pane="empresa"><ExperienceSection /></div>
+    <div data-pane="cotiza"><PackagesSection /></div>
+    <div data-pane="empresa"><TechSection /></div>
+    <div data-pane="empresa"><MethodSection /></div>
+    <div data-pane="empresa"><TestimonialsSection /></div>
+    <div data-pane="empresa"><FaqSection /></div>
+    <div data-pane="cotiza"><BookingSection /></div>
+    <div data-pane="contacto"><ContactSection /></div>
     <SiteFooter />
   </main>
 </template>

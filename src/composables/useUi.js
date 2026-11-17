@@ -34,8 +34,42 @@ export function loadTheme() {
 export const bookTab = ref('cita')
 export const quoteType = ref(null)
 
-export function openBooking(tab, type = null) {
-  bookTab.value = tab
+// ---- Pestañas del modo móvil (en escritorio la página es un solo scroll y esto no se usa) ----
+export const MOBILE_QUERY = '(max-width:1100px)'
+export const isMobileMode = () => typeof matchMedia !== 'undefined' && matchMedia(MOBILE_QUERY).matches
+export const tab = ref('inicio')
+
+// Sección -> pestaña
+const PANES = {
+  inicio: ['home', 'clients', 'work'],
+  empresa: ['about', 'mission', 'services', 'experience', 'tech', 'method', 'testimonials', 'faq'],
+  cotiza: ['packages', 'book'],
+  contacto: ['contact'],
+}
+export const paneOf = (id) => Object.keys(PANES).find((k) => PANES[k].includes(id)) || 'inicio'
+
+export function setTab(t, { top = true } = {}) {
+  tab.value = t
+  document.documentElement.dataset.tab = t
+  if (top) window.scrollTo({ top: 0, behavior: 'instant' })
+}
+if (typeof document !== 'undefined') document.documentElement.dataset.tab = tab.value
+
+// Lleva a una sección; en móvil cambia antes a la pestaña que la contiene.
+export function goToSection(id) {
+  const el = document.getElementById(id)
+  if (!el) return
+  const mobile = isMobileMode()
+  const t = mobile ? paneOf(id) : null
+  if (t && t !== tab.value) setTab(t, { top: false })
+  requestAnimationFrame(() => {
+    if (mobile && (id === 'home' || id === 'inicio')) { window.scrollTo({ top: 0, behavior: 'smooth' }); return }
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  })
+}
+
+export function openBooking(tab2, type = null) {
+  bookTab.value = tab2
   if (type) quoteType.value = type
-  document.getElementById('book')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  goToSection('book')
 }
