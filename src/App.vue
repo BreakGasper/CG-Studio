@@ -11,7 +11,6 @@ import HeroSection from './components/HeroSection.vue'
 import ClientsStrip from './components/ClientsStrip.vue'
 import AboutSection from './components/AboutSection.vue'
 import MissionVision from './components/MissionVision.vue'
-import MascotSection from './components/MascotSection.vue'
 import WorkSection from './components/WorkSection.vue'
 import ServicesSection from './components/ServicesSection.vue'
 import TechSection from './components/TechSection.vue'
@@ -36,7 +35,6 @@ onMounted(loadTheme)
     <ClientsStrip />
     <AboutSection />
     <MissionVision />
-    <MascotSection />
     <WorkSection />
     <ServicesSection />
     <TechSection />
