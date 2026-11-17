@@ -40,22 +40,26 @@ onBeforeUnmount(() => clearTimeout(timer))
       <button type="button" aria-label="Mascota CG" @click="onClick">
         <svg viewBox="0 0 560 1150" aria-hidden="true"><use href="#mcv" /></svg>
       </button>
-      <div v-if="show" :key="tick" class="hand" :class="'fx' + fx" aria-hidden="true">
-        <div class="hand-pop">
-          <svg class="hand-svg" viewBox="0 0 64 96">
+      <div v-if="show" :key="tick" class="ghost" :class="'fx' + fx" aria-hidden="true">
+        <svg viewBox="0 0 560 1150">
+          <!-- contorno claro alrededor de los ojos (dentro de la C) -->
+          <path class="cont-fill" d="M170 400 C140 330 150 230 215 175 C280 135 370 150 405 235 C425 290 415 360 385 410 Z" />
+          <path class="cont" pathLength="1" d="M170 400 C140 330 150 230 215 175 C280 135 370 150 405 235 C425 290 415 360 385 410" />
+          <!-- brazo y manita que salen por la abertura de la C -->
+          <g class="hand-pop">
             <g class="wv">
-              <path class="arm" d="M12 94 C14 80 14 70 22 60" />
-              <circle class="palm" cx="31" cy="42" r="17" />
-              <line class="fg f1" x1="19" y1="34" x2="17" y2="14" />
-              <line class="fg f2" x1="27" y1="30" x2="27" y2="6" />
-              <line class="fg f3" x1="36" y1="30" x2="38" y2="8" />
-              <line class="fg f4" x1="44" y1="35" x2="49" y2="17" />
-              <line class="fg th" x1="15" y1="46" x2="3" y2="38" />
-              <circle class="gl" cx="26" cy="46" r="2.2" />
-              <circle class="gl" cx="36" cy="46" r="2.2" />
+              <path class="arm" d="M385 410 C395 450 410 485 460 490 C520 495 560 450 585 395" />
+              <circle class="palm" cx="620" cy="330" r="80" />
+              <line class="fg f1" x1="582" y1="300" x2="572" y2="190" />
+              <line class="fg f2" x1="612" y1="262" x2="614" y2="150" />
+              <line class="fg f3" x1="650" y1="266" x2="662" y2="160" />
+              <line class="fg f4" x1="685" y1="296" x2="702" y2="215" />
+              <line class="fg th" x1="560" y1="350" x2="505" y2="308" />
+              <circle class="gl" cx="606" cy="345" r="9" />
+              <circle class="gl" cx="644" cy="345" r="9" />
             </g>
-          </svg>
-        </div>
+          </g>
+        </svg>
         <template v-if="fx > 1">
           <span v-for="(b, i) in bits" :key="i" class="bit" :style="{ '--x': b.x + 'px', '--y': b.y + 'px', animationDelay: b.d + 's' }">{{ glyphs[fx - 1] }}</span>
         </template>
