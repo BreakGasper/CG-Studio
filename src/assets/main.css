@@ -380,3 +380,16 @@ html.pv-lock{overflow:hidden}
 .xp p{color:var(--mute);font-size:14px;flex:1}
 @media(max-width:1200px){.xp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.xp-grid{grid-template-columns:1fr}}
+
+/* Formulario de contacto */
+.cf{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:28px;margin-top:70px;align-items:start}
+.cf-info h2{font-size:clamp(32px,4vw,52px)}
+.cf-list{list-style:none;display:flex;flex-direction:column;gap:14px;margin-top:26px;padding:0}
+.cf-list li{display:flex;flex-direction:column;padding:14px 18px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+.cf-list b{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--mute);font-weight:500}
+.cf-list a{color:var(--hl);font-weight:600}
+.cf-trap{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
+.cf-done h3{font-size:24px}
+.cf-done a{color:var(--hl);font-weight:600}
+@media(max-width:900px){.cf{grid-template-columns:1fr;margin-top:50px}}
+.bk-row>*,.bk-card label{min-width:0}.bk-card input:not([hidden]),.bk-card select,.bk-card textarea{width:100%;min-width:0;box-sizing:border-box}.bk-card textarea{resize:vertical}
