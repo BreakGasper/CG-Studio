@@ -519,3 +519,66 @@ aside{--mx:50%;--my:38%}
 .bk-card input.bad:focus,.bk-card textarea.bad:focus{outline-color:#d4351c}
 .bk-slots.bad{outline:2px solid #d4351c;outline-offset:6px;border-radius:14px}
 .bk-err{padding:9px 12px;border-radius:12px;background:color-mix(in srgb,#d4351c 10%,transparent);border:1px solid color-mix(in srgb,#d4351c 35%,transparent)}
+
+/* ===== Escritorio: los paneles no alteran el diseño ===== */
+[data-pane]{display:contents}
+.mtabs{display:none}
+.tgroup summary{list-style:none;display:flex;align-items:center;gap:10px;cursor:default;pointer-events:none}
+.tgroup summary::-webkit-details-marker{display:none}
+.tgroup summary h3{margin:0 0 14px;flex:1}
+.tcnt,.tpm{display:none}
+
+/* ===== Móvil / tableta: pestañas Inicio · Empresa · Cotiza · Contacto ===== */
+@media(max-width:1100px){
+  [data-pane]{display:none}
+  :root[data-tab="inicio"] [data-pane="inicio"],
+  :root[data-tab="empresa"] [data-pane="empresa"],
+  :root[data-tab="cotiza"] [data-pane="cotiza"],
+  :root[data-tab="contacto"] [data-pane="contacto"]{display:block;animation:paneIn .3s ease both}
+  @keyframes paneIn{from{opacity:0;transform:translateY(10px)}}
+  /* la tarjeta de bienvenida solo va en Inicio */
+  :root:not([data-tab="inicio"]) aside{display:none}
+  body{padding-bottom:calc(74px + env(safe-area-inset-bottom))}
+  .mascot{bottom:calc(86px + env(safe-area-inset-bottom))}
+  /* barra de pestañas fija abajo */
+  .mtabs{display:flex;position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:20;gap:4px;padding:6px;border-radius:999px;background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:0 10px 34px rgba(0,0,0,.28)}
+  .mtabs button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 4px;border:0;border-radius:999px;background:none;color:var(--mute);font:600 11px Inter,sans-serif;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .25s,color .25s}
+  .mtabs button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .mtabs button.on{background:var(--acc);color:var(--acc-ink)}
+  /* Tecnologías: acordeón */
+  .tgrid{display:flex;flex-direction:column;gap:10px}
+  .tgroup{padding:0;border-radius:18px;overflow:hidden}
+  .tgroup summary{cursor:pointer;pointer-events:auto;padding:16px 18px;-webkit-tap-highlight-color:transparent}
+  .tgroup summary h3{margin:0;font-size:17px}
+  .tcnt{display:inline-block;font-size:12px;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:1px 9px}
+  .tpm{display:block;position:relative;width:14px;height:14px;flex:none}
+  .tpm::before,.tpm::after{content:"";position:absolute;left:0;top:6px;width:14px;height:2px;background:currentColor;border-radius:2px;transition:transform .25s}
+  .tpm::after{transform:rotate(90deg)}
+  .tgroup[open] .tpm::after{transform:rotate(0)}
+  .tgroup .tchips{padding:0 18px 18px}
+  /* Experiencia y paquetes: carrusel horizontal */
+  .xp-grid,.pk-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin-inline:-4px;padding:6px 4px 14px;scrollbar-width:none}
+  .xp-grid::-webkit-scrollbar,.pk-grid::-webkit-scrollbar{display:none}
+  .xp{flex:0 0 76%;scroll-snap-align:start}
+  .pk{flex:0 0 84%;scroll-snap-align:center}
+  .xp-grid::after{content:"";flex:0 0 1px}
+  .xp-hint{display:block}
+}
+.xp-hint{display:none;margin-top:-4px;font-size:12px;color:var(--mute)}
+
+/* Móvil: más bloques como carrusel horizontal para acortar el scroll */
+@media(max-width:1100px){
+  .svc,.mv,.tst,.steps{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin-inline:-4px;padding:6px 4px 14px;scrollbar-width:none}
+  .svc::-webkit-scrollbar,.mv::-webkit-scrollbar,.tst::-webkit-scrollbar,.steps::-webkit-scrollbar{display:none}
+  .svc>div,.mv-card,.tst>*,.step{flex:0 0 82%;scroll-snap-align:center}
+  .awards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;scrollbar-width:none;padding-bottom:6px}
+  .awards::-webkit-scrollbar{display:none}
+  .awards div{flex:0 0 74%;scroll-snap-align:start;flex-direction:column;gap:4px}
+  .about-grid{grid-template-columns:1fr;gap:26px}
+}
+
+@media(max-width:1100px){
+  section{padding-top:56px}
+  .mascot:not(.talk) .bub{display:none}
+  .mascot .bub{max-width:min(210px,56vw)}
+}

@@ -3,6 +3,11 @@ import { ref, nextTick, onBeforeUnmount } from 'vue'
 import { mascotMessages } from '../data/content'
 
 const index = ref(0)
+// En celular el globo solo aparece unos segundos (al cargar y al tocar la mascota) para no tapar el contenido.
+const talk = ref(true)
+let talkTimer = 0
+const say = (ms = 4500) => { talk.value = true; clearTimeout(talkTimer); talkTimer = setTimeout(() => (talk.value = false), ms) }
+say(5500)
 const show = ref(false)
 const fx = ref(0)
 const tick = ref(0)
@@ -19,6 +24,7 @@ const bits = [
 
 function onClick() {
   index.value = (index.value + 1) % mascotMessages.length
+  say()
   let n = fx.value
   while (n === fx.value) n = 1 + Math.floor(Math.random() * EFFECTS)
   fx.value = n
@@ -30,11 +36,11 @@ function onClick() {
     timer = setTimeout(() => (show.value = false), 3000)
   })
 }
-onBeforeUnmount(() => clearTimeout(timer))
+onBeforeUnmount(() => { clearTimeout(timer); clearTimeout(talkTimer) })
 </script>
 
 <template>
-  <div class="mascot">
+  <div class="mascot" :class="{ talk }">
     <div class="bub">{{ mascotMessages[index] }}</div>
     <div class="mwrap">
       <button type="button" aria-label="Mascota CG" @click="onClick">

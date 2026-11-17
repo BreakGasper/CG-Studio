@@ -15,5 +15,6 @@ import { experience } from '../data/content'
         <div class="chips"><span v-for="t in x.tags" :key="t">{{ t }}</span></div>
       </article>
     </div>
+    <p class="xp-hint" aria-hidden="true">Desliza para ver más →</p>
   </section>
 </template>
