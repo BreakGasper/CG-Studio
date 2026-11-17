@@ -511,3 +511,11 @@ aside{--mx:50%;--my:38%}
 .mwrap{animation:fl 3.4s ease-in-out infinite}
 @media(prefers-reduced-motion:reduce){.mwrap{animation:none}}
 .bk-err{font-size:14px;color:#d4351c;font-weight:600}
+
+/* Campos obligatorios y advertencias */
+.req{color:var(--hl);font-weight:700}
+.fld-err{display:block;margin-top:2px;color:#d4351c;font-size:12.5px;font-weight:600}
+.bk-card input.bad,.bk-card select.bad,.bk-card textarea.bad{border-color:#d4351c;background:color-mix(in srgb,#d4351c 7%,var(--bg))}
+.bk-card input.bad:focus,.bk-card textarea.bad:focus{outline-color:#d4351c}
+.bk-slots.bad{outline:2px solid #d4351c;outline-offset:6px;border-radius:14px}
+.bk-err{padding:9px 12px;border-radius:12px;background:color-mix(in srgb,#d4351c 10%,transparent);border:1px solid color-mix(in srgb,#d4351c 35%,transparent)}

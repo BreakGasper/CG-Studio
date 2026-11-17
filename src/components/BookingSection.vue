@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, computed, watch } from 'vue'
+import { ref, reactive, computed, watch, nextTick } from 'vue'
 import { booking, quote, contactEmail } from '../data/content'
 import { bookTab, quoteType } from '../composables/useUi'
 import { takenSlots, saveCita, saveCotizacion } from '../firebase/store'
@@ -24,6 +24,26 @@ const remoteTaken = ref([])
 const taken = computed(() => new Set([...agenda.value.filter(a => a.kind === 'cita' && a.date === f.date).map(a => a.time), ...remoteTaken.value]))
 async function refreshSlots() { remoteTaken.value = f.date ? (await takenSlots(f.date)) || [] : [] }
 const canBook = computed(() => f.name.trim() && f.contact.trim() && f.date && f.time)
+
+// Advertencias de campos obligatorios (aparecen al intentar enviar y se quitan solas al corregirlos).
+const cform = ref(null)
+const qform = ref(null)
+const showErrC = ref(false)
+const showErrQ = ref(false)
+const errC = computed(() => ({
+  name: f.name.trim() ? '' : 'Escribe tu nombre',
+  contact: f.contact.trim() ? '' : 'Escribe tu correo o WhatsApp',
+  date: f.date ? '' : 'Elige una fecha',
+  time: f.time ? '' : f.date ? 'Elige un horario disponible' : 'Primero elige una fecha y luego un horario',
+}))
+const missingC = computed(() => Object.values(errC.value).filter(Boolean).length)
+const badC = (k) => showErrC.value && !!errC.value[k]
+async function focusFirstBad(root) {
+  await nextTick()
+  const el = root?.querySelector('.bad')
+  el?.scrollIntoView({ block: 'center', behavior: 'smooth' })
+  el?.focus?.({ preventScroll: true })
+}
 const sortedAgenda = computed(() => [...agenda.value].sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time)))
 watch(() => f.date, async () => { bookError.value = ''; await refreshSlots(); if (taken.value.has(f.time)) f.time = '' })
 
@@ -37,7 +57,8 @@ function send(subject, body) {
 }
 
 async function book() {
-  if (!canBook.value || busy.value) return
+  if (busy.value) return
+  if (!canBook.value) { showErrC.value = true; focusFirstBad(cform.value); return }
   busy.value = true
   bookError.value = ''
   const data = { ...f }
@@ -61,6 +82,7 @@ async function book() {
       `Nombre: ${data.name}\nContacto: ${data.contact}\nFecha: ${fmtDate(data.date)} ${data.time}\nTema: ${data.topic}\nNotas: ${data.notes || '-'}`),
   }
   Object.assign(f, { name: '', contact: '', time: '', notes: '' })
+  showErrC.value = false
   await refreshSlots()
   busy.value = false
 }
@@ -99,10 +121,17 @@ function summary() {
   return `Tipo: ${c.t.label}\nExtras: ${c.ex.map(x => x.label).join(', ') || 'ninguno'}\nComplejidad: ${quote.complexity.find(x => x.id === q.cx).label}\nUrgencia: ${quote.urgency.find(x => x.id === q.ug).label}\n` +
     `Mantenimiento: ${q.maint ? 'sí' : 'no'}\nEstimado: ${money(c.min)} – ${money(c.max)} (~${c.weeks} sem.)`
 }
+const errQ = computed(() => ({
+  name: qc.name.trim() ? '' : 'Escribe tu nombre',
+  contact: qc.contact.trim() ? '' : 'Escribe tu correo o WhatsApp',
+}))
+const missingQ = computed(() => Object.values(errQ.value).filter(Boolean).length)
+const badQ = (k) => showErrQ.value && !!errQ.value[k]
 const qBusy = ref(false)
 const qSaved = ref(false)
 async function requestQuote() {
-  if (!qc.name.trim() || !qc.contact.trim() || qBusy.value) return
+  if (qBusy.value) return
+  if (missingQ.value) { showErrQ.value = true; focusFirstBad(qform.value); return }
   qBusy.value = true
   const c = calc.value
   const r = await saveCotizacion({
@@ -113,6 +142,7 @@ async function requestQuote() {
   const body = `Nombre: ${qc.name}\nContacto: ${qc.contact}\n${summary()}`
   agenda.value.push({ id: uid(), kind: 'cotización', date: today, time: '', name: qc.name, contact: qc.contact, topic: `${c.t.label} · ${money(c.min)}–${money(c.max)}` })
   qSent.value = send('Solicitud de cotización CG Studio', body)
+  showErrQ.value = false
   qBusy.value = false
 }
 </script>
@@ -129,24 +159,27 @@ async function requestQuote() {
           <button type="button" :class="{ on: tab === 'cotiza' }" role="tab" @click="tab = 'cotiza'">Cotizador</button>
         </div>
       <!-- CITA -->
-      <form v-if="tab === 'cita'" class="bk-card" @submit.prevent="book">
+      <form v-if="tab === 'cita'" ref="cform" class="bk-card" novalidate @submit.prevent="book">
         <div class="bk-row">
-          <label>Nombre<input v-model="f.name" required autocomplete="name" /></label>
-          <label>Correo o WhatsApp<input v-model="f.contact" required autocomplete="email" /></label>
+          <label><span>Nombre <span class="req" title="Obligatorio">*</span></span><input v-model="f.name" required autocomplete="name" :class="{ bad: badC('name') }" :aria-invalid="badC('name')" /><small v-if="badC('name')" class="fld-err" role="alert">{{ errC.name }}</small></label>
+          <label><span>Correo o WhatsApp <span class="req" title="Obligatorio">*</span></span><input v-model="f.contact" required autocomplete="email" :class="{ bad: badC('contact') }" :aria-invalid="badC('contact')" /><small v-if="badC('contact')" class="fld-err" role="alert">{{ errC.contact }}</small></label>
         </div>
         <div class="bk-row">
-          <label>Fecha<input v-model="f.date" type="date" :min="today" required /></label>
+          <label><span>Fecha <span class="req" title="Obligatorio">*</span></span><input v-model="f.date" type="date" :min="today" required :class="{ bad: badC('date') }" :aria-invalid="badC('date')" /><small v-if="badC('date')" class="fld-err" role="alert">{{ errC.date }}</small></label>
           <label>Tema
             <select v-model="f.topic"><option v-for="t in booking.topics" :key="t">{{ t }}</option></select>
           </label>
         </div>
-        <div class="bk-lbl">Horario</div>
-        <div class="bk-slots">
+        <div class="bk-lbl">Horario <span class="req" title="Obligatorio">*</span></div>
+        <div class="bk-slots" :class="{ bad: badC('time') }" tabindex="-1">
           <button v-for="s in booking.slots" :key="s" type="button" class="tab" :class="{ on: f.time === s }"
             :disabled="!f.date || taken.has(s)" @click="f.time = s">{{ s }}</button>
         </div>
+        <small v-if="badC('time')" class="fld-err" role="alert">{{ errC.time }}</small>
         <label>Notas (opcional)<textarea v-model="f.notes" rows="2" /></label>
-        <button class="btn pri" :disabled="!canBook || busy">{{ busy ? 'Guardando…' : 'Registrar cita' }}</button>
+        <p v-if="showErrC && missingC" class="bk-err" role="alert">⚠ Faltan {{ missingC }} campo{{ missingC > 1 ? 's' : '' }} obligatorio{{ missingC > 1 ? 's' : '' }}. Revisa los marcados en rojo.</p>
+        <button class="btn pri" :disabled="busy">{{ busy ? 'Guardando…' : 'Registrar cita' }}</button>
+        <p class="bk-note"><span class="req">*</span> Campos obligatorios.</p>
         <p v-if="bookError" class="bk-err" role="alert">{{ bookError }}</p>
         <p v-if="sent" class="bk-ok">
           <template v-if="sent.saved">✓ Cita recibida para el {{ fmtDate(sent.item.date) }} a las {{ sent.item.time }}. Te confirmaremos pronto.</template>
@@ -156,7 +189,7 @@ async function requestQuote() {
       </form>
 
       <!-- COTIZADOR -->
-      <div v-else class="bk-card">
+      <div v-else ref="qform" class="bk-card">
         <div class="bk-lbl">¿Qué necesitas?</div>
         <div class="bk-opts">
           <label v-for="t in quote.types" :key="t.id" class="tab" :class="{ on: q.type === t.id }">
@@ -187,10 +220,11 @@ async function requestQuote() {
           <span>≈ {{ calc.weeks }} semanas<template v-if="q.maint"> · + {{ money(quote.maintenance.price) }}/mes</template></span>
         </div>
         <div class="bk-row">
-          <label>Nombre<input v-model="qc.name" autocomplete="name" /></label>
-          <label>Correo o WhatsApp<input v-model="qc.contact" autocomplete="email" /></label>
+          <label><span>Nombre <span class="req" title="Obligatorio">*</span></span><input v-model="qc.name" autocomplete="name" :class="{ bad: badQ('name') }" :aria-invalid="badQ('name')" /><small v-if="badQ('name')" class="fld-err" role="alert">{{ errQ.name }}</small></label>
+          <label><span>Correo o WhatsApp <span class="req" title="Obligatorio">*</span></span><input v-model="qc.contact" autocomplete="email" :class="{ bad: badQ('contact') }" :aria-invalid="badQ('contact')" /><small v-if="badQ('contact')" class="fld-err" role="alert">{{ errQ.contact }}</small></label>
         </div>
-        <button class="btn pri" :disabled="!qc.name.trim() || !qc.contact.trim() || qBusy" @click="requestQuote">{{ qBusy ? 'Enviando…' : 'Solicitar esta cotización' }}</button>
+        <p v-if="showErrQ && missingQ" class="bk-err" role="alert">⚠ Faltan {{ missingQ }} campo{{ missingQ > 1 ? 's' : '' }} obligatorio{{ missingQ > 1 ? 's' : '' }}. Revisa los marcados en rojo.</p>
+        <button class="btn pri" :disabled="qBusy" @click="requestQuote">{{ qBusy ? 'Enviando…' : 'Solicitar esta cotización' }}</button>
         <p v-if="qSent" class="bk-ok"><template v-if="qSaved">✓ Solicitud recibida. Te enviaremos tu cotización pronto.</template><template v-else>✓ Cotización registrada. <a :href="qSent" target="_blank" rel="noopener">Enviar solicitud →</a></template></p>
         <p class="bk-note">Estimado orientativo; la cotización final se confirma tras revisar el alcance.</p>
       </div>
