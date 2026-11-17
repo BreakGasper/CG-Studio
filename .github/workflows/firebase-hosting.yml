@@ -36,9 +36,7 @@ jobs:
         with:
           workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
           service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
-          token_format: access_token
-          create_credentials_file: false
-      # firebase-tools no acepta credenciales de Workload Identity directamente: se le da un token de acceso.
-      - run: npx --yes firebase-tools@latest deploy --only hosting --project cg-studio-1d248 --non-interactive --debug
-        env:
-          GOOGLE_OAUTH_ACCESS_TOKEN: ${{ steps.auth.outputs.access_token }}
+          create_credentials_file: true
+      - run: |
+          echo "tipo de credencial:"; python3 -c "import json,os;d=json.load(open(os.environ['GOOGLE_APPLICATION_CREDENTIALS']));print(d.get('type'), list(d.keys()))"
+          npx --yes firebase-tools@latest deploy --only hosting --project cg-studio-1d248 --non-interactive --debug
