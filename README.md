@@ -59,3 +59,28 @@ echo "GCP_SERVICE_ACCOUNT=$SA"
 
 Luego, en GitHub → **Settings → Secrets and variables → Actions → pestaña Variables → New repository variable**,
 crea `GCP_WIF_PROVIDER` y `GCP_SERVICE_ACCOUNT` con los dos valores que imprimió el último comando.
+
+## Base de datos (Firestore) y panel de administración
+
+Las citas, cotizaciones y mensajes de contacto se guardan en **Firestore** (plan gratuito Spark).
+
+- **Colecciones:** `citas`, `cotizaciones`, `contactos` (solo el administrador puede leerlas) y `horarios`
+  (solo fecha y hora ocupadas, sin datos personales; es lo que bloquea los horarios ya reservados).
+- **Reglas de seguridad:** `firestore.rules`. Los visitantes solo pueden **crear** registros válidos;
+  solo `breakgasper@gmail.com` (cuenta de Google verificada) puede leer, editar o borrar.
+  Se publican con el workflow de GitHub (`deploy --only firestore:rules`).
+- **Panel privado:** `/admin` (inicio de sesión con Google, en tiempo real, con aviso sonoro de nuevas
+  solicitudes). Para cambiar el correo autorizado edita `ADMIN_EMAIL` en `src/admin/AdminApp.vue`
+  **y** el correo en `firestore.rules`.
+- **Configuración:** la página lee las claves públicas de Firebase de `/__/firebase/init.json`
+  (las sirve Firebase Hosting; requiere que el proyecto tenga una app web registrada). En desarrollo local
+  puedes definirlas en `.env.local` con `VITE_FIREBASE_CONFIG='{"apiKey":"...","projectId":"...","appId":"..."}'`.
+  Si Firebase no está disponible, los formularios usan el correo/WhatsApp como respaldo.
+- **Probar las reglas:** `npx firebase-tools emulators:exec --only firestore --project demo "<comando de pruebas>"`.
+
+### Permisos extra para publicar las reglas desde GitHub (una sola vez, en Cloud Shell)
+
+```bash
+gcloud projects add-iam-policy-binding cg-studio-1d248 --member="serviceAccount:github-deployer@cg-studio-1d248.iam.gserviceaccount.com" --role="roles/firebaserules.admin"
+gcloud projects add-iam-policy-binding cg-studio-1d248 --member="serviceAccount:github-deployer@cg-studio-1d248.iam.gserviceaccount.com" --role="roles/datastore.viewer"
+```
