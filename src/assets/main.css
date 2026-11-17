@@ -467,28 +467,34 @@ aside{--mx:50%;--my:38%}
 .mascot button:hover,.mascot button:active,.mascot button:focus{background:transparent!important;box-shadow:none}
 .mascot button:focus-visible{outline:2px solid var(--hl);outline-offset:4px;border-radius:12px}
 .mascot button:active svg{transform:scale(.94)}
-.hand{position:absolute;left:74%;top:-3%;width:40px;height:60px;pointer-events:none;z-index:3;transform-origin:0 100%}
-.hand-pop{width:100%;height:100%;transform-origin:15% 95%;animation:handIn 3s cubic-bezier(.3,1.4,.5,1) both}
-.hand-svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 7px color-mix(in srgb,var(--acc) 70%,transparent))}
-.hand-svg .arm{fill:none;stroke:var(--acc);stroke-width:13;stroke-linecap:round;opacity:.9}
-.hand-svg .palm{fill:var(--acc);opacity:.95}
-.hand-svg .fg{stroke:var(--acc);stroke-width:9;stroke-linecap:round;transform-box:fill-box;transform-origin:50% 100%}
-.hand-svg .gl{fill:#fff;opacity:.55}
-.hand-svg .wv{transform-box:view-box;transform-origin:20% 95%}
-@keyframes handIn{0%{transform:translate(-6px,14px) scale(.1);opacity:0}10%{transform:translate(0,0) scale(1.12);opacity:1}16%{transform:scale(1)}86%{transform:scale(1);opacity:1}100%{transform:translate(-6px,14px) scale(.1);opacity:0}}
-@keyframes wave{0%,100%{transform:rotate(-16deg)}50%{transform:rotate(22deg)}}
-@keyframes hop{0%,100%{transform:translateY(0)}40%{transform:translateY(-9px)}60%{transform:translateY(-9px) rotate(8deg)}}
-@keyframes clap{0%,100%{transform:translateX(0) rotate(0)}25%{transform:translateX(-4px) rotate(-10deg)}75%{transform:translateX(5px) rotate(12deg)}}
+.ghost{position:absolute;inset:0;pointer-events:none;z-index:3}
+.ghost svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 8px color-mix(in srgb,var(--acc) 65%,transparent))}
+.ghost .cont{fill:none;stroke:color-mix(in srgb,var(--acc) 55%,#fff);stroke-width:26;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:contDraw .6s ease-out forwards,contOut .35s ease-in 2.6s forwards}
+.ghost .cont-fill{fill:var(--acc);opacity:0;animation:contFill 3s ease both}
+.ghost .arm{fill:none;stroke:var(--acc);stroke-width:62;stroke-linecap:round;opacity:.92}
+.ghost .palm{fill:var(--acc);opacity:.95}
+.ghost .fg{stroke:var(--acc);stroke-width:44;stroke-linecap:round;transform-box:fill-box;transform-origin:50% 100%}
+.ghost .gl{fill:#fff;opacity:.55}
+.mascot button{padding:0;border:0}
+.ghost .hand-pop{transform-origin:415px 480px;animation:handIn 3s cubic-bezier(.3,1.4,.5,1) .25s both}
+.ghost .wv{transform-origin:430px 470px}
+@keyframes contDraw{to{stroke-dashoffset:0}}
+@keyframes contOut{to{opacity:0}}
+@keyframes contFill{0%{opacity:0}15%{opacity:.16}85%{opacity:.16}100%{opacity:0}}
+@keyframes handIn{0%{transform:scale(.05);opacity:0}10%{transform:scale(1.1);opacity:1}16%{transform:scale(1)}86%{transform:scale(1);opacity:1}100%{transform:scale(.05);opacity:0}}
+@keyframes wave{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(13deg)}}
+@keyframes hop{0%,100%{transform:translateY(0)}40%{transform:translateY(-60px)}60%{transform:translateY(-90px) rotate(6deg)}}
+@keyframes clap{0%,100%{transform:translateX(0) rotate(0)}25%{transform:translateX(-40px) rotate(-8deg)}75%{transform:translateX(46px) rotate(9deg)}}
 @keyframes wig{0%,100%{transform:rotate(0)}50%{transform:rotate(18deg)}}
 @keyframes bit{0%{transform:translate(0,0) scale(.3);opacity:0}25%{opacity:1}100%{transform:translate(var(--x),var(--y)) scale(1.15) rotate(25deg);opacity:0}}
-.fx1 .wv{animation:wave .5s ease-in-out .35s 5}
-.fx2 .wv{animation:wave .75s ease-in-out .35s 3}
-.fx3 .wv{animation:hop .7s ease-in-out .35s 3}
-.fx4 .wv{animation:clap .22s ease-in-out .35s 9}
-.fx5 .wv{animation:wave 1s ease-in-out .35s 2}
+.fx1 .wv{animation:wave .5s ease-in-out .7s 5}
+.fx2 .wv{animation:wave .75s ease-in-out .7s 3}
+.fx3 .wv{animation:hop .7s ease-in-out .7s 3}
+.fx4 .wv{animation:clap .22s ease-in-out .7s 9}
+.fx5 .wv{animation:wave 1s ease-in-out .7s 2}
 .fx5 .fg{animation:wig .35s ease-in-out infinite alternate}
 .fx5 .f1{animation-delay:0s}.fx5 .f2{animation-delay:.08s}.fx5 .f3{animation-delay:.16s}.fx5 .f4{animation-delay:.24s}
-.hand .bit{position:absolute;left:18px;top:8px;font-size:15px;line-height:1;color:var(--acc);opacity:0;animation:bit 1.4s ease-out 4 both;text-shadow:0 0 8px color-mix(in srgb,var(--acc) 60%,transparent)}
-.fx3 .bit{color:var(--hl)}.fx4 .bit{color:var(--acc)}
+.ghost .bit{position:absolute;left:84%;top:10%;font-size:15px;line-height:1;color:var(--acc);opacity:0;animation:bit 1.4s ease-out 4 both;text-shadow:0 0 8px color-mix(in srgb,var(--acc) 60%,transparent)}
+.fx3 .bit{color:var(--hl)}
 @media(max-width:1100px){.mascot{right:36px}}
-@media(prefers-reduced-motion:reduce){.hand .wv,.hand .fg,.hand .bit{animation:none!important}.hand-pop{animation-duration:3s}}
+@media(prefers-reduced-motion:reduce){.ghost .wv,.ghost .fg,.ghost .bit{animation:none!important}}
