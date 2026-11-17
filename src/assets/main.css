@@ -459,3 +459,11 @@ aside{--mx:50%;--my:38%}
 
 :root[data-theme="tomate"] aside .socials a,:root[data-theme="tomate"] aside .avail,:root[data-theme="tomate"] aside .a-say{color:#efe7d3}
 :root[data-theme="tomate"] aside .socials a,:root[data-theme="tomate"] aside .avail{background:#26493a;border-color:#2f5642}
+
+/* Mascota flotante: sin fondo gris al tocar/hacer clic, y giro al hacer clic */
+.mascot button{-webkit-tap-highlight-color:transparent;background:transparent!important;outline:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.mascot button:hover,.mascot button:active,.mascot button:focus{background:transparent!important;box-shadow:none}
+.mascot button:focus-visible{outline:2px solid var(--hl);outline-offset:4px;border-radius:12px}
+.mascot button svg{transform-origin:50% 50%}
+.mascot button svg.spin{animation:mascotSpin .7s cubic-bezier(.4,.1,.2,1)}
+@keyframes mascotSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
