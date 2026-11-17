@@ -420,3 +420,6 @@ html.pv-lock{overflow:hidden}
 .car-track{user-select:none;-webkit-user-select:none}.car-track img,.car-track svg{-webkit-user-drag:none}
 /* espaciadores para que la primera y la última tarjeta puedan quedar centradas */
 .car-track::before,.car-track::after{content:"";flex:0 0 max(0px,calc(50% - min(220px,42%) - 22px))}
+/* Botones azules (turquesa de marca) del panel lateral */
+.btn.blue,.btn.blue:visited{background:var(--acc);color:var(--acc-ink);border:1px solid var(--acc)}
+.btn.blue:hover,.btn.blue:focus-visible{background:var(--hl);color:#fff;border-color:var(--hl)}

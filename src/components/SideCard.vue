@@ -23,9 +23,8 @@ const typed = useTyped(typedWords, 'Hola, somos ')
       <h3><span>{{ typed }}</span><span class="caret"></span></h3>
       <p>Desarrollamos software, plataformas e inteligencia artificial para que tu negocio crezca y automatice, con sede en LATAM.</p>
       <div class="row">
-        <a class="circ" href="#contact" aria-label="Contacto">↗</a>
-        <a class="btn pri" href="#contact">Hablemos</a>
-        <a class="btn" href="#work" style="border:0">Ver demos</a>
+        <a class="btn blue" href="#contact">Hablemos</a>
+        <a class="btn blue" href="#work">Ver demos</a>
       </div>
     </div>
   </aside>
