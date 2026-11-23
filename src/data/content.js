@@ -1,5 +1,6 @@
 // Contenido del sitio. Textos de ejemplo: reemplazar por información real antes de publicar.
 // Los proyectos reales (GitHub) viven en ./projects.js
+import { reactive } from 'vue'
 import { projects } from './projects'
 
 export const navItems = [
@@ -149,14 +150,16 @@ export const contactEmail = 'breakgasper@gmail.com'
 
 // ---- Agenda y cotizador ------------------------------------------------
 // Precios y plazos de EJEMPLO: ajústalos a tus tarifas reales.
-export const booking = {
+export const booking = reactive({
   currency: 'USD',
   whatsapp: '', // ej. '5215512345678' (código de país + número). Vacío = solo correo.
   slots: ['09:00', '10:00', '11:00', '12:00', '13:00', '16:00', '17:00', '18:00'],
   topics: ['Proyecto nuevo', 'Cotización', 'Asesoría técnica', 'Soporte / mantenimiento', 'Inteligencia artificial'],
-}
+  closedWeekdays: [], // días de la semana sin citas (0 = domingo … 6 = sábado); se edita desde el panel
+  blockedDates: [], // fechas sin citas (AAAA-MM-DD); se editan desde el panel
+})
 
-export const quote = {
+export const quote = reactive({
   types: [
     { id: 'web', label: 'Sitio web', price: 800, weeks: 2 },
     { id: 'app', label: 'App móvil', price: 2500, weeks: 6 },
@@ -182,7 +185,7 @@ export const quote = {
   ],
   maintenance: { label: 'Mantenimiento mensual', price: 150 },
   spread: 0.15, // rango ± sobre el estimado
-}
+})
 
 // Preguntas frecuentes (texto propuesto: ajusta plazos y condiciones a tu forma de trabajar).
 export const faqs = [
@@ -198,7 +201,7 @@ export const faqs = [
 
 // Paquetes: los precios "desde" salen del cotizador (valores de ejemplo, ajústalos).
 const priceOf = (id) => quote.types.find((t) => t.id === id)
-export const packages = [
+export const packages = reactive([
   {
     id: 'web', quote: 'web', name: 'Sitio web', tag: 'Para empezar', from: priceOf('web').price, weeks: priceOf('web').weeks,
     text: 'Presencia profesional, rápida y lista para crecer.',
@@ -214,7 +217,22 @@ export const packages = [
     text: 'Sistema web con panel, automatización y agentes de IA.',
     items: ['Panel de administración', 'APIs y base de datos', 'Agentes y automatizaciones con IA', 'Pagos en línea', 'Líder técnico dedicado'],
   },
-]
+])
+
+// Los precios "desde" y los plazos de los paquetes salen del cotizador (se vuelven a calcular al cambiar la configuración).
+export function syncPackagePrices() {
+  for (const p of packages) {
+    const t = quote.types.find((x) => x.id === p.quote)
+    if (t) { p.from = t.price; p.weeks = t.weeks }
+  }
+}
+
+// Valores de fábrica de lo que se puede editar desde el panel (para "Restaurar").
+export const defaultSiteConfig = JSON.parse(JSON.stringify({
+  quote: { types: quote.types, extras: quote.extras, complexity: quote.complexity, urgency: quote.urgency, maintenance: quote.maintenance, spread: quote.spread },
+  packages: packages.map(({ id, name, tag, text, items, quote: q, featured }) => ({ id, name, tag, text, items, quote: q, featured: !!featured })),
+  slots: booking.slots, closedWeekdays: [], blockedDates: [],
+}))
 
 // Áreas de experiencia (texto propuesto a partir de tus proyectos: ajústalo).
 export const experience = [

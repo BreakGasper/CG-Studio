@@ -15,7 +15,13 @@ service cloud.firestore {
     }
     function text(v, min, max) { return v is string && v.size() >= min && v.size() <= max; }
     function validDate(v) { return v is string && v.matches('^20[0-9]{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$'); }
-    function validTime(v) { return v in ['09:00', '10:00', '11:00', '12:00', '13:00', '16:00', '17:00', '18:00']; }
+    // Horarios permitidos: los que configuró el administrador en /config/site (o los de fábrica si aún no hay configuración).
+    function cfgPath() { return /databases/$(database)/documents/config/site; }
+    function allowedSlots() {
+      return exists(cfgPath()) ? get(cfgPath()).data.get('slots', ['09:00', '10:00', '11:00', '12:00', '13:00', '16:00', '17:00', '18:00'])
+                               : ['09:00', '10:00', '11:00', '12:00', '13:00', '16:00', '17:00', '18:00'];
+    }
+    function validTime(v) { return v is string && v.matches('^[0-2][0-9]:[0-5][0-9]$') && v in allowedSlots(); }
     function validTopic(v) { return v in ['Proyecto nuevo', 'Cotización', 'Asesoría técnica', 'Soporte / mantenimiento', 'Inteligencia artificial']; }
     function keysOnly(allowed) { return request.resource.data.keys().hasOnly(allowed); }
     function keysAll(required) { return request.resource.data.keys().hasAll(required); }
@@ -77,6 +83,29 @@ service cloud.firestore {
         && request.resource.data.status == 'nueva'
         && request.resource.data.createdAt == request.time;
       allow read, update, delete: if isAdmin();
+    }
+
+    // Configuración editable del sitio (precios, paquetes, horarios). La página la lee; solo el administrador la escribe.
+    match /config/{doc} {
+      allow read: if true;
+      allow write: if isAdmin() && doc == 'site';
+    }
+
+    // Contador de visitas anónimo: un documento por día con totales (sin datos personales ni identificadores).
+    // Los visitantes solo pueden sumar de 1 en 1; solo el administrador lo lee.
+    match /visitas/{day} {
+      allow read, delete: if isAdmin();
+      allow create: if validDate(day)
+        && keysOnly(['n', 'm', 'd'])
+        && request.resource.data.n == 1
+        && request.resource.data.m is int && request.resource.data.d is int
+        && request.resource.data.m + request.resource.data.d == 1
+        && request.resource.data.m >= 0 && request.resource.data.d >= 0;
+      allow update: if (isAdmin()) || (keysOnly(['n', 'm', 'd'])
+        && request.resource.data.n == resource.data.n + 1
+        && request.resource.data.m is int && request.resource.data.d is int
+        && request.resource.data.m >= resource.data.m && request.resource.data.d >= resource.data.d
+        && (request.resource.data.m + request.resource.data.d) == (resource.data.m + resource.data.d + 1));
     }
 
     match /{document=**} {

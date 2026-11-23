@@ -1,6 +1,10 @@
 <script setup>
 import { onMounted, onBeforeUnmount } from 'vue'
 import { loadTheme, goToSection, isMobileMode } from './composables/useUi'
+import { applySiteConfig, applyCachedSiteConfig, SITE_KEY } from './data/siteConfig'
+import { loadSiteConfig } from './firebase/store'
+import { countVisit, startAnalytics } from './firebase/track'
+import CookieNotice from './components/CookieNotice.vue'
 import MobileTabs from './components/MobileTabs.vue'
 import SvgSprite from './components/SvgSprite.vue'
 import OverlayMenu from './components/OverlayMenu.vue'
@@ -33,7 +37,18 @@ function onLink(e) {
   e.preventDefault()
   goToSection(id)
 }
+// Precios, paquetes y horarios editables desde el panel: se aplica primero la última copia guardada (sin parpadeo)
+// y luego la versión actual de Firestore.
+applyCachedSiteConfig()
+const idle = (fn) => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 2500 }) : setTimeout(fn, 600))
 onMounted(() => {
+  idle(() => { countVisit(); startAnalytics() })
+  idle(async () => {
+    const cfg = await loadSiteConfig()
+    if (!cfg) return
+    applySiteConfig(cfg)
+    try { localStorage.setItem(SITE_KEY, JSON.stringify(cfg)) } catch { /* sin almacenamiento */ }
+  })
   loadTheme()
   document.addEventListener('click', onLink)
   if (location.hash.length > 1 && isMobileMode()) goToSection(location.hash.slice(1))
@@ -48,6 +63,7 @@ onBeforeUnmount(() => document.removeEventListener('click', onLink))
   <DockNav />
   <MascotWidget />
   <MobileTabs />
+  <CookieNotice />
   <main>
     <TopBar />
     <div data-pane="inicio"><HeroSection /></div>

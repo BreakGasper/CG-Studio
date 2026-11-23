@@ -18,6 +18,18 @@ async function live() {
   return (await liveP) ? f : null
 }
 
+// Configuración editable del sitio (precios, paquetes, horarios) guardada por el administrador. null si no hay.
+export async function loadSiteConfig() {
+  const f = await getFirebase()
+  if (!f) return null
+  try {
+    const snap = await f.fs.getDoc(f.fs.doc(f.db, 'config', 'site'))
+    return snap.exists() ? snap.data() : null
+  } catch {
+    return null
+  }
+}
+
 // Horarios ya ocupados para una fecha (null si Firebase no está disponible).
 export async function takenSlots(date) {
   const f = await live()
