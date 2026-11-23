@@ -69,9 +69,16 @@ Las citas, cotizaciones y mensajes de contacto se guardan en **Firestore** (plan
 - **Reglas de seguridad:** `firestore.rules`. Los visitantes solo pueden **crear** registros válidos;
   solo `breakgasper@gmail.com` (cuenta de Google verificada) puede leer, editar o borrar.
   Se publican con el workflow de GitHub (`deploy --only firestore:rules`).
-- **Panel privado:** `/admin` (inicio de sesión con Google, en tiempo real, con aviso sonoro de nuevas
-  solicitudes). Para cambiar el correo autorizado edita `ADMIN_EMAIL` en `src/admin/AdminApp.vue`
-  **y** el correo en `firestore.rules`.
+- **Panel privado:** `/admin` (inicio de sesión con Google, en tiempo real, con aviso sonoro de nuevas solicitudes). Para cambiar el
+  correo autorizado edita `ADMIN_EMAIL` en `src/admin/AdminApp.vue` **y** el correo en `firestore.rules`. Secciones:
+  - **Resumen:** solicitudes nuevas, valor potencial de las cotizaciones abiertas, solicitudes por semana, visitas, próximas citas.
+  - **Citas / Cotizaciones / Mensajes:** búsqueda, filtros por etapa y fechas, etapas de seguimiento, notas internas, botones de
+    correo/WhatsApp, reagendar citas y **exportar a Excel (CSV)**.
+  - **Calendario:** vista mensual de la agenda, horarios libres u ocupados, bloquear horarios y días.
+  - **Visitas:** contador anónimo (`visitas/{AAAA-MM-DD}`, sin cookies) y enlace a Google Analytics (solo se activa si el visitante acepta el aviso).
+  - **Ajustes:** precios y plazos del cotizador, paquetes, horarios disponibles, días cerrados y fechas no disponibles. Se guardan en
+    `config/site` (lectura pública, escritura solo del administrador) y la página los aplica sobre los valores de fábrica de
+    `src/data/content.js`; "Restaurar" borra ese documento.
 - **Configuración:** las claves públicas de la app web de Firebase están en `src/firebase/config.js` (no son secretas; las protegen las reglas de seguridad). En pruebas locales se pueden sustituir con `VITE_FIREBASE_CONFIG` en `.env.local`.
   Si Firebase no responde o las reglas no están publicadas, los formularios usan el correo/WhatsApp de respaldo.
 - **Probar las reglas:** `npx firebase-tools emulators:exec --only firestore --project demo "<comando de pruebas>"`.

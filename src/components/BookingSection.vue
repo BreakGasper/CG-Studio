@@ -23,7 +23,9 @@ const remoteTaken = ref([])
 // Horarios ocupados: los de todos los visitantes (Firestore) más los de este navegador.
 const taken = computed(() => new Set([...agenda.value.filter(a => a.kind === 'cita' && a.date === f.date).map(a => a.time), ...remoteTaken.value]))
 async function refreshSlots() { remoteTaken.value = f.date ? (await takenSlots(f.date)) || [] : [] }
-const canBook = computed(() => f.name.trim() && f.contact.trim() && f.date && f.time)
+// Días sin citas (configurados en el panel): días de la semana cerrados y fechas bloqueadas.
+const dayClosed = computed(() => !!f.date && (booking.blockedDates.includes(f.date) || booking.closedWeekdays.includes(new Date(f.date + 'T12:00').getDay())))
+const canBook = computed(() => f.name.trim() && f.contact.trim() && f.date && f.time && !dayClosed.value)
 
 // Advertencias de campos obligatorios (aparecen al intentar enviar y se quitan solas al corregirlos).
 const cform = ref(null)
@@ -33,8 +35,8 @@ const showErrQ = ref(false)
 const errC = computed(() => ({
   name: f.name.trim() ? '' : 'Escribe tu nombre',
   contact: f.contact.trim() ? '' : 'Escribe tu correo o WhatsApp',
-  date: f.date ? '' : 'Elige una fecha',
-  time: f.time ? '' : f.date ? 'Elige un horario disponible' : 'Primero elige una fecha y luego un horario',
+  date: !f.date ? 'Elige una fecha' : dayClosed.value ? 'Ese día no hay citas disponibles. Elige otra fecha.' : '',
+  time: f.time ? '' : f.date ? (dayClosed.value ? 'Elige otra fecha para ver horarios' : 'Elige un horario disponible') : 'Primero elige una fecha y luego un horario',
 }))
 const missingC = computed(() => Object.values(errC.value).filter(Boolean).length)
 const badC = (k) => showErrC.value && !!errC.value[k]
@@ -173,7 +175,7 @@ async function requestQuote() {
         <div class="bk-lbl">Horario <span class="req" title="Obligatorio">*</span></div>
         <div class="bk-slots" :class="{ bad: badC('time') }" tabindex="-1">
           <button v-for="s in booking.slots" :key="s" type="button" class="tab" :class="{ on: f.time === s }"
-            :disabled="!f.date || taken.has(s)" @click="f.time = s">{{ s }}</button>
+            :disabled="!f.date || dayClosed || taken.has(s)" @click="f.time = s">{{ s }}</button>
         </div>
         <small v-if="badC('time')" class="fld-err" role="alert">{{ errC.time }}</small>
         <label>Notas (opcional)<textarea v-model="f.notes" rows="2" /></label>

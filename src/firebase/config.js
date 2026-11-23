@@ -7,4 +7,5 @@ export const firebaseConfig = {
   storageBucket: 'cg-studio-1d248.firebasestorage.app',
   messagingSenderId: '530382553123',
   appId: '1:530382553123:web:af1e92ef42638fcfecb196',
+  measurementId: 'G-SNHB44B5KY', // Google Analytics (solo se activa si el visitante lo acepta)
 }

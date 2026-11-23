@@ -3,7 +3,7 @@
 //   npx firebase-tools emulators:exec --only firestore --project cg-test "node tests/firestore.rules.test.mjs"
 import { initializeTestEnvironment, assertSucceeds, assertFails } from '@firebase/rules-unit-testing'
 import { readFileSync } from 'node:fs'
-import { doc, collection, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc, writeBatch, serverTimestamp, query, where } from 'firebase/firestore'
+import { doc, collection, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc, writeBatch, serverTimestamp, query, where, increment } from 'firebase/firestore'
 
 const env = await initializeTestEnvironment({
   projectId: 'cg-test',
@@ -65,6 +65,35 @@ await t('el horario liberado se puede volver a reservar', () => assertSucceeds(r
 await t('mismo correo SIN verificar NO tiene acceso', () => assertFails(getDocs(collection(adminUnverified, 'citas'))))
 await t('otra cuenta de Google NO tiene acceso', () => assertFails(getDocs(collection(other, 'contactos'))))
 await t('colección desconocida bloqueada', () => assertFails(setDoc(doc(anon, 'otra', 'x'), { a: 1 })))
+
+
+console.log('CONFIGURACIÓN EDITABLE (/config/site)')
+await t('visitante lee la configuración', () => assertSucceeds(getDoc(doc(anon, 'config', 'site'))))
+await t('visitante NO puede escribir la configuración', () => assertFails(setDoc(doc(anon, 'config', 'site'), { slots: ['09:00'] })))
+await t('otra cuenta NO puede escribir la configuración', () => assertFails(setDoc(doc(other, 'config', 'site'), { slots: ['09:00'] })))
+await t('admin guarda la configuración', () => assertSucceeds(setDoc(doc(admin, 'config', 'site'), { slots: ['08:00', '09:00', '15:30'], quote: { types: [] } })))
+await t('otro documento en /config bloqueado incluso para admin', () => assertFails(setDoc(doc(admin, 'config', 'otro'), { a: 1 })))
+await t('con la configuración nueva, 15:30 ya se puede reservar', () => assertSucceeds(reservar(anon, { date: '2026-12-02', time: '15:30' }, 'k1')))
+await t('con la configuración nueva, 10:00 (antes válido) se rechaza', () => assertFails(reservar(anon, { date: '2026-12-02', time: '10:00' }, 'k2')))
+await t('hora mal formada rechazada aunque esté en la lista', () => assertFails(reservar(anon, { date: '2026-12-03', time: '9:00' }, 'k3')))
+await t('admin bloquea un horario sin cita (vacaciones)', () => assertSucceeds(setDoc(doc(admin, 'horarios', '2026-12-24_09:00'), { date: '2026-12-24', time: '09:00', createdAt: serverTimestamp() })))
+await t('el horario bloqueado ya no se puede reservar', () => assertFails(reservar(anon, { date: '2026-12-24', time: '09:00' }, 'k4')))
+
+console.log('VISITAS (contador anónimo)')
+await t('primera visita del día (escritorio) crea el documento', () => assertSucceeds(setDoc(doc(anon, 'visitas', '2026-12-05'), { n: increment(1), m: increment(0), d: increment(1) }, { merge: true })))
+await t('segunda visita (móvil) suma 1', () => assertSucceeds(setDoc(doc(anon, 'visitas', '2026-12-05'), { n: increment(1), m: increment(1), d: increment(0) }, { merge: true })))
+await t('sumar 5 de golpe rechazado', () => assertFails(setDoc(doc(anon, 'visitas', '2026-12-05'), { n: increment(5), m: increment(0), d: increment(5) }, { merge: true })))
+await t('restar visitas rechazado', () => assertFails(setDoc(doc(anon, 'visitas', '2026-12-05'), { n: increment(-1), m: increment(0), d: increment(-1) }, { merge: true })))
+await t('campos extra en visitas rechazados', () => assertFails(setDoc(doc(anon, 'visitas', '2026-12-06'), { n: increment(1), m: increment(0), d: increment(1), ip: '1.2.3.4' }, { merge: true })))
+await t('id de día inválido rechazado', () => assertFails(setDoc(doc(anon, 'visitas', 'hoy'), { n: increment(1), m: increment(0), d: increment(1) }, { merge: true })))
+await t('visitante NO puede leer las visitas', () => assertFails(getDoc(doc(anon, 'visitas', '2026-12-05'))))
+await t('admin lee las visitas', () => assertSucceeds(getDoc(doc(admin, 'visitas', '2026-12-05'))))
+await t('admin elimina un día de visitas', () => assertSucceeds(deleteDoc(doc(admin, 'visitas', '2026-12-05'))))
+
+console.log('SEGUIMIENTO (admin)')
+await t('admin cambia etapa y agrega notas a una cita', async () => { await assertSucceeds(updateDoc(doc(admin, 'citas', 'c3'), { status: 'confirmada', notas: 'Llamar el lunes' })) })
+await t('admin reagenda: libera el horario y toma otro', async () => { const b = writeBatch(admin); b.delete(doc(admin, 'horarios', '2026-12-01_11:00')); b.set(doc(admin, 'horarios', '2026-12-01_09:00'), { date: '2026-12-01', time: '09:00', createdAt: serverTimestamp() }); b.update(doc(admin, 'citas', 'c3'), { date: '2026-12-01', time: '09:00' }); await assertSucceeds(b.commit()) })
+await t('visitante NO puede agregar notas ni cambiar etapa', () => assertFails(updateDoc(doc(anon, 'citas', 'c3'), { notas: 'x' })))
 
 console.log(`\n${pass} correctas, ${fail} fallidas`)
 await env.cleanup()
