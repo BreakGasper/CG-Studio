@@ -6,7 +6,7 @@ import { takenSlots, saveCita, saveCotizacion } from '../firebase/store'
 
 const tab = bookTab
 const KEY = 'cg-agenda'
-const money = (n) => new Intl.NumberFormat('es', { style: 'currency', currency: booking.currency, maximumFractionDigits: 0 }).format(n)
+const money = (n) => new Intl.NumberFormat('es-MX', { style: 'currency', currency: booking.currency, maximumFractionDigits: 0 }).format(n)
 
 // ---------- Agenda (guardada en este navegador) ----------
 const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || [] } catch { return [] } }

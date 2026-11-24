@@ -151,7 +151,7 @@ export const contactEmail = 'breakgasper@gmail.com'
 // ---- Agenda y cotizador ------------------------------------------------
 // Precios y plazos de EJEMPLO: ajústalos a tus tarifas reales.
 export const booking = reactive({
-  currency: 'USD',
+  currency: 'MXN',
   whatsapp: '', // ej. '5215512345678' (código de país + número). Vacío = solo correo.
   slots: ['09:00', '10:00', '11:00', '12:00', '13:00', '16:00', '17:00', '18:00'],
   topics: ['Proyecto nuevo', 'Cotización', 'Asesoría técnica', 'Soporte / mantenimiento', 'Inteligencia artificial'],
@@ -161,18 +161,18 @@ export const booking = reactive({
 
 export const quote = reactive({
   types: [
-    { id: 'web', label: 'Sitio web', price: 800, weeks: 2 },
-    { id: 'app', label: 'App móvil', price: 2500, weeks: 6 },
-    { id: 'platform', label: 'Plataforma / sistema web', price: 3500, weeks: 8 },
-    { id: 'api', label: 'API / backend', price: 1500, weeks: 3 },
-    { id: 'ai', label: 'IA y automatización', price: 1800, weeks: 4 },
+    { id: 'web', label: 'Sitio web', price: 15000, weeks: 2 },
+    { id: 'app', label: 'App móvil', price: 45000, weeks: 6 },
+    { id: 'platform', label: 'Plataforma / sistema web', price: 65000, weeks: 8 },
+    { id: 'api', label: 'API / backend', price: 27000, weeks: 3 },
+    { id: 'ai', label: 'IA y automatización', price: 32000, weeks: 4 },
   ],
   extras: [
-    { id: 'admin', label: 'Panel de administración', price: 600, weeks: 1 },
-    { id: 'design', label: 'Diseño UI/UX', price: 500, weeks: 1 },
-    { id: 'pay', label: 'Pagos en línea', price: 400, weeks: 1 },
-    { id: 'agents', label: 'Agentes / integración IA', price: 900, weeks: 2 },
-    { id: 'deploy', label: 'Hosting y despliegue', price: 200, weeks: 0 },
+    { id: 'admin', label: 'Panel de administración', price: 11000, weeks: 1 },
+    { id: 'design', label: 'Diseño UI/UX', price: 9000, weeks: 1 },
+    { id: 'pay', label: 'Pagos en línea', price: 7000, weeks: 1 },
+    { id: 'agents', label: 'Agentes / integración IA', price: 16000, weeks: 2 },
+    { id: 'deploy', label: 'Hosting y despliegue', price: 3500, weeks: 0 },
   ],
   complexity: [
     { id: 'low', label: 'Básica', mult: 1 },
@@ -183,13 +183,13 @@ export const quote = reactive({
     { id: 'normal', label: 'Normal', mult: 1 },
     { id: 'fast', label: 'Prioritaria', mult: 1.25 },
   ],
-  maintenance: { label: 'Mantenimiento mensual', price: 150 },
+  maintenance: { label: 'Mantenimiento mensual', price: 2700 },
   spread: 0.15, // rango ± sobre el estimado
 })
 
 // Preguntas frecuentes (texto propuesto: ajusta plazos y condiciones a tu forma de trabajar).
 export const faqs = [
-  { q: '¿Cuánto cuesta un proyecto?', a: 'Depende del alcance. Un sitio web puede empezar desde unos cientos de dólares y una app o plataforma desde unos miles. Usa el cotizador de esta página para obtener un rango en minutos; la cifra final se confirma tras revisar el alcance.' },
+  { q: '¿Cuánto cuesta un proyecto?', a: 'Depende del alcance. Un sitio web puede empezar desde unos $15,000 pesos y una app o plataforma desde unos $45,000 pesos. Usa el cotizador de esta página para obtener un rango en minutos; la cifra final se confirma tras revisar el alcance.' },
   { q: '¿Cuánto tarda en estar listo?', a: 'Un sitio web suele tomar de 2 a 3 semanas, una API o automatización de 3 a 4, y una app móvil o plataforma de 6 a 8. Los plazos cambian según la complejidad y qué tan rápido recibamos contenido y aprobaciones.' },
   { q: '¿Qué tecnologías usan?', a: 'Android (Kotlin/Java), Flutter, Vue 3, Firebase, AWS, SQL Server, SAP ABAP e inteligencia artificial. Elegimos la herramienta que mejor resuelve tu caso, no la que esté de moda.' },
   { q: '¿Pueden integrar inteligencia artificial en mi negocio?', a: 'Sí. Creamos agentes, automatizaciones y asistentes conectados a tus sistemas para ahorrar tareas repetitivas, siempre empezando por un caso pequeño y medible.' },
