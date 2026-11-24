@@ -85,12 +85,12 @@ void applySiteConfig; void quote; void packages
     <p class="muted">Los cambios se aplican en la página al guardar (los visitantes los ven al recargar).</p>
 
     <section class="a-card">
-      <h3>Cotizador · precios (USD) y plazos</h3>
+      <h3>Cotizador · precios (MXN) y plazos</h3>
       <table class="tbl">
         <thead><tr><th>Tipo de proyecto</th><th>Precio base</th><th>Semanas</th></tr></thead>
         <tbody>
           <tr v-for="t in f.quote.types" :key="t.id"><td>{{ labelOf(quote.types, t.id) }}</td>
-            <td><input v-model.number="t.price" class="in num" type="number" min="0" step="50" /></td>
+            <td><input v-model.number="t.price" class="in num" type="number" min="0" step="500" /></td>
             <td><input v-model.number="t.weeks" class="in num" type="number" min="0" /></td></tr>
         </tbody>
       </table>
@@ -98,7 +98,7 @@ void applySiteConfig; void quote; void packages
         <thead><tr><th>Extra</th><th>Precio</th><th>Semanas</th></tr></thead>
         <tbody>
           <tr v-for="t in f.quote.extras" :key="t.id"><td>{{ labelOf(quote.extras, t.id) }}</td>
-            <td><input v-model.number="t.price" class="in num" type="number" min="0" step="50" /></td>
+            <td><input v-model.number="t.price" class="in num" type="number" min="0" step="500" /></td>
             <td><input v-model.number="t.weeks" class="in num" type="number" min="0" /></td></tr>
         </tbody>
       </table>
@@ -110,7 +110,7 @@ void applySiteConfig; void quote; void packages
         <div>
           <h4>Urgencia (multiplicador)</h4>
           <label v-for="t in f.quote.urgency" :key="t.id" class="row">{{ labelOf(quote.urgency, t.id) }} <input v-model.number="t.mult" class="in num" type="number" min="0.5" step="0.05" /></label>
-          <label class="row">Mantenimiento mensual (USD) <input v-model.number="f.quote.maintenance.price" class="in num" type="number" min="0" step="10" /></label>
+          <label class="row">Mantenimiento mensual (MXN) <input v-model.number="f.quote.maintenance.price" class="in num" type="number" min="0" step="100" /></label>
           <label class="row">Margen del rango (0–0.5) <input v-model.number="f.quote.spread" class="in num" type="number" min="0" max="0.5" step="0.05" /></label>
         </div>
       </div>

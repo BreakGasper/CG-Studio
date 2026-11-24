@@ -1,7 +1,7 @@
 <script setup>
 import { packages, booking } from '../data/content'
 import { openBooking } from '../composables/useUi'
-const money = (n) => new Intl.NumberFormat('es', { style: 'currency', currency: booking.currency, maximumFractionDigits: 0 }).format(n)
+const money = (n) => new Intl.NumberFormat('es-MX', { style: 'currency', currency: booking.currency, maximumFractionDigits: 0 }).format(n)
 </script>
 
 <template>
