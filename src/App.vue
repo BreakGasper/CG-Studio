@@ -4,6 +4,7 @@ import { loadTheme, goToSection, isMobileMode } from './composables/useUi'
 import { applySiteConfig, applyCachedSiteConfig, SITE_KEY } from './data/siteConfig'
 import { loadSiteConfig } from './firebase/store'
 import { countVisit, startAnalytics } from './firebase/track'
+import { setupReveal } from './composables/useReveal'
 import CookieNotice from './components/CookieNotice.vue'
 import MobileTabs from './components/MobileTabs.vue'
 import SvgSprite from './components/SvgSprite.vue'
@@ -50,6 +51,7 @@ onMounted(() => {
     try { localStorage.setItem(SITE_KEY, JSON.stringify(cfg)) } catch { /* sin almacenamiento */ }
   })
   loadTheme()
+  setupReveal()
   document.addEventListener('click', onLink)
   if (location.hash.length > 1 && isMobileMode()) goToSection(location.hash.slice(1))
 })
