@@ -176,3 +176,66 @@ El hosting se publica **antes** que las reglas: si faltara algún permiso de las
 - Se prueba antes de afirmar que algo funciona: `npm run build`, Playwright en escritorio y en celular (390 px),
   y las reglas de Firestore con el emulador.
 - El portafolio de demos nunca lleva datos reales de empresas ni de personas: se reemplazan por datos ficticios.
+
+---
+
+## 6. Base de datos y panel de administración (lo que se puede reutilizar)
+
+**Colecciones de Firestore** y quién puede qué (ver `firestore.rules`):
+
+| Colección | Visitantes | Administrador |
+|---|---|---|
+| `citas`, `cotizaciones`, `contactos` | Solo crear (datos validados) | Leer, editar (etapa y notas), borrar |
+| `horarios/{AAAA-MM-DD_HH:MM}` | Leer y crear; no se pueden pisar (evita doble reserva) | Todo (bloquear o liberar horarios) |
+| `config/site` | Leer | Escribir (precios, paquetes, horarios, días cerrados) |
+| `visitas/{AAAA-MM-DD}` | Solo sumar 1 a los totales del día | Leer y borrar |
+
+**Archivos clave**
+- `admin.html` + `src/admin/` (`AdminApp.vue` y `views/`): panel con Resumen, Citas, Calendario, Cotizaciones, Mensajes,
+  Visitas y Ajustes. `vite.config.js` declara las dos páginas (`index.html` y `admin.html`).
+- `src/firebase/` (`config.js`, `client.js`, `store.js`, `track.js`): configuración pública, carga bajo demanda,
+  guardado de formularios, contador de visitas y consentimiento de Google Analytics.
+- `src/data/siteConfig.js`: aplica la configuración editable sobre los valores de fábrica.
+- `tests/firestore.rules.test.mjs`: 57 pruebas de las reglas.
+
+**Cambiar el administrador:** edita `ADMIN_EMAIL` en `src/admin/AdminApp.vue` **y** el correo en `firestore.rules`.
+
+### Probar con emuladores (sin tocar el proyecto real)
+
+`firebase.json` del proyecto no trae el emulador de Auth; para pruebas usa una configuración aparte con
+`emulators: { firestore: { port: 8080 }, auth: { port: 9099 } }` y la copia de `firestore.rules`, y ejecuta:
+
+```bash
+npx firebase-tools emulators:exec --only firestore,auth --project demo-test "node tu-prueba.js"
+```
+
+Para probar la interfaz, compila con variables que apunten a los emuladores (solo para ese build de prueba):
+
+```bash
+VITE_FIREBASE_CONFIG='{"projectId":"demo-test","apiKey":"fake","appId":"1:1:web:1"}' VITE_FIRESTORE_EMULATOR=127.0.0.1:8080 VITE_AUTH_EMULATOR=http://127.0.0.1:9099 npx vite build --outDir /tmp/dist-emu
+```
+
+Con `VITE_AUTH_EMULATOR`, el panel expone `window.__adminLogin()` (solo en ese build) para iniciar sesión sin Google y
+recorrerlo con Playwright. La versión publicada **no** incluye ese acceso.
+
+### Lecciones del panel
+
+- Una consulta `orderBy(documentId(), 'desc')` pide un índice (`failed-precondition`). Usa un filtro de rango
+  (`where(documentId(), '>=', fecha)`).
+- Para que la página lea el panel sin llaves en el código, la configuración pública va en `src/firebase/config.js`.
+- Los precios y paquetes viven como datos reactivos con valores de fábrica; la configuración guardada solo los sobrescribe
+  si son válidos. "Restaurar" borra el documento `config/site`.
+- Los días cerrados se aplican en la página, no en las reglas (las reglas validan formato y horarios permitidos).
+- Google Analytics solo se inicia con consentimiento; el contador propio es anónimo y sin cookies.
+- Reglas con datos de otras colecciones (`get`/`exists`) cuestan una lectura por operación: usarlas solo donde valga la pena.
+
+### Prompt para pedir un panel similar
+
+```text
+Necesito un panel de administración en /admin para este sitio, con inicio de sesión de Google solo para [MI_CORREO].
+Debe incluir: resumen con números y gráficas, lista de citas/cotizaciones/mensajes con búsqueda, filtros, etapas de
+seguimiento, notas internas, exportar a Excel (CSV), calendario de agenda con bloqueo de horarios y una pantalla de
+ajustes para editar precios, paquetes y horarios sin tocar código. Los formularios públicos guardan en Firestore con
+reglas estrictas (los visitantes solo crean, solo yo leo). Prueba las reglas y el panel con los emuladores antes de
+publicar y dime con honestidad qué no pudiste probar.
+```
