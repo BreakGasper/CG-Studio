@@ -604,3 +604,44 @@ aside{--mx:50%;--my:38%}
 .ck-btns{display:flex;gap:8px;justify-content:flex-end}
 .ck .btn{padding:8px 16px;font-size:13px}
 @media(max-width:1100px){.ck{bottom:calc(92px + env(safe-area-inset-bottom));left:12px;right:12px;width:auto}}
+
+/* ===== Pulido pro (easing, feedback al tocar, entradas, móvil nativo, casos extremos) ===== */
+:root{--ease-out:cubic-bezier(.23,1,.32,1);--ease-in-out:cubic-bezier(.77,0,.175,1)}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:16px}
+body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;overscroll-behavior-y:none}
+h1,h2,h3,.disp{text-wrap:balance}
+p,li,blockquote{text-wrap:pretty}
+::selection{background:var(--acc);color:var(--acc-ink)}
+img,svg,video{max-width:100%}
+/* toque: sin zoom por doble toque ni destello gris */
+a,button,summary,[role=button],input,select,textarea,label{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+/* foco visible y consistente para teclado */
+:where(a,button,summary,input,select,textarea,[tabindex]):focus-visible{outline:2px solid var(--hl,var(--acc));outline-offset:3px;border-radius:inherit}
+/* easing más vivo en lo que responde al usuario */
+.btn,.pbtn,.socials a,.seg button,.car-btn,.theme-toggle,.proj,.xp,.mtabs button,.dock .ib{transition-timing-function:var(--ease-out)}
+/* feedback inmediato al presionar */
+.btn:active:not(:disabled),.car-btn:active,.seg button:active,.socials a:active,.theme-toggle:active,.mtabs button:active{transform:scale(.96);transition-duration:.1s}
+.pbtn:active{transform:translate(-50%,-50%) scale(.96);transition-duration:.1s}
+.faq summary:active{background:color-mix(in srgb,var(--acc) 8%,transparent)}
+/* hover solo en dispositivos con puntero (evita hover "pegado" en el móvil) */
+@media (hover:hover){
+  .proj:hover,.xp:hover{transform:translateY(-3px)}
+  .proj:hover .shot .mock,.proj:hover .thumb .mock{transform:scale(1.03)}
+}
+/* entrada escalonada al hacer scroll */
+.js-rv [data-rv]{opacity:0;translate:0 16px}
+.js-rv [data-rv].rv-in{opacity:1;translate:0 0;transition:opacity .6s var(--ease-out) var(--rv-d,0ms),translate .7s var(--ease-out) var(--rv-d,0ms)}
+/* casos extremos: textos o nombres larguísimos no rompen el diseño */
+.proj h3,.svc h3,.xp h3,.faq summary,.mv-card p,.tst blockquote,.step h3{overflow-wrap:anywhere;hyphens:auto}
+.bk-card input,.bk-card textarea,.bk-card select,.cf-form input,.cf-form textarea{max-width:100%}
+/* móvil: pantalla real (barras del navegador), sin zoom automático en inputs */
+@supports (min-height:100dvh){body{min-height:100dvh}}
+@media (max-width:1100px){
+  input:not([type=checkbox]):not([type=radio]),select,textarea{font-size:16px!important}
+  .mtabs button{min-height:48px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .js-rv [data-rv]{opacity:1;translate:none}
+}
